@@ -1,4 +1,4 @@
-package org.rus4j.numbify.lang;
+package org.rus4j.numbify;
 
 public enum Gender {
     MALE,

@@ -1,12 +1,10 @@
 package org.rus4j.numbify;
 
 
-import org.rus4j.numbify.lang.Declension;
-import org.rus4j.numbify.lang.Gender;
-
 public class NumbifyBuilder {
-    private Declension declension;
-    private Gender gender;
+    private Declension declension = Declension.NOMINATIVE;
+    private Gender gender = Gender.MALE;
+    private Language language;
     private Currency currency = Currency.NO_CURRENCY;
 
     public NumbifyBuilder currency(Currency currency) {
@@ -24,7 +22,12 @@ public class NumbifyBuilder {
         return this;
     }
 
+    public NumbifyBuilder language(Language language) {
+        this.language = language;
+        return this;
+    }
+
     public Numbify build() {
-        return new Numbify(declension, gender);
+        return new Numbify(declension, gender, language);
     }
 }
