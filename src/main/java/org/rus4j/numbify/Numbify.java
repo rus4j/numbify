@@ -48,7 +48,7 @@ public class Numbify {
 
     private String rankToText(int[] digits, int groupNum) {
         String hundredText = lang.hundreds().get(declension)[digits[2]];
-        String tenText = "";
+        String tenText;
         String unitText = "";
         if (digits[1] == 1) {
             tenText = lang.tenToNineteen().get(declension)[digits[0]];
@@ -67,8 +67,10 @@ public class Numbify {
         if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) return "";
         if (groupNum == 1) {
             return lang.digits(Gender.FEMALE).get(declension)[digits[0]];
+        } else if (groupNum == 0) {
+            return lang.digits(gender).get(declension)[digits[0]];
         }
-        return lang.digits(gender).get(declension)[digits[0]];
+        return lang.digits(Gender.MALE).get(declension)[digits[0]];
     }
 
     // 1234 -> [4,3,2,1]
