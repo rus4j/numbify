@@ -1,7 +1,8 @@
 package org.rus4j.numbify;
 
 import org.junit.jupiter.api.Test;
-import org.rus4j.numbify.lang.Russian;
+import org.rus4j.numbify.lang.ru.RuDeclension;
+import org.rus4j.numbify.lang.ru.Russian;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +32,7 @@ class NumbifyRussianTest {
     @Test
     public void testNominativeFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.NOMINATIVE)
+                .declension(RuDeclension.NOMINATIVE)
                 .gender(Gender.FEMALE)
                 .language(new Russian())
                 .build();
@@ -47,7 +48,7 @@ class NumbifyRussianTest {
     @Test
     public void testNominativeNeutral() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.NOMINATIVE)
+                .declension(RuDeclension.NOMINATIVE)
                 .gender(Gender.NEUTRAL)
                 .language(new Russian())
                 .build();
@@ -60,7 +61,7 @@ class NumbifyRussianTest {
     @Test
     public void testGenitiveMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.GENITIVE)
+                .declension(RuDeclension.GENITIVE)
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
@@ -85,7 +86,7 @@ class NumbifyRussianTest {
     @Test
     public void testGenitiveFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.GENITIVE)
+                .declension(RuDeclension.GENITIVE)
                 .gender(Gender.FEMALE)
                 .language(new Russian())
                 .build();
@@ -98,7 +99,7 @@ class NumbifyRussianTest {
     @Test
     public void testAccusativeMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.ACCUSATIVE)
+                .declension(RuDeclension.ACCUSATIVE)
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
@@ -123,7 +124,7 @@ class NumbifyRussianTest {
     @Test
     public void testAccusativeFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.ACCUSATIVE)
+                .declension(RuDeclension.ACCUSATIVE)
                 .gender(Gender.FEMALE)
                 .language(new Russian())
                 .build();
@@ -136,7 +137,7 @@ class NumbifyRussianTest {
     @Test
     public void testDativeMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.DATIVE)
+                .declension(RuDeclension.DATIVE)
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
@@ -161,7 +162,7 @@ class NumbifyRussianTest {
     @Test
     public void testDativeFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.DATIVE)
+                .declension(RuDeclension.DATIVE)
                 .gender(Gender.FEMALE)
                 .language(new Russian())
                 .build();
@@ -174,7 +175,7 @@ class NumbifyRussianTest {
     @Test
     public void testInstrumentalMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.INSTRUMENTAL)
+                .declension(RuDeclension.INSTRUMENTAL)
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
@@ -199,7 +200,7 @@ class NumbifyRussianTest {
     @Test
     public void testInstrumentalFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.INSTRUMENTAL)
+                .declension(RuDeclension.INSTRUMENTAL)
                 .gender(Gender.FEMALE)
                 .language(new Russian())
                 .build();
@@ -212,7 +213,7 @@ class NumbifyRussianTest {
     @Test
     public void testPrepositionalMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.PREPOSITIONAL)
+                .declension(RuDeclension.PREPOSITIONAL)
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
@@ -237,7 +238,7 @@ class NumbifyRussianTest {
     @Test
     public void testPrepositionalFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(Declension.PREPOSITIONAL)
+                .declension(RuDeclension.PREPOSITIONAL)
                 .gender(Gender.FEMALE)
                 .language(new Russian())
                 .build();

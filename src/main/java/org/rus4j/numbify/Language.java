@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public interface Language {
+public interface Language<LANG_DECLENSION> {
 
-    default Map<Declension, String[]> digits(Gender gender) {
+    default Map<LANG_DECLENSION, String[]> digits(Gender gender) {
         return switch (gender) {
             case MALE -> maleDigits();
             case FEMALE -> femaleDigits();
@@ -14,19 +14,21 @@ public interface Language {
         };
     }
 
-    Map<Declension, String[]> maleDigits();
-    Map<Declension, String[]> femaleDigits();
-    Map<Declension, String[]> neutralDigits();
-    Map<Declension, String[]> tenToNineteen();
-    Map<Declension, String[]> tens();
-    Map<Declension, String[]> hundreds();
+    Map<LANG_DECLENSION, String[]> maleDigits();
+    Map<LANG_DECLENSION, String[]> femaleDigits();
+    Map<LANG_DECLENSION, String[]> neutralDigits();
+    Map<LANG_DECLENSION, String[]> tenToNineteen();
+    Map<LANG_DECLENSION, String[]> tens();
+    Map<LANG_DECLENSION, String[]> hundreds();
 
-    Map<Declension, String[]> thousands();
+    Map<LANG_DECLENSION, String[]> thousands();
     String[] millions();
-    Map<Declension, String[]> endings();
+    Map<LANG_DECLENSION, String[]> endings();
 
-    default Map<Declension, String[]> sameAsMaleBut(Map<Declension, Map<Integer, String>> diff) {
-        HashMap<Declension, String[]> map = new HashMap<>(maleDigits());
+    int form(int[] numGroup);
+
+    default Map<LANG_DECLENSION, String[]> sameAsMaleBut(Map<LANG_DECLENSION, Map<Integer, String>> diff) {
+        HashMap<LANG_DECLENSION, String[]> map = new HashMap<>(maleDigits());
         diff.forEach((key, value) -> map.computeIfPresent(key, (d, strings) -> replaceOnIndex(strings, value)));
         return map;
     }

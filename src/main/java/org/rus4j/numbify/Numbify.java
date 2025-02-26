@@ -9,9 +9,9 @@ public class Numbify {
 
     private final Declension declension;
     private final Gender gender;
-    private final Language lang;
+    private final Language<?> lang;
 
-    public Numbify(Declension declension, Gender gender, Language language) {
+    public Numbify(Declension declension, Gender gender, Language<?> language) {
         this.declension = declension;
         this.gender = gender;
         this.lang = language;
@@ -19,13 +19,13 @@ public class Numbify {
 
     public String toText(Integer number) {
         int[] digits = toArray(number);
-        int[][] byRank = splitRankChunks(digits);
+        int[][] groups = splitNumbersByGroups(digits);
 
         StringJoiner result = new StringJoiner(" ");
-        for (int i = byRank.length - 1; i >= 0; i--) {
-            if (byRank[i][0] == 0 && byRank[i][1] == 0 && byRank[i][2] == 0) continue;
-            result.add(rankToText(byRank[i], i));
-            int form = form(byRank[i]);
+        for (int i = groups.length - 1; i >= 0; i--) {
+            if (groups[i][0] == 0 && groups[i][1] == 0 && groups[i][2] == 0) continue;
+            result.add(groupToText(groups[i], i));
+            int form = lang.form(groups[i]);
             if (i == 1) {
                 result.add(lang.thousands().get(declension)[form]);
             } else if (i > 1) {
@@ -35,18 +35,7 @@ public class Numbify {
         return result.toString();
     }
 
-    private int form(int[] numGroup) {
-        if (numGroup[1] == 1) { // единица в десятках, 110-119 тысяч.
-            return 2;
-        }
-        return switch (numGroup[0]) {
-            case 1 -> 0; // 1 тысяча
-            case 2, 3, 4 -> 1; // 2|3|4 тысячи
-            default -> 2; // 5|6|7|8|9 тысяч
-        };
-    }
-
-    private String rankToText(int[] digits, int groupNum) {
+    private String groupToText(int[] digits, int groupNum) {
         String hundredText = lang.hundreds().get(declension)[digits[2]];
         String tenText;
         String unitText = "";
@@ -73,7 +62,6 @@ public class Numbify {
         return lang.digits(Gender.MALE).get(declension)[digits[0]];
     }
 
-    // 1234 -> [4,3,2,1]
     private int[] toArray(int number) {
         int[] digits = new int[String.valueOf(number).length()];
         int i = 0;
@@ -84,7 +72,7 @@ public class Numbify {
         return digits;
     }
 
-    private int[][] splitRankChunks(int[] numbers) {
+    private int[][] splitNumbersByGroups(int[] numbers) {
         int[][] digitsByGroup = new int[(int) Math.ceil(numbers.length / 3.0)][3];
         int group = 0;
         for (int i = 0; i < numbers.length; i += 3) {

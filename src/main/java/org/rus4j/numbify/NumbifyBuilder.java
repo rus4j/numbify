@@ -1,16 +1,18 @@
 package org.rus4j.numbify;
 
 
-public class NumbifyBuilder {
-    private Declension declension = Declension.NOMINATIVE;
-    private Gender gender = Gender.MALE;
-    private Language language;
-    private Currency currency = Currency.NO_CURRENCY;
+import org.rus4j.numbify.lang.ru.RuDeclension;
 
-    public NumbifyBuilder currency(Currency currency) {
-        this.currency = currency;
-        return this;
-    }
+public class NumbifyBuilder {
+    private Declension declension = RuDeclension.NOMINATIVE;
+    private Gender gender = Gender.MALE;
+    private Language<?> language;
+//    private Currency currency = Currency.NO_CURRENCY;
+
+//    public NumbifyBuilder currency(Currency currency) {
+//        this.currency = currency;
+//        return this;
+//    }
 
     public NumbifyBuilder declension(Declension declension) {
         this.declension = declension;
@@ -22,7 +24,7 @@ public class NumbifyBuilder {
         return this;
     }
 
-    public NumbifyBuilder language(Language language) {
+    public NumbifyBuilder language(Language<?> language) {
         this.language = language;
         return this;
     }

@@ -1,20 +1,19 @@
-package org.rus4j.numbify.lang;
+package org.rus4j.numbify.lang.ru;
 
 import java.util.Map;
 
-import org.rus4j.numbify.Declension;
 import org.rus4j.numbify.Language;
 
-import static org.rus4j.numbify.Declension.ACCUSATIVE;
-import static org.rus4j.numbify.Declension.DATIVE;
-import static org.rus4j.numbify.Declension.GENITIVE;
-import static org.rus4j.numbify.Declension.INSTRUMENTAL;
-import static org.rus4j.numbify.Declension.NOMINATIVE;
-import static org.rus4j.numbify.Declension.PREPOSITIONAL;
+import static org.rus4j.numbify.lang.ru.RuDeclension.ACCUSATIVE;
+import static org.rus4j.numbify.lang.ru.RuDeclension.DATIVE;
+import static org.rus4j.numbify.lang.ru.RuDeclension.GENITIVE;
+import static org.rus4j.numbify.lang.ru.RuDeclension.INSTRUMENTAL;
+import static org.rus4j.numbify.lang.ru.RuDeclension.NOMINATIVE;
+import static org.rus4j.numbify.lang.ru.RuDeclension.PREPOSITIONAL;
 
-public class Russian implements Language {
+public class Russian implements Language<RuDeclension> {
     @Override
-    public Map<Declension, String[]> maleDigits() {
+    public Map<RuDeclension, String[]> maleDigits() {
         return Map.of(
                 NOMINATIVE, new String[]{"ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"},
                 GENITIVE, new String[]{"ноля", "одного", "двух", "трёх", "четырёх", "пяти", "шести", "семи", "восьми", "девяти"},
@@ -26,7 +25,7 @@ public class Russian implements Language {
     }
 
     @Override
-    public Map<Declension, String[]> femaleDigits() {
+    public Map<RuDeclension, String[]> femaleDigits() {
         return sameAsMaleBut(Map.of(
                 NOMINATIVE, Map.of(1, "одна", 2, "две"),
                 GENITIVE, Map.of(1, "одной"),
@@ -38,14 +37,14 @@ public class Russian implements Language {
     }
 
     @Override
-    public Map<Declension, String[]> neutralDigits() {
+    public Map<RuDeclension, String[]> neutralDigits() {
         return sameAsMaleBut(Map.of(
                 NOMINATIVE, Map.of(1, "одно"), ACCUSATIVE, Map.of(1, "одно")
         ));
     }
 
     @Override
-    public Map<Declension, String[]> tenToNineteen() {
+    public Map<RuDeclension, String[]> tenToNineteen() {
         return Map.of(
                 NOMINATIVE, new String[]{"десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать",
                         "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"},
@@ -63,7 +62,7 @@ public class Russian implements Language {
     }
 
     @Override
-    public Map<Declension, String[]> tens() {
+    public Map<RuDeclension, String[]> tens() {
         return Map.of(
                 NOMINATIVE, new String[]{"", "", "двадцать", "тридцать", "сорок", "пятьдесят",
                         "шестьдесят", "семьдесят", "восемьдесят", "девяносто"},
@@ -81,7 +80,7 @@ public class Russian implements Language {
     }
 
     @Override
-    public Map<Declension, String[]> hundreds() {
+    public Map<RuDeclension, String[]> hundreds() {
         return Map.of(
                 NOMINATIVE, new String[]{"", "сто", "двести", "триста", "четыреста", "пятьсот",
                         "шестьсот", "семьсот", "восемьсот", "девятьсот"},
@@ -99,7 +98,7 @@ public class Russian implements Language {
     }
 
     @Override
-    public Map<Declension, String[]> thousands() {
+    public Map<RuDeclension, String[]> thousands() {
         return Map.of(
                 NOMINATIVE, new String[] {"тысяча", "тысячи", "тысяч"},
                 GENITIVE, new String[] {"тысячи", "тысяч", "тысяч"},
@@ -118,7 +117,7 @@ public class Russian implements Language {
     }
 
     @Override
-    public Map<Declension, String[]> endings() {
+    public Map<RuDeclension, String[]> endings() {
         return Map.of(
                 NOMINATIVE, new String[] {"", "а", "ов"},
                 GENITIVE, new String[] {"а", "ов", "ов"},
@@ -127,5 +126,17 @@ public class Russian implements Language {
                 INSTRUMENTAL, new String[] {"ом", "ами", "ами"},
                 PREPOSITIONAL, new String[] {"е", "ах", "ах"}
         );
+    }
+
+    @Override
+    public int form(int[] numGroup) {
+        if (numGroup[1] == 1) { // единица в десятках, 110-119 тысяч.
+            return 2;
+        }
+        return switch (numGroup[0]) {
+            case 1 -> 0; // 1 тысяча
+            case 2, 3, 4 -> 1; // 2|3|4 тысячи
+            default -> 2; // 5|6|7|8|9 тысяч
+        };
     }
 }
