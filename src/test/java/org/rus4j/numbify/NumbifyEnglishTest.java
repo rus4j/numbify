@@ -26,5 +26,6 @@ public class NumbifyEnglishTest {
         assertThat(en.toText(1_001)).isEqualTo("one thousand one");
         assertThat(en.toText(100_000)).isEqualTo("one hundred thousand");
         assertThat(en.toText(1_000_001)).isEqualTo("one million one");
+        assertThat(en.toText(0)).isEqualTo("zero");
     }
 }
