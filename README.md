@@ -1,4 +1,5 @@
 # Numbify
+![workflow](https://github.com/rus4j/numbify/actions/workflows/gradle.yml/badge.svg)
 
 Numbify ia s Java library for transforming numbers into text with wide customization options.
 
