@@ -23,7 +23,7 @@ public class Numbify {
 
         StringJoiner result = new StringJoiner(" ");
         for (int i = groups.length - 1; i >= 0; i--) {
-            if (groups[i][0] == 0 && groups[i][1] == 0 && groups[i][2] == 0) continue;
+            if (groups[i][0] == 0 && groups[i][1] == 0 && groups[i][2] == 0 && groups.length > 1) continue;
             result.add(groupToText(groups[i], i));
             int form = lang.form(groups[i]);
             if (i == 1) {

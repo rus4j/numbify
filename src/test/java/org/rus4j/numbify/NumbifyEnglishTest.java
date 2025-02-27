@@ -10,6 +10,7 @@ public class NumbifyEnglishTest {
     @Test
     public void test() {
         Numbify en = new NumbifyBuilder().language(new English()).declension(EnDeclension.COMMON).build();
+        assertThat(en.toText(0)).isEqualTo("zero");
         assertThat(en.toText(1)).isEqualTo("one");
         assertThat(en.toText(12)).isEqualTo("twelve");
         assertThat(en.toText(123)).isEqualTo("one hundred twenty three");
@@ -26,7 +27,5 @@ public class NumbifyEnglishTest {
         assertThat(en.toText(1_001)).isEqualTo("one thousand one");
         assertThat(en.toText(100_000)).isEqualTo("one hundred thousand");
         assertThat(en.toText(1_000_001)).isEqualTo("one million one");
-        // TODO fix
-        assertThat(en.toText(0)).isEqualTo("zero");
     }
 }
