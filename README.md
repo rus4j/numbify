@@ -13,8 +13,8 @@ String numberInText = en.toText(1234); // "one thousand two hundred thirty four"
 ```
 
 ## Languages
-* English
-* Russian
+* 🇬🇧 English
+* 🇷🇺 Russian
 * others langs in progress
 
 ## Options
