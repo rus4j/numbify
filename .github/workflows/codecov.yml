@@ -17,5 +17,5 @@ jobs:
       - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./target/reports/jacoco/test/html/idex.xml
+          files: ./build/reports/jacoco/test/html/index.xml
           fail_ci_if_error: true
