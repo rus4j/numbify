@@ -11,6 +11,7 @@ class NumbifyRussianTest {
     @Test
     public void testNominativeMale() {
         Numbify ru = new NumbifyBuilder().language(new Russian()).build();
+        assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
         assertThat(ru.toText(12)).isEqualTo("двенадцать");
         assertThat(ru.toText(123)).isEqualTo("сто двадцать три");
@@ -65,6 +66,7 @@ class NumbifyRussianTest {
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
+        assertThat(ru.toText(0)).isEqualTo("ноля");
         assertThat(ru.toText(1)).isEqualTo("одного");
         assertThat(ru.toText(12)).isEqualTo("двенадцати");
         assertThat(ru.toText(123)).isEqualTo("ста двадцати трёх");
@@ -103,6 +105,7 @@ class NumbifyRussianTest {
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
+        assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
         assertThat(ru.toText(12)).isEqualTo("двенадцать");
         assertThat(ru.toText(123)).isEqualTo("сто двадцать три");
@@ -141,6 +144,7 @@ class NumbifyRussianTest {
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
+        assertThat(ru.toText(0)).isEqualTo("нолю");
         assertThat(ru.toText(1)).isEqualTo("одному");
         assertThat(ru.toText(12)).isEqualTo("двенадцати");
         assertThat(ru.toText(123)).isEqualTo("ста двадцати трём");
@@ -179,6 +183,7 @@ class NumbifyRussianTest {
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
+        assertThat(ru.toText(0)).isEqualTo("нолём");
         assertThat(ru.toText(1)).isEqualTo("одним");
         assertThat(ru.toText(12)).isEqualTo("двенадцатью");
         assertThat(ru.toText(123)).isEqualTo("ста двадцатью тремя");
@@ -217,6 +222,7 @@ class NumbifyRussianTest {
                 .gender(Gender.MALE)
                 .language(new Russian())
                 .build();
+        assertThat(ru.toText(0)).isEqualTo("ноле");
         assertThat(ru.toText(1)).isEqualTo("одном");
         assertThat(ru.toText(12)).isEqualTo("двенадцати");
         assertThat(ru.toText(123)).isEqualTo("ста двадцати трёх");
