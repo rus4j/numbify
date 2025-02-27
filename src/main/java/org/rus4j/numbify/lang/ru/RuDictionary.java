@@ -15,14 +15,14 @@ import static org.rus4j.numbify.lang.ru.RuDeclension.PREPOSITIONAL;
 
 public class RuDictionary {
 
-    public static Map<RuDeclension, String[]> units(Gender gender) {
+    final Map<RuDeclension, String[]> units(Gender gender) {
         return switch (gender) {
             case MALE -> maleUnits;
             case FEMALE -> femaleUnits;
             case NEUTRAL -> neutralUnits;
         };
     }
-    public static Map<RuDeclension, String[]> maleUnits = Map.of(
+    final Map<RuDeclension, String[]> maleUnits = Map.of(
             NOMINATIVE, new String[]{"ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"},
             GENITIVE, new String[]{"ноля", "одного", "двух", "трёх", "четырёх", "пяти", "шести", "семи", "восьми", "девяти"},
             DATIVE, new String[]{"нолю", "одному", "двум", "трём", "четырём", "пяти", "шести", "семи", "восьми", "девяти"},
@@ -31,7 +31,7 @@ public class RuDictionary {
             PREPOSITIONAL, new String[]{"ноле", "одном", "двух", "трёх", "четырёх", "пяти", "шести", "семи", "восьми", "девяти"}
         );
 
-    public static Map<RuDeclension, String[]> femaleUnits = sameAsMaleBut(Map.of(
+    final Map<RuDeclension, String[]> femaleUnits = sameAsMaleBut(Map.of(
             NOMINATIVE, Map.of(1, "одна", 2, "две"),
             GENITIVE, Map.of(1, "одной"),
             DATIVE, Map.of(1, "одной"),
@@ -40,11 +40,11 @@ public class RuDictionary {
             PREPOSITIONAL, Map.of(1, "одной")
     ));
 
-    public static Map<RuDeclension, String[]> neutralUnits = sameAsMaleBut(Map.of(
+    final Map<RuDeclension, String[]> neutralUnits = sameAsMaleBut(Map.of(
             NOMINATIVE, Map.of(1, "одно"), ACCUSATIVE, Map.of(1, "одно")
     ));
 
-    public static Map<RuDeclension, String[]> tenToNineteen = Map.of(
+    final Map<RuDeclension, String[]> tenToNineteen = Map.of(
             NOMINATIVE, new String[]{"десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать",
                     "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"},
             GENITIVE, new String[]{"десяти", "одиннадцати", "двенадцати", "тринадцати", "четырнадцати",
@@ -59,7 +59,7 @@ public class RuDictionary {
                     "пятнадцати", "шестнадцати", "семнадцати", "восемнадцати", "девятнадцати"}
     );
 
-    public static Map<RuDeclension, String[]> tens = Map.of(
+    final Map<RuDeclension, String[]> tens = Map.of(
             NOMINATIVE, new String[]{"", "", "двадцать", "тридцать", "сорок", "пятьдесят",
                     "шестьдесят", "семьдесят", "восемьдесят", "девяносто"},
             GENITIVE, new String[]{"", "", "двадцати", "тридцати", "сорока", "пятидесяти",
@@ -74,7 +74,7 @@ public class RuDictionary {
                     "шестидесяти", "семидесяти", "восьмидесяти", "девяноста"}
     );
 
-    public static Map<RuDeclension, String[]> hundreds = Map.of(
+    final Map<RuDeclension, String[]> hundreds = Map.of(
             NOMINATIVE, new String[]{"", "сто", "двести", "триста", "четыреста", "пятьсот",
                     "шестьсот", "семьсот", "восемьсот", "девятьсот"},
             GENITIVE, new String[]{"", "ста", "двухсот", "трёхсот", "четырёхсот", "пятисот",
@@ -89,7 +89,7 @@ public class RuDictionary {
                     "шестистах", "семистах", "восьмистах", "девятистах"}
     );
 
-    public static Map<RuDeclension, String[]> thousands = Map.of(
+    final Map<RuDeclension, String[]> thousands = Map.of(
             NOMINATIVE, new String[] {"тысяча", "тысячи", "тысяч"},
             GENITIVE, new String[] {"тысячи", "тысяч", "тысяч"},
             DATIVE, new String[] {"тысяче", "тысячам", "тысячам"},
@@ -98,11 +98,11 @@ public class RuDictionary {
             PREPOSITIONAL, new String[] {"тысяче", "тысячах", "тысячах"}
     );
 
-    public static String[] millions = new String[]{"миллион", "миллиард", "триллион", "квадриллион",
+    final String[] millions = new String[]{"миллион", "миллиард", "триллион", "квадриллион",
             "квинтиллион", "секстиллион", "септиллион", "октиллион", "нониллион", "дециллион",
     };
 
-    public static Map<RuDeclension, String[]> endings = Map.of(
+    final Map<RuDeclension, String[]> endings = Map.of(
             NOMINATIVE, new String[] {"", "а", "ов"},
             GENITIVE, new String[] {"а", "ов", "ов"},
             DATIVE, new String[] {"у", "ам", "ам"},
@@ -111,13 +111,13 @@ public class RuDictionary {
             PREPOSITIONAL, new String[] {"е", "ах", "ах"}
     );
 
-    private static Map<RuDeclension, String[]> sameAsMaleBut(Map<RuDeclension, Map<Integer, String>> diff) {
+    private Map<RuDeclension, String[]> sameAsMaleBut(Map<RuDeclension, Map<Integer, String>> diff) {
         HashMap<RuDeclension, String[]> map = new HashMap<>(maleUnits);
         diff.forEach((key, value) -> map.computeIfPresent(key, (d, strings) -> replaceOnIndex(strings, value)));
         return map;
     }
 
-    private static String[] replaceOnIndex(String[] arr, Map<Integer, String> map) {
+    private String[] replaceOnIndex(String[] arr, Map<Integer, String> map) {
         String[] newArr = Arrays.copyOf(arr, arr.length);
         map.forEach((key, value) -> newArr[key] = value);
         return newArr;

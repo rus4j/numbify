@@ -4,10 +4,12 @@ import org.rus4j.numbify.Gender;
 import org.rus4j.numbify.Language;
 
 public class Russian implements Language {
+    private final RuDictionary dict;
     private final RuDeclension declension;
     private final Gender gender;
 
     public Russian(RuDeclension declension, Gender gender) {
+        this.dict = new RuDictionary();
         this.declension = declension;
         this.gender = gender;
     }
@@ -28,41 +30,41 @@ public class Russian implements Language {
             return "";
         }
         if (groupNum == 1) {
-            return RuDictionary.units(Gender.FEMALE).get(declension)[digits[0]];
+            return dict.units(Gender.FEMALE).get(declension)[digits[0]];
         } else if (groupNum == 0) {
-            return RuDictionary.units(gender).get(declension)[digits[0]];
+            return dict.units(gender).get(declension)[digits[0]];
         }
-        return RuDictionary.units(Gender.MALE).get(declension)[digits[0]];
+        return dict.units(Gender.MALE).get(declension)[digits[0]];
     }
 
     @Override
     public String tenToNineteen(int i) {
-        return RuDictionary.tenToNineteen.get(declension)[i];
+        return dict.tenToNineteen.get(declension)[i];
     }
 
     @Override
     public String tens(int i) {
-        return RuDictionary.tens.get(declension)[i];
+        return dict.tens.get(declension)[i];
     }
 
     @Override
     public String hundreds(int i) {
-        return RuDictionary.hundreds.get(declension)[i];
+        return dict.hundreds.get(declension)[i];
     }
 
     @Override
     public String thousands(int form) {
-        return RuDictionary.thousands.get(declension)[form];
+        return dict.thousands.get(declension)[form];
     }
 
     @Override
     public String millions(int i) {
-        return RuDictionary.millions[i];
+        return dict.millions[i];
     }
 
     @Override
     public String endings(int form) {
-        return RuDictionary.endings.get(declension)[form];
+        return dict.endings.get(declension)[form];
     }
 
     /**

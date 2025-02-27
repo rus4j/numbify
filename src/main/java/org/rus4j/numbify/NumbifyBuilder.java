@@ -22,10 +22,10 @@ public class NumbifyBuilder {
         return this;
     }
 
-    public NumbifyBuilder customLanguage(Language language) {
-        this.language = language;
-        return this;
-    }
+//    public NumbifyBuilder customLanguage(Language language) {
+//        this.language = language;
+//        return this;
+//    }
 
     public Numbify build() {
         return new Numbify(language);
