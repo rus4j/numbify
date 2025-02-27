@@ -1,0 +1,21 @@
+name: codecov
+'on':
+  push:
+    branches:
+      - master
+jobs:
+  codecov:
+    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - run: ./gradlew jacocoTestCoverageVerification
+      - uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./target/reports/jacoco/test/html/idex.xml
+          fail_ci_if_error: true
