@@ -2,7 +2,6 @@ package org.rus4j.numbify;
 
 import org.junit.jupiter.api.Test;
 import org.rus4j.numbify.lang.ru.RuDeclension;
-import org.rus4j.numbify.lang.ru.Russian;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +9,7 @@ class NumbifyRussianTest {
 
     @Test
     public void testNominativeMale() {
-        Numbify ru = new NumbifyBuilder().language(new Russian()).build();
+        Numbify ru = new NumbifyBuilder().russian().build();
         assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
         assertThat(ru.toText(12)).isEqualTo("двенадцать");
@@ -33,9 +32,7 @@ class NumbifyRussianTest {
     @Test
     public void testNominativeFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.NOMINATIVE)
-                .gender(Gender.FEMALE)
-                .language(new Russian())
+                .russian(RuDeclension.NOMINATIVE, Gender.FEMALE)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одна");
         assertThat(ru.toText(2)).isEqualTo("две");
@@ -49,9 +46,7 @@ class NumbifyRussianTest {
     @Test
     public void testNominativeNeutral() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.NOMINATIVE)
-                .gender(Gender.NEUTRAL)
-                .language(new Russian())
+                .russian(RuDeclension.NOMINATIVE, Gender.NEUTRAL)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одно");
         assertThat(ru.toText(101)).isEqualTo("сто одно");
@@ -62,9 +57,7 @@ class NumbifyRussianTest {
     @Test
     public void testGenitiveMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.GENITIVE)
-                .gender(Gender.MALE)
-                .language(new Russian())
+                .russian(RuDeclension.GENITIVE, Gender.MALE)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноля");
         assertThat(ru.toText(1)).isEqualTo("одного");
@@ -88,9 +81,7 @@ class NumbifyRussianTest {
     @Test
     public void testGenitiveFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.GENITIVE)
-                .gender(Gender.FEMALE)
-                .language(new Russian())
+                .russian(RuDeclension.GENITIVE, Gender.FEMALE)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -101,9 +92,7 @@ class NumbifyRussianTest {
     @Test
     public void testAccusativeMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.ACCUSATIVE)
-                .gender(Gender.MALE)
-                .language(new Russian())
+                .russian(RuDeclension.ACCUSATIVE, Gender.MALE)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
@@ -127,9 +116,7 @@ class NumbifyRussianTest {
     @Test
     public void testAccusativeFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.ACCUSATIVE)
-                .gender(Gender.FEMALE)
-                .language(new Russian())
+                .russian(RuDeclension.ACCUSATIVE, Gender.FEMALE)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одну");
         assertThat(ru.toText(101)).isEqualTo("сто одну");
@@ -140,9 +127,7 @@ class NumbifyRussianTest {
     @Test
     public void testDativeMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.DATIVE)
-                .gender(Gender.MALE)
-                .language(new Russian())
+                .russian(RuDeclension.DATIVE, Gender.MALE)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("нолю");
         assertThat(ru.toText(1)).isEqualTo("одному");
@@ -166,9 +151,7 @@ class NumbifyRussianTest {
     @Test
     public void testDativeFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.DATIVE)
-                .gender(Gender.FEMALE)
-                .language(new Russian())
+                .russian(RuDeclension.DATIVE, Gender.FEMALE)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -179,9 +162,7 @@ class NumbifyRussianTest {
     @Test
     public void testInstrumentalMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.INSTRUMENTAL)
-                .gender(Gender.MALE)
-                .language(new Russian())
+                .russian(RuDeclension.INSTRUMENTAL, Gender.MALE)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("нолём");
         assertThat(ru.toText(1)).isEqualTo("одним");
@@ -205,9 +186,7 @@ class NumbifyRussianTest {
     @Test
     public void testInstrumentalFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.INSTRUMENTAL)
-                .gender(Gender.FEMALE)
-                .language(new Russian())
+                .russian(RuDeclension.INSTRUMENTAL, Gender.FEMALE)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -218,9 +197,7 @@ class NumbifyRussianTest {
     @Test
     public void testPrepositionalMale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.PREPOSITIONAL)
-                .gender(Gender.MALE)
-                .language(new Russian())
+                .russian(RuDeclension.PREPOSITIONAL, Gender.MALE)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноле");
         assertThat(ru.toText(1)).isEqualTo("одном");
@@ -244,9 +221,7 @@ class NumbifyRussianTest {
     @Test
     public void testPrepositionalFemale() {
         Numbify ru = new NumbifyBuilder()
-                .declension(RuDeclension.PREPOSITIONAL)
-                .gender(Gender.FEMALE)
-                .language(new Russian())
+                .russian(RuDeclension.PREPOSITIONAL, Gender.FEMALE)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");

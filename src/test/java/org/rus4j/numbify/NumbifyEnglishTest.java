@@ -1,15 +1,14 @@
 package org.rus4j.numbify;
 
 import org.junit.jupiter.api.Test;
-import org.rus4j.numbify.lang.en.EnDeclension;
-import org.rus4j.numbify.lang.en.English;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NumbifyEnglishTest {
+
     @Test
     public void test() {
-        Numbify en = new NumbifyBuilder().language(new English()).declension(EnDeclension.COMMON).build();
+        Numbify en = new NumbifyBuilder().english().build();
         assertThat(en.toText(0)).isEqualTo("zero");
         assertThat(en.toText(1)).isEqualTo("one");
         assertThat(en.toText(12)).isEqualTo("twelve");

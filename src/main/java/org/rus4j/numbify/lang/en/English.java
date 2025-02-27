@@ -1,78 +1,47 @@
 package org.rus4j.numbify.lang.en;
 
-import java.util.Map;
-
 import org.rus4j.numbify.Language;
 
-import static org.rus4j.numbify.lang.en.EnDeclension.COMMON;
-
-public class English implements Language<EnDeclension> {
-
-    private static final Map<EnDeclension, String[]> DIGITS = Map.of(
-            COMMON, new String[]{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
-    );
+public class English implements Language {
 
     @Override
-    public Map<EnDeclension, String[]> maleDigits() {
-        return DIGITS;
+    public String unitNumber(int groupNum, int[] digits) {
+        if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) return "";
+        return EnDictionary.units[digits[0]];
     }
 
     @Override
-    public Map<EnDeclension, String[]> femaleDigits() {
-        return DIGITS;
+    public String tenToNineteen(int i) {
+        return EnDictionary.tenToNineteen[i];
     }
 
     @Override
-    public Map<EnDeclension, String[]> neutralDigits() {
-        return DIGITS;
+    public String tens(int i) {
+        return EnDictionary.tens[i];
     }
 
     @Override
-    public Map<EnDeclension, String[]> tenToNineteen() {
-        return Map.of(
-                COMMON, new String[]{"ten", "eleven", "twelve", "thirteen", "fourteen",
-                        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
-                }
-        );
+    public String hundreds(int i) {
+        return EnDictionary.hundreds[i];
     }
 
     @Override
-    public Map<EnDeclension, String[]> tens() {
-        return Map.of(
-                COMMON, new String[]{"", "", "twenty", "thirty", "forty",
-                        "fifty", "sixty", "seventy", "eighty", "ninety"
-                }
-        );
+    public String thousands(int form) {
+        return EnDictionary.thousand[form];
     }
 
     @Override
-    public Map<EnDeclension, String[]> hundreds() {
-        return Map.of(
-                COMMON, new String[]{"", "one hundred", "two hundred", "three hundred", "four hundred",
-                        "five hundred", "six hundred", "seven hundred", "eight hundred", "nine hundred"
-                }
-        );
+    public String millions(int i) {
+        return EnDictionary.millions[i];
     }
 
     @Override
-    public Map<EnDeclension, String[]> thousands() {
-        return Map.of(COMMON, new String[]{"thousand"});
-    }
-
-    @Override
-    public String[] millions() {
-        return new String[]{"million", "billion", "trillion", "quadrillion",
-                "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion",
-        };
-    }
-
-    @Override
-    public Map<EnDeclension, String[]> endings() {
-        return Map.of(COMMON, new String[]{""});
+    public String endings(int form) {
+        return EnDictionary.endings[form];
     }
 
     /**
-     * There is only 1 from in English.
+     * There is only 1 form in English.
      * No difference between 1 thousand/million and 5 thousand/million.
      */
     @Override

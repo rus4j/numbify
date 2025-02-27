@@ -1,142 +1,86 @@
 package org.rus4j.numbify.lang.ru;
 
-import java.util.Map;
-
+import org.rus4j.numbify.Gender;
 import org.rus4j.numbify.Language;
 
-import static org.rus4j.numbify.lang.ru.RuDeclension.ACCUSATIVE;
-import static org.rus4j.numbify.lang.ru.RuDeclension.DATIVE;
-import static org.rus4j.numbify.lang.ru.RuDeclension.GENITIVE;
-import static org.rus4j.numbify.lang.ru.RuDeclension.INSTRUMENTAL;
-import static org.rus4j.numbify.lang.ru.RuDeclension.NOMINATIVE;
-import static org.rus4j.numbify.lang.ru.RuDeclension.PREPOSITIONAL;
+public class Russian implements Language {
+    private final RuDeclension declension;
+    private final Gender gender;
 
-public class Russian implements Language<RuDeclension> {
+    public Russian(RuDeclension declension, Gender gender) {
+        this.declension = declension;
+        this.gender = gender;
+    }
+
+    public Russian() {
+        this(RuDeclension.NOMINATIVE, Gender.MALE);
+    }
+
+    /**
+     * If it is thousand group, then units should go in Female gender.
+     * Example in russian: <pre>
+     * 1000 = одн<b>a</b> тысяча
+     * 42000 = сорок дв<b>е</b> тысячи</pre>
+     */
     @Override
-    public Map<RuDeclension, String[]> maleDigits() {
-        return Map.of(
-                NOMINATIVE, new String[]{"ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"},
-                GENITIVE, new String[]{"ноля", "одного", "двух", "трёх", "четырёх", "пяти", "шести", "семи", "восьми", "девяти"},
-                DATIVE, new String[]{"нолю", "одному", "двум", "трём", "четырём", "пяти", "шести", "семи", "восьми", "девяти"},
-                ACCUSATIVE, new String[]{"ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"},
-                INSTRUMENTAL, new String[]{"нолём", "одним", "двумя", "тремя", "четырьмя", "пятью", "шестью", "семью", "восемью", "девятью"},
-                PREPOSITIONAL, new String[]{"ноле", "одном", "двух", "трёх", "четырёх", "пяти", "шести", "семи", "восьми", "девяти"}
-        );
+    public String unitNumber(int groupNum, int[] digits) {
+        if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) {
+            return "";
+        }
+        if (groupNum == 1) {
+            return RuDictionary.units(Gender.FEMALE).get(declension)[digits[0]];
+        } else if (groupNum == 0) {
+            return RuDictionary.units(gender).get(declension)[digits[0]];
+        }
+        return RuDictionary.units(Gender.MALE).get(declension)[digits[0]];
     }
 
     @Override
-    public Map<RuDeclension, String[]> femaleDigits() {
-        return sameAsMaleBut(Map.of(
-                NOMINATIVE, Map.of(1, "одна", 2, "две"),
-                GENITIVE, Map.of(1, "одной"),
-                DATIVE, Map.of(1, "одной"),
-                ACCUSATIVE, Map.of(1, "одну", 2, "две"),
-                INSTRUMENTAL, Map.of(1, "одной"),
-                PREPOSITIONAL, Map.of(1, "одной")
-        ));
+    public String tenToNineteen(int i) {
+        return RuDictionary.tenToNineteen.get(declension)[i];
     }
 
     @Override
-    public Map<RuDeclension, String[]> neutralDigits() {
-        return sameAsMaleBut(Map.of(
-                NOMINATIVE, Map.of(1, "одно"), ACCUSATIVE, Map.of(1, "одно")
-        ));
+    public String tens(int i) {
+        return RuDictionary.tens.get(declension)[i];
     }
 
     @Override
-    public Map<RuDeclension, String[]> tenToNineteen() {
-        return Map.of(
-                NOMINATIVE, new String[]{"десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать",
-                        "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"},
-                GENITIVE, new String[]{"десяти", "одиннадцати", "двенадцати", "тринадцати", "четырнадцати",
-                        "пятнадцати", "шестнадцати", "семнадцати", "восемнадцати", "девятнадцати"},
-                DATIVE, new String[]{"десяти", "одиннадцати", "двенадцати", "тринадцати", "четырнадцати",
-                        "пятнадцати", "шестнадцати", "семнадцати", "восемнадцати", "девятнадцати"},
-                ACCUSATIVE, new String[]{"десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать",
-                        "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"},
-                INSTRUMENTAL, new String[]{"десятью", "одиннадцатью", "двенадцатью", "тринадцатью", "четырнадцатью",
-                        "пятнадцатью", "шестнадцатью", "семнадцатью", "восемнадцатью", "девятнадцатью"},
-                PREPOSITIONAL, new String[]{"десяти", "одиннадцати", "двенадцати", "тринадцати", "четырнадцати",
-                        "пятнадцати", "шестнадцати", "семнадцати", "восемнадцати", "девятнадцати"}
-        );
+    public String hundreds(int i) {
+        return RuDictionary.hundreds.get(declension)[i];
     }
 
     @Override
-    public Map<RuDeclension, String[]> tens() {
-        return Map.of(
-                NOMINATIVE, new String[]{"", "", "двадцать", "тридцать", "сорок", "пятьдесят",
-                        "шестьдесят", "семьдесят", "восемьдесят", "девяносто"},
-                GENITIVE, new String[]{"", "", "двадцати", "тридцати", "сорока", "пятидесяти",
-                        "шестидесяти", "семидесяти", "восьмидесяти", "девяноста"},
-                DATIVE, new String[]{"", "", "двадцати", "тридцати", "сорока", "пятидесяти",
-                        "шестидесяти", "семидесяти", "восьмидесяти", "девяноста"},
-                ACCUSATIVE, new String[]{"", "", "двадцать", "тридцать", "сорок", "пятьдесят",
-                        "шестьдесят", "семьдесят", "восемьдесят", "девяносто"},
-                INSTRUMENTAL, new String[]{"", "", "двадцатью", "тридцатью", "сорока", "пятьюдесятью",
-                        "шестьюдесятью", "семьюдесятью", "восемьюдесятью", "девяноста"},
-                PREPOSITIONAL, new String[]{"", "", "двадцати", "тридцати", "сорока", "пятидесяти",
-                        "шестидесяти", "семидесяти", "восьмидесяти", "девяноста"}
-        );
+    public String thousands(int form) {
+        return RuDictionary.thousands.get(declension)[form];
     }
 
     @Override
-    public Map<RuDeclension, String[]> hundreds() {
-        return Map.of(
-                NOMINATIVE, new String[]{"", "сто", "двести", "триста", "четыреста", "пятьсот",
-                        "шестьсот", "семьсот", "восемьсот", "девятьсот"},
-                GENITIVE, new String[]{"", "ста", "двухсот", "трёхсот", "четырёхсот", "пятисот",
-                        "шестисот", "семисот", "восьмисот", "девятисот"},
-                DATIVE, new String[]{"", "ста", "двумстам", "трёмстам", "четырёмстам", "пятистам",
-                        "шестистам", "семистам", "восьмистам", "девятистам"},
-                ACCUSATIVE, new String[]{"", "сто", "двести", "триста", "четыреста", "пятьсот",
-                        "шестьсот", "семьсот", "восемьсот", "девятьсот"},
-                INSTRUMENTAL, new String[]{"", "ста", "двумястами", "тремястами", "четырьмястами", "пятьюстами",
-                        "шестьюстами", "семьюстами", "восемьюстами", "девятьюстами"},
-                PREPOSITIONAL, new String[]{"", "ста", "двухстах", "трёхстах", "четырёхстах", "пятистах",
-                        "шестистах", "семистах", "восьмистах", "девятистах"}
-        );
+    public String millions(int i) {
+        return RuDictionary.millions[i];
     }
 
     @Override
-    public Map<RuDeclension, String[]> thousands() {
-        return Map.of(
-                NOMINATIVE, new String[] {"тысяча", "тысячи", "тысяч"},
-                GENITIVE, new String[] {"тысячи", "тысяч", "тысяч"},
-                DATIVE, new String[] {"тысяче", "тысячам", "тысячам"},
-                ACCUSATIVE, new String[] {"тысячу", "тысячи", "тысяч"},
-                INSTRUMENTAL, new String[] {"тысячей", "тысячами", "тысячами"},
-                PREPOSITIONAL, new String[] {"тысяче", "тысячах", "тысячах"}
-        );
+    public String endings(int form) {
+        return RuDictionary.endings.get(declension)[form];
     }
 
-    @Override
-    public String[] millions() {
-        return new String[]{"миллион", "миллиард", "триллион", "квадриллион",
-                "квинтиллион", "секстиллион", "септиллион", "октиллион", "нониллион", "дециллион",
-        };
-    }
-
-    @Override
-    public Map<RuDeclension, String[]> endings() {
-        return Map.of(
-                NOMINATIVE, new String[] {"", "а", "ов"},
-                GENITIVE, new String[] {"а", "ов", "ов"},
-                DATIVE, new String[] {"у", "ам", "ам"},
-                ACCUSATIVE, new String[] {"", "а", "ов"},
-                INSTRUMENTAL, new String[] {"ом", "ами", "ами"},
-                PREPOSITIONAL, new String[] {"е", "ах", "ах"}
-        );
-    }
-
+    /**
+     * Russian language has 3 forms for thousands and millions.
+     * Example in russian:<pre>
+     * 1    тысяч<b>а</b>
+     * 2-4  тысяч<b>и</b>
+     * 5-20 тыся<b>ч</b></pre>
+     */
     @Override
     public int form(int[] numGroup) {
-        if (numGroup[1] == 1) { // единица в десятках, 110-119 тысяч.
+        if (numGroup[1] == 1) {
             return 2;
         }
         return switch (numGroup[0]) {
-            case 1 -> 0; // 1 тысяча
-            case 2, 3, 4 -> 1; // 2|3|4 тысячи
-            default -> 2; // 5|6|7|8|9 тысяч
+            case 1 -> 0;
+            case 2, 3, 4 -> 1;
+            default -> 2;
         };
     }
 }
