@@ -229,4 +229,19 @@ class NumbifyRussianTest {
         assertThat(ru.toText(1_000_001)).isEqualTo("одном миллионе одной");
     }
 
+    @Test
+    public void longValuesTest() {
+        Numbify ru = new NumbifyBuilder().russian().build();
+        assertThat(ru.toText(1234L)).isEqualTo("одна тысяча двести тридцать четыре");
+        assertThat(ru.toText(Long.MAX_VALUE))
+                .isEqualTo("девять квинтиллионов " +
+                        "двести двадцать три квадриллиона " +
+                        "триста семьдесят два триллиона " +
+                        "тридцать шесть миллиардов " +
+                        "восемьсот пятьдесят четыре миллиона " +
+                        "семьсот семьдесят пять тысяч " +
+                        "восемьсот семь"
+                );
+    }
+
 }

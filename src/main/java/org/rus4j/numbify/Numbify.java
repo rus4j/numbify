@@ -14,6 +14,10 @@ public class Numbify {
     }
 
     public String toText(Integer number) {
+        return toText(number.longValue());
+    }
+
+    public String toText(Long number) {
         int[] digits = toArray(number);
         int[][] groups = splitNumbersByGroups(digits);
 
@@ -46,11 +50,11 @@ public class Numbify {
                 .collect(Collectors.joining(" "));
     }
 
-    private int[] toArray(int number) {
+    private int[] toArray(long number) {
         int[] digits = new int[String.valueOf(number).length()];
         int i = 0;
         while (number > 0) {
-            digits[i++] = number % 10;
+            digits[i++] = (int) (number % 10);
             number = number / 10;
         }
         return digits;

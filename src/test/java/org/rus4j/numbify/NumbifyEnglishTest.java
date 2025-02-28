@@ -26,5 +26,15 @@ public class NumbifyEnglishTest {
         assertThat(en.toText(1_001)).isEqualTo("one thousand one");
         assertThat(en.toText(100_000)).isEqualTo("one hundred thousand");
         assertThat(en.toText(1_000_001)).isEqualTo("one million one");
+
+        assertThat(en.toText(Long.MAX_VALUE))
+                .isEqualTo("nine quintillion " +
+                        "two hundred twenty three quadrillion " +
+                        "three hundred seventy two trillion " +
+                        "thirty six billion " +
+                        "eight hundred fifty four million " +
+                        "seven hundred seventy five thousand " +
+                        "eight hundred seven"
+                );
     }
 }
