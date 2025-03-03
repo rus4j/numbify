@@ -5,6 +5,18 @@
 Numbify ia s Java library for transforming numbers into text with wide customization options.
 
 ## Usage
+Add dependency into your project:
+```xml
+<dependency>
+    <groupId>org.rus4j</groupId>
+    <artifactId>numbify</artifactId>
+    <verion>1.0.0</verion>
+</dependency>
+```
+```groovy
+implementation group: 'org.rus4j', name: 'numbify', version: '1.0.0'
+```
+Use NumbifyBuilder:
 ```java
 Numbify en = new NumbifyBuilder()
     .english().build();
