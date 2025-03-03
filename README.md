@@ -14,7 +14,7 @@ Add dependency into your project:
 </dependency>
 ```
 ```groovy
-implementation group: 'org.rus4j', name: 'numbify', version: '1.0.0'
+implementation 'org.rus4j:numbify:1.0.0'
 ```
 Use NumbifyBuilder:
 ```java
