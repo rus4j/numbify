@@ -1,0 +1,21 @@
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+    dependsOn(tasks.test)
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit { minimum = "0.9".toBigDecimal() }
+        }
+    }
+}

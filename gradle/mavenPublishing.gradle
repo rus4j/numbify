@@ -1,0 +1,52 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.30.0'
+    }
+}
+
+apply plugin: 'com.vanniktech.maven.publish'
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+    coordinates("org.rus4j", "numbify", "1.0.0")
+
+    pom {
+        name = "Numbify"
+        description = "Library for transforming numbers into text."
+        url = "https://github.com/rus4j/numbify"
+        inceptionYear = "2025"
+        organization {
+            name = "rus4j"
+            url = "https://rus4j.org"
+        }
+        licenses {
+            license {
+                name = "MIT"
+                url = "https://raw.githubusercontent.com/rus4j/numbify/master/LICENSE"
+                distribution = "site"
+            }
+        }
+        developers {
+            developer {
+                id = "rus4j"
+                name = "Ruslan Dibirov"
+                url = "https://rus4j.org/"
+                timezone = "+3"
+            }
+        }
+        issueManagement {
+            system = "GitHub"
+            url = "https://github.com/rus4j/numbify/issues"
+        }
+        scm {
+            url = "https://github.com/rus4j/numbify"
+            connection = "scm:git:git@github.com:rus4j/numbify.git"
+            developerConnection = "scm:git:git@github.com:rus4j/numbify.git"
+        }
+    }
+}
