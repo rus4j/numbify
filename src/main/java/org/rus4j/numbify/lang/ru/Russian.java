@@ -29,9 +29,8 @@ public class Russian implements Language {
 
     private static Gender currencyGender(Currency currency) {
         return switch (currency) {
-            case USD, RUB -> Gender.MALE;
+            case USD, RUB, NO_CURRENCY -> Gender.MALE;
             case EUR -> Gender.NEUTRAL;
-            case NO_CURRENCY -> null;
         };
     }
 

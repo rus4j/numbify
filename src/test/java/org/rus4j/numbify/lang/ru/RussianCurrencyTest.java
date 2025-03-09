@@ -206,4 +206,13 @@ public class RussianCurrencyTest {
         assertThat(ru.toText(3)).isEqualTo("трёх евро");
         assertThat(ru.toText(100)).isEqualTo("ста евро");
     }
+
+    @Test
+    public void noCurrencyTest() {
+        Numbify ru = new NumbifyBuilder()
+                .russian(RuDeclension.NOMINATIVE, Currency.NO_CURRENCY)
+                .build();
+
+        assertThat(ru.toText(1234)).isEqualTo("одна тысяча двести тридцать четыре");
+    }
 }
