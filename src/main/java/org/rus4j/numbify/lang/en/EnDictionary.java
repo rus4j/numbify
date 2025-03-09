@@ -20,6 +20,4 @@ public class EnDictionary {
     final String[] millions = new String[]{"million", "billion", "trillion", "quadrillion",
                 "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion",
     };
-
-    final String[] endings = new String[]{""};
 }
