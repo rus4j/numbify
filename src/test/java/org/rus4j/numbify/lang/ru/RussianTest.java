@@ -1,11 +1,13 @@
-package org.rus4j.numbify;
+package org.rus4j.numbify.lang.ru;
 
 import org.junit.jupiter.api.Test;
-import org.rus4j.numbify.lang.ru.RuDeclension;
+import org.rus4j.numbify.Gender;
+import org.rus4j.numbify.Numbify;
+import org.rus4j.numbify.NumbifyBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NumbifyRussianTest {
+class RussianTest {
 
     @Test
     public void testNominativeMale() {

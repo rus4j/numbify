@@ -1,10 +1,12 @@
-package org.rus4j.numbify;
+package org.rus4j.numbify.lang.en;
 
 import org.junit.jupiter.api.Test;
+import org.rus4j.numbify.Numbify;
+import org.rus4j.numbify.NumbifyBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NumbifyEnglishTest {
+public class EnglishTest {
 
     @Test
     public void test() {

@@ -9,8 +9,8 @@ public class Numbify {
 
     private final Language lang;
 
-    public Numbify(Language language) {
-        this.lang = language;
+    public Numbify(Language lang) {
+        this.lang = lang;
     }
 
     public String toText(Integer number) {
@@ -25,14 +25,13 @@ public class Numbify {
         for (int i = groups.length - 1; i >= 0; i--) {
             if (groups[i][0] == 0 && groups[i][1] == 0 && groups[i][2] == 0 && groups.length > 1) continue;
             result.add(groupToText(groups[i], i));
-            int form = lang.form(groups[i]);
             if (i == 1) {
-                result.add(lang.thousands(form));
+                result.add(lang.thousands(groups[i]));
             } else if (i > 1) {
-                result.add(lang.millions(i - 2) + lang.endings(form));
+                result.add(lang.largeNumbers(i - 2) + lang.endings(groups[i]));
             }
         }
-        return result.toString();
+        return result.add(lang.intCurrency(groups[0])).toString().trim();
     }
 
     private String groupToText(int[] digits, int groupNum) {
