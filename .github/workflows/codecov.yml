@@ -1,8 +1,9 @@
 name: codecov
 'on':
-  push:
+  pull_request:
     branches:
       - master
+    paths: ['**.java', '**.gradle']
 jobs:
   codecov:
     timeout-minutes: 15
