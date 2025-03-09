@@ -1,25 +1,42 @@
 package org.rus4j.numbify.lang.ru;
 
+import org.rus4j.numbify.Currency;
 import org.rus4j.numbify.Gender;
 import org.rus4j.numbify.Language;
 
 public class Russian implements Language {
     private final RuDictionary dict;
+    private final RuCurrencyDictionary currencyDict;
     private final RuDeclension declension;
     private final Gender gender;
+    private final Currency currency;
 
-    public Russian(RuDeclension declension, Gender gender) {
+    public Russian(RuDeclension declension, Gender gender, Currency currency) {
         this.dict = new RuDictionary();
+        this.currencyDict = new RuCurrencyDictionary();
         this.declension = declension;
         this.gender = gender;
+        this.currency = currency;
+    }
+
+    public Russian(RuDeclension declension, Currency currency) {
+        this(declension, currencyGender(currency), currency);
     }
 
     public Russian() {
-        this(RuDeclension.NOMINATIVE, Gender.MALE);
+        this(RuDeclension.NOMINATIVE, Gender.MALE, Currency.NO_CURRENCY);
+    }
+
+    private static Gender currencyGender(Currency currency) {
+        return switch (currency) {
+            case USD, RUB -> Gender.MALE;
+            case EUR -> Gender.NEUTRAL;
+            case NO_CURRENCY -> null;
+        };
     }
 
     /**
-     * If it is thousand group, then units should go in Female gender.
+     * If it is a thousand group, then units should go in Female gender.
      * Example in russian: <pre>
      * 1000 = одн<b>a</b> тысяча
      * 42000 = сорок дв<b>е</b> тысячи</pre>
@@ -53,18 +70,32 @@ public class Russian implements Language {
     }
 
     @Override
-    public String thousands(int form) {
-        return dict.thousands.get(declension)[form];
+    public String thousands(int[] numGroup) {
+        return dict.thousands.get(declension)[form(numGroup)];
     }
 
     @Override
-    public String millions(int i) {
+    public String largeNumbers(int i) {
         return dict.millions[i];
     }
 
     @Override
-    public String endings(int form) {
-        return dict.endings.get(declension)[form];
+    public String intCurrency(int[] numGroup) {
+        return currencyDict.currency(currency, declension, form(numGroup));
+    }
+
+    @Override
+    public String decimalCurrency(int[] digits) {
+        return currencyDict.decimalCurrency(currency, declension, form(digits));
+    }
+
+    /**
+     * In russian there are 3 forms on endings for the word 'million'.
+     * See {@link Russian#form(int[])}
+     */
+    @Override
+    public String endings(int[] numGroup) {
+        return dict.endings.get(declension)[form(numGroup)];
     }
 
     /**
@@ -74,7 +105,6 @@ public class Russian implements Language {
      * 2-4  тысяч<b>и</b>
      * 5-20 тыся<b>ч</b></pre>
      */
-    @Override
     public int form(int[] numGroup) {
         if (numGroup[1] == 1) {
             return 2;

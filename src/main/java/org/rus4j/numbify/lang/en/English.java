@@ -1,12 +1,17 @@
 package org.rus4j.numbify.lang.en;
 
+import org.rus4j.numbify.Currency;
 import org.rus4j.numbify.Language;
 
 public class English implements Language {
     private final EnDictionary dict;
+    private final EnCurrencyDictionary currencyDict;
+    private final Currency currency;
 
-    public English() {
+    public English(Currency currency) {
+        this.currency = currency;
         this.dict = new EnDictionary();
+        this.currencyDict = new EnCurrencyDictionary();
     }
 
     @Override
@@ -31,26 +36,32 @@ public class English implements Language {
     }
 
     @Override
-    public String thousands(int form) {
-        return dict.thousand[form];
+    public String thousands(int[] numGroup) {
+        return dict.thousand;
     }
 
     @Override
-    public String millions(int i) {
+    public String largeNumbers(int i) {
         return dict.millions[i];
     }
 
     @Override
-    public String endings(int form) {
-        return dict.endings[form];
+    public String intCurrency(int[] numGroup) {
+        boolean plural = numGroup[0] > 1 || numGroup[1] > 0 || numGroup[2] > 0;
+        return currencyDict.currency(currency, plural);
+    }
+
+    @Override
+    public String decimalCurrency(int[] numGroup) {
+        boolean plural = numGroup[0] > 1 || numGroup[1] > 0 || numGroup[2] > 0;
+        return currencyDict.decimalCurrency(currency, plural);
     }
 
     /**
-     * There is only 1 form in English.
-     * No difference between 1 thousand/million and 5 thousand/million.
+     * In english there is no additional endings for the word 'million'.
      */
     @Override
-    public int form(int[] numGroup) {
-        return 0;
+    public String endings(int[] numGroup) {
+        return "";
     }
 }

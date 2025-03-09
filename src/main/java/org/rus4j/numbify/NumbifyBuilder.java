@@ -8,7 +8,12 @@ public class NumbifyBuilder {
     private Language language;
 
     public NumbifyBuilder english() {
-        this.language = new English();
+        this.language = new English(Currency.NO_CURRENCY);
+        return this;
+    }
+
+    public NumbifyBuilder english(Currency currency) {
+        this.language = new English(currency);
         return this;
     }
 
@@ -18,7 +23,12 @@ public class NumbifyBuilder {
     }
 
     public NumbifyBuilder russian(RuDeclension declension, Gender gender) {
-        this.language = new Russian(declension, gender);
+        this.language = new Russian(declension, gender, Currency.NO_CURRENCY);
+        return this;
+    }
+
+    public NumbifyBuilder russian(RuDeclension declension, Currency currency) {
+        this.language = new Russian(declension, currency);
         return this;
     }
 
