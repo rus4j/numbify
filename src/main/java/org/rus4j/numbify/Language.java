@@ -71,4 +71,6 @@ public interface Language {
      * @return currency text for decimal part of the number.
      */
     String decimalCurrency(int[] digits);
+
+    boolean hasSpecificCurrency();
 }

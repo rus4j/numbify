@@ -64,4 +64,9 @@ public class English implements Language {
     public String endings(int[] numGroup) {
         return "";
     }
+
+    @Override
+    public boolean hasSpecificCurrency() {
+        return !currency.equals(Currency.NUMBER);
+    }
 }

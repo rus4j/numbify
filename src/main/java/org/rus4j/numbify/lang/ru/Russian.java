@@ -103,6 +103,11 @@ public class Russian implements Language {
         return currencyDict.decimalCurrency(currency, declension, form(digits));
     }
 
+    @Override
+    public boolean hasSpecificCurrency() {
+        return !currency.equals(Currency.NUMBER);
+    }
+
     /**
      * In russian there are 3 forms on endings for the word 'million'.
      * See {@link Russian#form(int[])}
