@@ -12,7 +12,7 @@ public interface Language {
      * @param digits group of digits in current group. Arrays of length 3. The number 123 is represented as [3,2,1].
      * @return text representation of digits[0] number.
      */
-    String unitNumber(int groupNum, int[] digits);
+    String unitNumber(int groupNum, int[] digits, boolean decimalPart);
 
     /**
      * Transforms number from 10 to 19 to text.

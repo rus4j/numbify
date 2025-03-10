@@ -15,7 +15,7 @@ public class English implements Language {
     }
 
     @Override
-    public String unitNumber(int groupNum, int[] digits) {
+    public String unitNumber(int groupNum, int[] digits, boolean decimalPart) {
         if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) return "";
         return dict.units[digits[0]];
     }

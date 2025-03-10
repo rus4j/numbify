@@ -210,7 +210,7 @@ public class RussianCurrencyTest {
     @Test
     public void noCurrencyTest() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.NOMINATIVE, Currency.NO_CURRENCY)
+                .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
                 .build();
 
         assertThat(ru.toText(1234)).isEqualTo("одна тысяча двести тридцать четыре");

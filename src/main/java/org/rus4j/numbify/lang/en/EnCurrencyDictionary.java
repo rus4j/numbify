@@ -10,7 +10,7 @@ public class EnCurrencyDictionary {
             case RUB -> ruble[form];
             case USD -> usd[form];
             case EUR -> euro[form];
-            case NO_CURRENCY -> "";
+            case NUMBER -> "";
         };
     }
 
@@ -19,7 +19,7 @@ public class EnCurrencyDictionary {
         return switch (currency) {
             case RUB -> decimalRub[form];
             case USD, EUR -> cent[form];
-            case NO_CURRENCY -> "";
+            case NUMBER -> "";
         };
     }
 

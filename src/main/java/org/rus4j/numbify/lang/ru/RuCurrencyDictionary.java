@@ -18,7 +18,7 @@ public class RuCurrencyDictionary {
             case RUB -> ruble.get(declension)[form];
             case USD -> usd.get(declension)[form];
             case EUR -> euro.get(declension)[form];
-            case NO_CURRENCY -> "";
+            case NUMBER -> number.get(declension)[form];
         };
     }
 
@@ -26,7 +26,7 @@ public class RuCurrencyDictionary {
         return switch (currency) {
             case RUB -> decimalRub.get(declension)[form];
             case USD, EUR -> cent.get(declension)[form];
-            case NO_CURRENCY -> "";
+            case NUMBER -> decimal.get(declension)[form];
         };
     }
 
@@ -57,6 +57,15 @@ public class RuCurrencyDictionary {
             PREPOSITIONAL, new String[]{"евро", "евро", "евро"}
     );
 
+    final Map<RuDeclension, String[]> number = Map.of(
+            NOMINATIVE, new String[]{"целая", "целых", "целых"},
+            GENITIVE, new String[]{"целой", "целых", "целых"},
+            DATIVE, new String[]{"целой", "целым", "целым"},
+            ACCUSATIVE, new String[]{"целую", "целых", "целых"},
+            INSTRUMENTAL, new String[]{"целой", "целыми", "целыми"},
+            PREPOSITIONAL, new String[]{"целой", "целых", "целых"}
+    );
+
     final Map<RuDeclension, String[]> decimalRub = Map.of(
             NOMINATIVE, new String[]{"копейка", "копейки", "копеек"},
             GENITIVE, new String[]{"копейки", "копеек", "копеек"},
@@ -73,5 +82,14 @@ public class RuCurrencyDictionary {
             ACCUSATIVE, new String[]{"цент", "цента", "центов"},
             INSTRUMENTAL, new String[]{"центом", "центами", "центами"},
             PREPOSITIONAL, new String[]{"центе", "центах", "центах"}
+    );
+
+    final Map<RuDeclension, String[]> decimal = Map.of(
+            NOMINATIVE, new String[]{"десятая", "десятых", "десятых"},
+            GENITIVE, new String[]{"десятой", "десятых", "десятых"},
+            DATIVE, new String[]{"десятой", "десятым", "десятым"},
+            ACCUSATIVE, new String[]{"десятую", "десятых", "десятых"},
+            INSTRUMENTAL, new String[]{"десятой", "десятыми", "десятыми"},
+            PREPOSITIONAL, new String[]{"десятой", "десятых", "десятых"}
     );
 }

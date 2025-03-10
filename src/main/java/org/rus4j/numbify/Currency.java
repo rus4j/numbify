@@ -4,5 +4,5 @@ public enum Currency {
     USD,
     RUB,
     EUR,
-    NO_CURRENCY
+    NUMBER
 }

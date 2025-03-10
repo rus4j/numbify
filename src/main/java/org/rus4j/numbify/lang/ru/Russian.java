@@ -8,14 +8,22 @@ public class Russian implements Language {
     private final RuDictionary dict;
     private final RuCurrencyDictionary currencyDict;
     private final RuDeclension declension;
-    private final Gender gender;
+    private final Gender[] genders;
     private final Currency currency;
+
+    public Russian(RuDeclension declension, Gender[] genders, Currency currency) {
+        this.dict = new RuDictionary();
+        this.currencyDict = new RuCurrencyDictionary();
+        this.declension = declension;
+        this.genders = genders;
+        this.currency = currency;
+    }
 
     public Russian(RuDeclension declension, Gender gender, Currency currency) {
         this.dict = new RuDictionary();
         this.currencyDict = new RuCurrencyDictionary();
         this.declension = declension;
-        this.gender = gender;
+        this.genders = new Gender[] {gender, gender};
         this.currency = currency;
     }
 
@@ -24,13 +32,19 @@ public class Russian implements Language {
     }
 
     public Russian() {
-        this(RuDeclension.NOMINATIVE, Gender.MALE, Currency.NO_CURRENCY);
+        this(RuDeclension.NOMINATIVE, Gender.MALE, Currency.NUMBER);
     }
 
-    private static Gender currencyGender(Currency currency) {
+    /**
+     * Returns Gender array where gender[0] - is gender for integer part of the currency
+     * and gender[1] - is gender for decimal part of the currency
+     */
+    private static Gender[] currencyGender(Currency currency) {
         return switch (currency) {
-            case USD, RUB, NO_CURRENCY -> Gender.MALE;
-            case EUR -> Gender.NEUTRAL;
+            case RUB -> new Gender[] {Gender.MALE, Gender.FEMALE};
+            case USD -> new Gender[] {Gender.MALE, Gender.MALE};
+            case EUR -> new Gender[] {Gender.NEUTRAL, Gender.MALE};
+            case NUMBER -> new Gender[] {Gender.FEMALE, Gender.FEMALE};
         };
     }
 
@@ -41,14 +55,15 @@ public class Russian implements Language {
      * 42000 = сорок дв<b>е</b> тысячи</pre>
      */
     @Override
-    public String unitNumber(int groupNum, int[] digits) {
+    public String unitNumber(int groupNum, int[] digits, boolean decimalPart) {
         if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) {
             return "";
         }
+        int currencyGender = decimalPart ? 1 : 0;
         if (groupNum == 1) {
             return dict.units(Gender.FEMALE).get(declension)[digits[0]];
         } else if (groupNum == 0) {
-            return dict.units(gender).get(declension)[digits[0]];
+            return dict.units(genders[currencyGender]).get(declension)[digits[0]];
         }
         return dict.units(Gender.MALE).get(declension)[digits[0]];
     }
