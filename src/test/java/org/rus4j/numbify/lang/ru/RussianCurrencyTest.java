@@ -37,7 +37,7 @@ public class RussianCurrencyTest {
                 .russian(RuDeclension.NOMINATIVE, Currency.EUR)
                 .build();
 
-        assertThat(ru.toText(1)).isEqualTo("одно евро");
+        assertThat(ru.toText(1)).isEqualTo("один евро");
         assertThat(ru.toText(3)).isEqualTo("три евро");
         assertThat(ru.toText(100)).isEqualTo("сто евро");
     }
@@ -103,7 +103,7 @@ public class RussianCurrencyTest {
                 .russian(RuDeclension.ACCUSATIVE, Currency.EUR)
                 .build();
 
-        assertThat(ru.toText(1)).isEqualTo("одно евро");
+        assertThat(ru.toText(1)).isEqualTo("один евро");
         assertThat(ru.toText(3)).isEqualTo("три евро");
         assertThat(ru.toText(100)).isEqualTo("сто евро");
     }
@@ -213,6 +213,6 @@ public class RussianCurrencyTest {
                 .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
                 .build();
 
-        assertThat(ru.toText(1234)).isEqualTo("одна тысяча двести тридцать четыре");
+        assertThat(ru.toText(1234)).isEqualTo("одна тысяча двести тридцать четыре целых");
     }
 }

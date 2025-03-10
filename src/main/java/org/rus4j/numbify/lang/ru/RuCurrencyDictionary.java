@@ -22,11 +22,11 @@ public class RuCurrencyDictionary {
         };
     }
 
-    final String decimalCurrency(Currency currency, RuDeclension declension, int form) {
+    final String decimalCurrency(Currency currency, RuDeclension declension, int decimalLength, int form) {
         return switch (currency) {
             case RUB -> decimalRub.get(declension)[form];
             case USD, EUR -> cent.get(declension)[form];
-            case NUMBER -> decimal.get(declension)[form];
+            case NUMBER -> decimal[decimalLength] + decimalEndings.get(declension)[form];
         };
     }
 
@@ -84,12 +84,17 @@ public class RuCurrencyDictionary {
             PREPOSITIONAL, new String[]{"центе", "центах", "центах"}
     );
 
-    final Map<RuDeclension, String[]> decimal = Map.of(
-            NOMINATIVE, new String[]{"десятая", "десятых", "десятых"},
-            GENITIVE, new String[]{"десятой", "десятых", "десятых"},
-            DATIVE, new String[]{"десятой", "десятым", "десятым"},
-            ACCUSATIVE, new String[]{"десятую", "десятых", "десятых"},
-            INSTRUMENTAL, new String[]{"десятой", "десятыми", "десятыми"},
-            PREPOSITIONAL, new String[]{"десятой", "десятых", "десятых"}
+    final String[] decimal = new String[]{"", "десят", "сот", "тысячн", "десятитысячн", "стотысячн", "миллионн",
+            "десятимиллионн", "стомиллионн", "миллиардн", "десятимиллиардн", "стомиллиардн", "триллионн",
+            "десятитриллионн", "стотриллионн", "квадриллионн"
+    };
+
+    final Map<RuDeclension, String[]> decimalEndings = Map.of(
+            NOMINATIVE, new String[]{"ая", "ых", "ых"},
+            GENITIVE, new String[]{"ой", "ых", "ых"},
+            DATIVE, new String[]{"ой", "ым", "ым"},
+            ACCUSATIVE, new String[]{"ую", "ых", "ых"},
+            INSTRUMENTAL, new String[]{"ой", "ми", "ми"},
+            PREPOSITIONAL, new String[]{"ой", "ых", "ых"}
     );
 }

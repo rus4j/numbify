@@ -52,7 +52,7 @@ public class English implements Language {
     }
 
     @Override
-    public String decimalCurrency(int[] numGroup) {
+    public String decimalCurrency(int[] numGroup, int decimalLength) {
         boolean plural = numGroup[0] > 1 || numGroup[1] > 0 || numGroup[2] > 0;
         return currencyDict.decimalCurrency(currency, plural);
     }

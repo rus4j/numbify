@@ -81,21 +81,6 @@ public class Numbify {
         return digits;
     }
 
-    private int[] toDecimalPartArray(Double number) {
-        int[] digits = new int[String.valueOf(number).length()];
-        int i = 0;
-        double integerPart = Math.floor(number);
-        double decimalPart = number - integerPart;
-
-        while (decimalPart > 0) {
-            decimalPart *= 10;
-            digits[i] = (int) decimalPart;
-            decimalPart -= digits[i++];
-        }
-
-        return digits;
-    }
-
     private int[][] splitNumbersByGroups(int[] numbers) {
         int[][] digitsByGroup = new int[(int) Math.ceil(numbers.length / 3.0)][3];
         int group = 0;

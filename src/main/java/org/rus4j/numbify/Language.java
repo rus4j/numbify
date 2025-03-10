@@ -38,7 +38,7 @@ public interface Language {
     /**
      * Languages could have different endings for the word 'million'
      * depending on number they refer to.
-     * @param digits group of digits the words refer to.
+     * @param digits group of last 3 digits the words refer to.
      * @return ending.
      */
     String endings(int[] digits);
@@ -46,7 +46,7 @@ public interface Language {
     /**
      * Languages could have different forms of the word 'thousand'
      * depending on number they refer to.
-     * @param digits group of digits the word refer to.
+     * @param digits group of last 3 digits the word refer to.
      * @return right form of the word 'thousand'.
      */
     String thousands(int[] digits);
@@ -60,17 +60,18 @@ public interface Language {
 
     /**
      * Transforms integer part of currency to text.
-     * @param digits group of digits the currency refer to.
+     * @param digits group of last 3 digits the currency refer to.
      * @return currency text for integer part of the number.
      */
     String intCurrency(int[] digits);
 
     /**
      * Transforms decimal part of currency to text.
-     * @param digits group of digits the currency refer to.
+     * @param digits group of last 3 digits the currency refer to.
+     * @param decimalLength length of decimal part
      * @return currency text for decimal part of the number.
      */
-    String decimalCurrency(int[] digits);
+    String decimalCurrency(int[] digits, int decimalLength);
 
     boolean hasSpecificCurrency();
 }

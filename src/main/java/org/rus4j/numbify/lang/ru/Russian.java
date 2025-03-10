@@ -32,7 +32,7 @@ public class Russian implements Language {
     }
 
     public Russian() {
-        this(RuDeclension.NOMINATIVE, Gender.MALE, Currency.NUMBER);
+        this(RuDeclension.NOMINATIVE, currencyGender(Currency.NUMBER), Currency.NUMBER);
     }
 
     /**
@@ -98,8 +98,8 @@ public class Russian implements Language {
     }
 
     @Override
-    public String decimalCurrency(int[] digits) {
-        return currencyDict.decimalCurrency(currency, declension, form(digits));
+    public String decimalCurrency(int[] digits, int decimalLength) {
+        return currencyDict.decimalCurrency(currency, declension, decimalLength, form(digits));
     }
 
     @Override
