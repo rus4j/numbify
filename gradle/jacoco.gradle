@@ -7,11 +7,12 @@ jacoco {
         reports {
             xml.required = true
         }
+        finalizedBy(jacocoTestCoverageVerification)
     }
     jacocoTestCoverageVerification {
         violationRules {
             rule {
-                limit { minimum = "0.9".toBigDecimal() }
+                limit { minimum = 0.9 }
             }
         }
     }

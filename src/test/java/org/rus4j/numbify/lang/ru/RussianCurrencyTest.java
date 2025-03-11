@@ -13,6 +13,7 @@ public class RussianCurrencyTest {
     public void rubNominativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.RUB)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("один рубль");
@@ -24,6 +25,7 @@ public class RussianCurrencyTest {
     public void usdNominativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.USD)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("один доллар");
@@ -35,6 +37,7 @@ public class RussianCurrencyTest {
     public void eurNominativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.EUR)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("один евро");
@@ -46,6 +49,7 @@ public class RussianCurrencyTest {
     public void rubGenitiveTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.GENITIVE, Currency.RUB)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одного рубля");
@@ -57,6 +61,7 @@ public class RussianCurrencyTest {
     public void usdGenitiveTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.GENITIVE, Currency.USD)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одного доллара");
@@ -68,6 +73,7 @@ public class RussianCurrencyTest {
     public void eurGenitiveTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.GENITIVE, Currency.EUR)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одного евро");
@@ -79,6 +85,7 @@ public class RussianCurrencyTest {
     public void rubAccusativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.ACCUSATIVE, Currency.RUB)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("один рубль");
@@ -90,6 +97,7 @@ public class RussianCurrencyTest {
     public void usdAccusativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.ACCUSATIVE, Currency.USD)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("один доллар");
@@ -101,6 +109,7 @@ public class RussianCurrencyTest {
     public void eurAccusativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.ACCUSATIVE, Currency.EUR)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("один евро");
@@ -112,6 +121,7 @@ public class RussianCurrencyTest {
     public void rubDativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.DATIVE, Currency.RUB)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одному рублю");
@@ -123,6 +133,7 @@ public class RussianCurrencyTest {
     public void usdDativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.DATIVE, Currency.USD)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одному доллару");
@@ -134,6 +145,7 @@ public class RussianCurrencyTest {
     public void eurDativeTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.DATIVE, Currency.EUR)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одному евро");
@@ -145,6 +157,7 @@ public class RussianCurrencyTest {
     public void rubInstrumentalTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.INSTRUMENTAL, Currency.RUB)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одним рублём");
@@ -156,6 +169,7 @@ public class RussianCurrencyTest {
     public void usdInstrumentalTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.INSTRUMENTAL, Currency.USD)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одним долларом");
@@ -167,6 +181,7 @@ public class RussianCurrencyTest {
     public void eurInstrumentalTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.INSTRUMENTAL, Currency.EUR)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одним евро");
@@ -178,6 +193,7 @@ public class RussianCurrencyTest {
     public void rubPrepositionalTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.PREPOSITIONAL, Currency.RUB)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одном рубле");
@@ -189,6 +205,7 @@ public class RussianCurrencyTest {
     public void usdPrepositionalTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.PREPOSITIONAL, Currency.USD)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одном долларе");
@@ -200,6 +217,7 @@ public class RussianCurrencyTest {
     public void eurPrepositionalTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.PREPOSITIONAL, Currency.EUR)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1)).isEqualTo("одном евро");
@@ -208,9 +226,10 @@ public class RussianCurrencyTest {
     }
 
     @Test
-    public void noCurrencyTest() {
+    public void numberTest() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(ru.toText(1234)).isEqualTo("одна тысяча двести тридцать четыре целых");

@@ -14,12 +14,12 @@ public class EnCurrencyDictionary {
         };
     }
 
-    final String decimalCurrency(Currency currency, boolean pluralForm) {
+    final String decimalCurrency(Currency currency, boolean pluralForm, int decimalLength) {
         int form = pluralForm ? 1 : 0;
         return switch (currency) {
             case RUB -> decimalRub[form];
             case USD, EUR -> cent[form];
-            case NUMBER -> "";
+            case NUMBER -> decimals[decimalLength];
         };
     }
 
@@ -29,4 +29,8 @@ public class EnCurrencyDictionary {
 
     final String[] decimalRub = new String[]{"kopeck", "kopecks"};
     final String[] cent = new String[]{"cent", "cents"};
+
+    final String[] decimals = new String[]{"", "tenths", "hundredths", "thousandths", "ten thousandths",
+            "hundred thousandths", "millionth", "ten millionth", "hundred millionth", "billionth", "ten billionth",
+            "hundred billionth", "trillionth", "ten trillionth", "hundred trillionth", "quadrillionth"};
 }

@@ -1,5 +1,6 @@
 package org.rus4j.numbify;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -8,27 +9,35 @@ import java.util.stream.Stream;
 public class Numbify {
 
     private final Language lang;
+    private final boolean showIntegerCurrency;
+    private final boolean showDecimalCurrency;
 
-    public Numbify(Language lang) {
+    public Numbify(Language lang, boolean showIntegerCurrency, boolean showDecimalCurrency) {
         this.lang = lang;
+        this.showIntegerCurrency = showIntegerCurrency;
+        this.showDecimalCurrency = showDecimalCurrency;
     }
 
     public String toText(Double number) {
-        String integerText = toText(number.longValue());
 
         String strNumber;
         if (lang.hasSpecificCurrency()) {
             // if currency is specified, then force rounding to 2 decimal point
             strNumber = String.format("%.2f", number);
         } else {
-            strNumber = String.valueOf(number);
+            strNumber = BigDecimal.valueOf(number).stripTrailingZeros().toPlainString();
         }
 
-        long decimalPart = Long.parseLong(strNumber.split("\\.")[1]);
+        String strDecimal = strNumber.split("\\.")[1];
+        long decimalPart = Long.parseLong(strDecimal);
         int[][] groups = splitNumbersByGroups(toArray(decimalPart));
         String decimalText = toText(groups, true);
 
-        return integerText + " " + decimalText + " " + lang.decimalCurrency(groups[0]);
+        StringJoiner result = new StringJoiner(" ")
+                .add(toText(number.longValue()))
+                .add(decimalText);
+        if (showDecimalCurrency) result.add(lang.decimalCurrency(groups[0], strDecimal.length()));
+        return result.toString();
     }
 
     public String toText(Integer number) {
@@ -38,8 +47,10 @@ public class Numbify {
     public String toText(Long number) {
         int[][] groups = splitNumbersByGroups(toArray(number));
         String text = toText(groups, false);
-        StringJoiner result = new StringJoiner(" ");
-        return result.add(text).add(lang.intCurrency(groups[0])).toString().trim();
+        StringJoiner result = new StringJoiner(" ")
+                .add(text);
+        if (showIntegerCurrency) result.add(lang.intCurrency(groups[0]));
+        return result.toString().trim();
     }
 
     private String toText(int[][] groups, boolean decimalPart) {

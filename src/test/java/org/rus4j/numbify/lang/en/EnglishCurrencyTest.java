@@ -13,6 +13,7 @@ public class EnglishCurrencyTest {
     public void rubCurrencyTest() {
         Numbify en = new NumbifyBuilder()
                 .english(Currency.RUB)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(en.toText(100)).isEqualTo("one hundred rubles");
@@ -24,6 +25,7 @@ public class EnglishCurrencyTest {
     public void usdCurrencyTest() {
         Numbify en = new NumbifyBuilder()
                 .english(Currency.USD)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(en.toText(100)).isEqualTo("one hundred dollars");
@@ -35,6 +37,7 @@ public class EnglishCurrencyTest {
     public void eurCurrencyTest() {
         Numbify en = new NumbifyBuilder()
                 .english(Currency.EUR)
+                .showIntegerCurrency(true)
                 .build();
 
         assertThat(en.toText(100)).isEqualTo("one hundred euros");

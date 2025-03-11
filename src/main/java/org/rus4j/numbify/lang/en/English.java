@@ -47,14 +47,14 @@ public class English implements Language {
 
     @Override
     public String intCurrency(int[] numGroup) {
-        boolean plural = numGroup[0] > 1 || numGroup[1] > 0 || numGroup[2] > 0;
+        boolean plural = numGroup[0] != 1;
         return currencyDict.currency(currency, plural);
     }
 
     @Override
     public String decimalCurrency(int[] numGroup, int decimalLength) {
-        boolean plural = numGroup[0] > 1 || numGroup[1] > 0 || numGroup[2] > 0;
-        return currencyDict.decimalCurrency(currency, plural);
+        boolean plural = numGroup[0] != 1;
+        return currencyDict.decimalCurrency(currency, plural, decimalLength);
     }
 
     /**

@@ -13,6 +13,8 @@ public class RussianCurrencyDecimalTest {
     public void rubNominativeDecimal() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.RUB)
+                .showIntegerCurrency(true)
+                .showDecimalCurrency(true)
                 .build();
 
         assertThat(ru.toText(0.01)).isEqualTo("ноль рублей одна копейка");
@@ -27,6 +29,8 @@ public class RussianCurrencyDecimalTest {
     public void usdNominativeDecimal() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.USD)
+                .showIntegerCurrency(true)
+                .showDecimalCurrency(true)
                 .build();
 
         assertThat(ru.toText(0.01)).isEqualTo("ноль долларов один цент");
@@ -41,6 +45,8 @@ public class RussianCurrencyDecimalTest {
     public void eurNominativeDecimal() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.EUR)
+                .showIntegerCurrency(true)
+                .showDecimalCurrency(true)
                 .build();
 
         assertThat(ru.toText(0.01)).isEqualTo("ноль евро один цент");
@@ -49,5 +55,24 @@ public class RussianCurrencyDecimalTest {
         assertThat(ru.toText(0.1)).isEqualTo("ноль евро десять центов");
         assertThat(ru.toText(0.10)).isEqualTo("ноль евро десять центов");
         assertThat(ru.toText(0.001)).isEqualTo("ноль евро ноль центов");
+    }
+
+    @Test
+    public void numberNominativeDecimal() {
+        Numbify ru = new NumbifyBuilder()
+                .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
+                .showIntegerCurrency(true)
+                .showDecimalCurrency(true)
+                .build();
+
+        assertThat(ru.toText(0.01)).isEqualTo("ноль целых одна сотая");
+        assertThat(ru.toText(0.02)).isEqualTo("ноль целых две сотых");
+        assertThat(ru.toText(0.05)).isEqualTo("ноль целых пять сотых");
+        assertThat(ru.toText(0.1)).isEqualTo("ноль целых одна десятая");
+        assertThat(ru.toText(0.10)).isEqualTo("ноль целых одна десятая");
+        assertThat(ru.toText(0.001)).isEqualTo("ноль целых одна тысячная");
+        assertThat(ru.toText(0.0001)).isEqualTo("ноль целых одна десятитысячная");
+        assertThat(ru.toText(0.00001)).isEqualTo("ноль целых одна стотысячная");
+        assertThat(ru.toText(0.000001)).isEqualTo("ноль целых одна миллионная");
     }
 }

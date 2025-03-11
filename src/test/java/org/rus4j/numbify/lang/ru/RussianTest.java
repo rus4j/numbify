@@ -1,6 +1,7 @@
 package org.rus4j.numbify.lang.ru;
 
 import org.junit.jupiter.api.Test;
+import org.rus4j.numbify.Currency;
 import org.rus4j.numbify.Gender;
 import org.rus4j.numbify.Numbify;
 import org.rus4j.numbify.NumbifyBuilder;
@@ -10,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RussianTest {
 
     @Test
-    public void testNominativeMale() {
+    public void testNominativeRub() {
         Numbify ru = new NumbifyBuilder().russian().build();
         assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
@@ -32,9 +33,9 @@ class RussianTest {
     }
 
     @Test
-    public void testNominativeFemale() {
+    public void testNominativeNumber() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.NOMINATIVE, Gender.FEMALE)
+                .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одна");
         assertThat(ru.toText(2)).isEqualTo("две");
@@ -46,20 +47,9 @@ class RussianTest {
     }
 
     @Test
-    public void testNominativeNeutral() {
+    public void testGenitiveRub() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.NOMINATIVE, Gender.NEUTRAL)
-                .build();
-        assertThat(ru.toText(1)).isEqualTo("одно");
-        assertThat(ru.toText(101)).isEqualTo("сто одно");
-        assertThat(ru.toText(1_001)).isEqualTo("одна тысяча одно");
-        assertThat(ru.toText(1_000_001)).isEqualTo("один миллион одно");
-    }
-
-    @Test
-    public void testGenitiveMale() {
-        Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.GENITIVE, Gender.MALE)
+                .russian(RuDeclension.GENITIVE, Currency.RUB)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноля");
         assertThat(ru.toText(1)).isEqualTo("одного");
@@ -81,9 +71,9 @@ class RussianTest {
     }
 
     @Test
-    public void testGenitiveFemale() {
+    public void testGenitiveNumber() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.GENITIVE, Gender.FEMALE)
+                .russian(RuDeclension.GENITIVE, Currency.NUMBER)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -92,9 +82,9 @@ class RussianTest {
     }
 
     @Test
-    public void testAccusativeMale() {
+    public void testAccusativeRub() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.ACCUSATIVE, Gender.MALE)
+                .russian(RuDeclension.ACCUSATIVE, Currency.RUB)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
@@ -116,9 +106,9 @@ class RussianTest {
     }
 
     @Test
-    public void testAccusativeFemale() {
+    public void testAccusativeNumber() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.ACCUSATIVE, Gender.FEMALE)
+                .russian(RuDeclension.ACCUSATIVE, Currency.NUMBER)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одну");
         assertThat(ru.toText(101)).isEqualTo("сто одну");
@@ -127,9 +117,9 @@ class RussianTest {
     }
 
     @Test
-    public void testDativeMale() {
+    public void testDativeRub() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.DATIVE, Gender.MALE)
+                .russian(RuDeclension.DATIVE, Currency.RUB)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("нолю");
         assertThat(ru.toText(1)).isEqualTo("одному");
@@ -151,9 +141,9 @@ class RussianTest {
     }
 
     @Test
-    public void testDativeFemale() {
+    public void testDativeNumber() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.DATIVE, Gender.FEMALE)
+                .russian(RuDeclension.DATIVE, Currency.NUMBER)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -162,9 +152,9 @@ class RussianTest {
     }
 
     @Test
-    public void testInstrumentalMale() {
+    public void testInstrumentalRub() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.INSTRUMENTAL, Gender.MALE)
+                .russian(RuDeclension.INSTRUMENTAL, Currency.RUB)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("нолём");
         assertThat(ru.toText(1)).isEqualTo("одним");
@@ -186,9 +176,9 @@ class RussianTest {
     }
 
     @Test
-    public void testInstrumentalFemale() {
+    public void testInstrumentalNumber() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.INSTRUMENTAL, Gender.FEMALE)
+                .russian(RuDeclension.INSTRUMENTAL, Currency.NUMBER)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -197,9 +187,9 @@ class RussianTest {
     }
 
     @Test
-    public void testPrepositionalMale() {
+    public void testPrepositionalRub() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.PREPOSITIONAL, Gender.MALE)
+                .russian(RuDeclension.PREPOSITIONAL, Currency.RUB)
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноле");
         assertThat(ru.toText(1)).isEqualTo("одном");
@@ -221,14 +211,26 @@ class RussianTest {
     }
 
     @Test
-    public void testPrepositionalFemale() {
+    public void testPrepositionalNumber() {
         Numbify ru = new NumbifyBuilder()
-                .russian(RuDeclension.PREPOSITIONAL, Gender.FEMALE)
+                .russian(RuDeclension.PREPOSITIONAL, Currency.NUMBER)
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
         assertThat(ru.toText(1_001)).isEqualTo("одной тысяче одной");
         assertThat(ru.toText(1_000_001)).isEqualTo("одном миллионе одной");
+    }
+
+    @Test
+    public void testNominativeNeutral() {
+        Russian ru = new Russian(RuDeclension.NOMINATIVE, new Gender[]{Gender.NEUTRAL, Gender.NEUTRAL}, Currency.NUMBER);
+        Numbify custom = new NumbifyBuilder()
+                .customLanguage(ru)
+                .build();
+        assertThat(custom.toText(1)).isEqualTo("одно");
+        assertThat(custom.toText(101)).isEqualTo("сто одно");
+        assertThat(custom.toText(1_001)).isEqualTo("одна тысяча одно");
+        assertThat(custom.toText(1_000_001)).isEqualTo("один миллион одно");
     }
 
     @Test

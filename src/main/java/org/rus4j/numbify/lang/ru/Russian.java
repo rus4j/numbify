@@ -19,20 +19,12 @@ public class Russian implements Language {
         this.currency = currency;
     }
 
-    public Russian(RuDeclension declension, Gender gender, Currency currency) {
-        this.dict = new RuDictionary();
-        this.currencyDict = new RuCurrencyDictionary();
-        this.declension = declension;
-        this.genders = new Gender[] {gender, gender};
-        this.currency = currency;
-    }
-
     public Russian(RuDeclension declension, Currency currency) {
         this(declension, currencyGender(currency), currency);
     }
 
     public Russian() {
-        this(RuDeclension.NOMINATIVE, currencyGender(Currency.NUMBER), Currency.NUMBER);
+        this(RuDeclension.NOMINATIVE, Currency.RUB);
     }
 
     /**
