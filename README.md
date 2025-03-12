@@ -20,9 +20,12 @@ implementation 'org.rus4j:numbify:1.0.0'
 Use NumbifyBuilder:
 ```java
 Numbify en = new NumbifyBuilder()
-    .english().build();
+    .english(Currency.USD)
+    .showIntegerCurrency(true)
+    .showDecimalCurrency(true)
+    .build();
 
-String numberInText = en.toText(1234); // "one thousand two hundred thirty four"
+String numberInText = en.toText(25.17); // "twenty five dollars seventeen cents"
 ```
 
 ## Languages
@@ -34,19 +37,22 @@ String numberInText = en.toText(1234); // "one thousand two hundred thirty four"
 ## Language features
 Some languages have features the numerals text representations depend on.
 
-For example russian have declensions and gender, so it has additional builder method with declension and gender as parameters.
+For example russian have declensions, so it has additional builder method with declension as parameters.
 ```java
 Numbify ru = new NumbifyBuilder()
-    .russian(RuDeclension.GENITIVE, Gender.FEMALE)
+    .russian(RuDeclension.GENITIVE, Currency.RUB)
+    .showIntegerCurrency(true)
+    .showDecimalCurrency(true)
     .build();
 
-String number = ru.toText(121_041); // "Ста двадцати одной тысячи сорока одной"
+String number = ru.toText(123.45); // "ста двадцати трёх рублей сорока пяти копеек"
 ```
 See the list of all supported language methods in javadoc.
 
 ## Options
 There is also a set of options you can customize:
-* `.currency(String)` to add currency support (TBD)
+* `.showIntegerCurrency(true/false)` to show/hide currency for integer part of number
+* `.showDecimalCurrency(true/false)` to show/hide currency for decimal part of number
 * `.capitalize(boolean)` to capitalize each word (TBD)
 * `.showIntOnly(boolean)` to show only integer part of number (TBD)
 * `.showDecimalOnly(boolean)` to show only decimal part (TBD)
