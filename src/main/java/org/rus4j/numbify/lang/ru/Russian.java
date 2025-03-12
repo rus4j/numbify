@@ -1,38 +1,60 @@
 package org.rus4j.numbify.lang.ru;
 
+import org.rus4j.numbify.Currency;
 import org.rus4j.numbify.Gender;
 import org.rus4j.numbify.Language;
 
 public class Russian implements Language {
     private final RuDictionary dict;
+    private final RuCurrencyDictionary currencyDict;
     private final RuDeclension declension;
-    private final Gender gender;
+    private final Gender[] genders;
+    private final Currency currency;
 
-    public Russian(RuDeclension declension, Gender gender) {
+    public Russian(RuDeclension declension, Gender[] genders, Currency currency) {
         this.dict = new RuDictionary();
+        this.currencyDict = new RuCurrencyDictionary();
         this.declension = declension;
-        this.gender = gender;
+        this.genders = genders;
+        this.currency = currency;
+    }
+
+    public Russian(RuDeclension declension, Currency currency) {
+        this(declension, currencyGender(currency), currency);
     }
 
     public Russian() {
-        this(RuDeclension.NOMINATIVE, Gender.MALE);
+        this(RuDeclension.NOMINATIVE, Currency.RUB);
     }
 
     /**
-     * If it is thousand group, then units should go in Female gender.
+     * Returns Gender array where gender[0] - is gender for integer part of the currency
+     * and gender[1] - is gender for decimal part of the currency
+     */
+    private static Gender[] currencyGender(Currency currency) {
+        return switch (currency) {
+            case RUB -> new Gender[] {Gender.MALE, Gender.FEMALE};
+            case USD, EUR -> new Gender[] {Gender.MALE, Gender.MALE};
+            case NUMBER -> new Gender[] {Gender.FEMALE, Gender.FEMALE};
+        };
+    }
+
+    /**
+     * If it is a thousand group, then units should go in Female gender.
      * Example in russian: <pre>
      * 1000 = одн<b>a</b> тысяча
      * 42000 = сорок дв<b>е</b> тысячи</pre>
      */
     @Override
-    public String unitNumber(int groupNum, int[] digits) {
+    public String unitNumber(int groupNum, int[] digits, boolean decimalPart) {
         if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) {
             return "";
         }
+        int currencyGender = decimalPart ? 1 : 0;
         if (groupNum == 1) {
             return dict.units(Gender.FEMALE).get(declension)[digits[0]];
         } else if (groupNum == 0) {
-            return dict.units(gender).get(declension)[digits[0]];
+            return dict.units(genders[currencyGender]).get(declension)[digits[0]];
         }
         return dict.units(Gender.MALE).get(declension)[digits[0]];
     }
@@ -53,18 +75,42 @@ public class Russian implements Language {
     }
 
     @Override
-    public String thousands(int form) {
-        return dict.thousands.get(declension)[form];
+    public String thousands(int[] numGroup) {
+        return dict.thousands.get(declension)[form(numGroup)];
     }
 
     @Override
-    public String millions(int i) {
+    public String largeNumbers(int i) {
         return dict.millions[i];
     }
 
     @Override
-    public String endings(int form) {
-        return dict.endings.get(declension)[form];
+    public String intCurrency(int[] numGroup) {
+        return currencyDict.currency(currency, declension, form(numGroup));
+    }
+
+    @Override
+    public String decimalCurrency(int[] digits, int decimalLength) {
+        return currencyDict.decimalCurrency(currency, declension, decimalLength, form(digits));
+    }
+
+    @Override
+    public boolean hasSpecificCurrency() {
+        return !currency.equals(Currency.NUMBER);
+    }
+
+    /**
+     * In russian there are 3 forms on endings for the word 'million'.
+     * See {@link Russian#form(int[])}
+     */
+    @Override
+    public String endings(int[] numGroup) {
+        return dict.endings.get(declension)[form(numGroup)];
+    }
+
+    @Override
+    public String numberPartsDelimiter() {
+        return "";
     }
 
     /**
@@ -74,7 +120,6 @@ public class Russian implements Language {
      * 2-4  тысяч<b>и</b>
      * 5-20 тыся<b>ч</b></pre>
      */
-    @Override
     public int form(int[] numGroup) {
         if (numGroup[1] == 1) {
             return 2;

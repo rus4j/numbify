@@ -1,6 +1,5 @@
 package org.rus4j.numbify;
 
-import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -8,9 +7,26 @@ import java.util.stream.Stream;
 public class Numbify {
 
     private final Language lang;
+    private final boolean showIntegerCurrency;
+    private final boolean showDecimalCurrency;
 
-    public Numbify(Language language) {
-        this.lang = language;
+    public Numbify(Language lang, boolean showIntegerCurrency, boolean showDecimalCurrency) {
+        this.lang = lang;
+        this.showIntegerCurrency = showIntegerCurrency;
+        this.showDecimalCurrency = showDecimalCurrency;
+    }
+
+    public String toText(Double number) {
+        NumberGroup numberGroup = new NumberGroup(number);
+        int[][] groups = numberGroup.decimalGroup(lang.hasSpecificCurrency());
+        String decimalText = toText(groups, true);
+
+        StringJoiner result = new StringJoiner(" ")
+                .add(toText(number.longValue()));
+        if (!lang.numberPartsDelimiter().isEmpty()) result.add(lang.numberPartsDelimiter());
+        result.add(decimalText);
+        if (showDecimalCurrency) result.add(lang.decimalCurrency(groups[0], numberGroup.decimalLength()));
+        return result.toString();
     }
 
     public String toText(Integer number) {
@@ -18,24 +34,29 @@ public class Numbify {
     }
 
     public String toText(Long number) {
-        int[] digits = toArray(number);
-        int[][] groups = splitNumbersByGroups(digits);
+        int[][] groups = new NumberGroup(number).integerGroup();
+        String text = toText(groups, false);
+        StringJoiner result = new StringJoiner(" ")
+                .add(text);
+        if (showIntegerCurrency) result.add(lang.intCurrency(groups[0]));
+        return result.toString().trim();
+    }
 
+    private String toText(int[][] groups, boolean isDecimal) {
         StringJoiner result = new StringJoiner(" ");
         for (int i = groups.length - 1; i >= 0; i--) {
             if (groups[i][0] == 0 && groups[i][1] == 0 && groups[i][2] == 0 && groups.length > 1) continue;
-            result.add(groupToText(groups[i], i));
-            int form = lang.form(groups[i]);
+            result.add(groupToText(groups[i], i, isDecimal));
             if (i == 1) {
-                result.add(lang.thousands(form));
+                result.add(lang.thousands(groups[i]));
             } else if (i > 1) {
-                result.add(lang.millions(i - 2) + lang.endings(form));
+                result.add(lang.largeNumbers(i - 2) + lang.endings(groups[i]));
             }
         }
         return result.toString();
     }
 
-    private String groupToText(int[] digits, int groupNum) {
+    private String groupToText(int[] digits, int groupNum, boolean isDecimal) {
         String hundredText = lang.hundreds(digits[2]);
         String tenText;
         String unitText = "";
@@ -43,29 +64,10 @@ public class Numbify {
             tenText = lang.tenToNineteen(digits[0]);
         } else {
             tenText = lang.tens(digits[1]);
-            unitText = lang.unitNumber(groupNum, digits);
+            unitText = lang.unitNumber(groupNum, digits, isDecimal);
         }
         return Stream.of(hundredText, tenText, unitText)
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.joining(" "));
-    }
-
-    private int[] toArray(long number) {
-        int[] digits = new int[String.valueOf(number).length()];
-        int i = 0;
-        while (number > 0) {
-            digits[i++] = (int) (number % 10);
-            number = number / 10;
-        }
-        return digits;
-    }
-
-    private int[][] splitNumbersByGroups(int[] numbers) {
-        int[][] digitsByGroup = new int[(int) Math.ceil(numbers.length / 3.0)][3];
-        int group = 0;
-        for (int i = 0; i < numbers.length; i += 3) {
-            digitsByGroup[group++] = Arrays.copyOfRange(numbers, i, i + 3);
-        }
-        return digitsByGroup;
     }
 }

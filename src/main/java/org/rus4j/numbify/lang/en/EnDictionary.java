@@ -15,11 +15,9 @@ public class EnDictionary {
             "five hundred", "six hundred", "seven hundred", "eight hundred", "nine hundred"
     };
 
-    final String[] thousand = new String[]{"thousand"};
+    final String thousand = "thousand";
 
     final String[] millions = new String[]{"million", "billion", "trillion", "quadrillion",
                 "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion",
     };
-
-    final String[] endings = new String[]{""};
 }

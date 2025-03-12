@@ -12,6 +12,7 @@
 
 .idea
 .gradle
+gradle.properties
 build
 
 # Package Files #
