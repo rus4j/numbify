@@ -74,4 +74,6 @@ public interface Language {
     String decimalCurrency(int[] digits, int decimalLength);
 
     boolean hasSpecificCurrency();
+
+    String numberPartsDelimiter();
 }

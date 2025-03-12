@@ -64,12 +64,15 @@ public class EnglishCurrencyDecimalTest {
                 .showDecimalCurrency(true)
                 .build();
 
-        // TODO fix
-//        assertThat(en.toText(0.01)).isEqualTo("zero euros one cent");
-//        assertThat(en.toText(0.02)).isEqualTo("zero euros two cents");
-//        assertThat(en.toText(0.1)).isEqualTo("zero euros ten cents");
-//        assertThat(en.toText(0.10)).isEqualTo("zero euros ten cents");
-//        assertThat(en.toText(0.100000009)).isEqualTo("zero euros ten cents");
-//        assertThat(en.toText(0.0001)).isEqualTo("zero euros zero cents");
+
+        assertThat(en.toText(0.01)).isEqualTo("zero and one hundredths");
+        assertThat(en.toText(0.02)).isEqualTo("zero and two hundredths");
+        assertThat(en.toText(0.1)).isEqualTo("zero and one tenths");
+        assertThat(en.toText(0.10)).isEqualTo("zero and one tenths");
+        assertThat(en.toText(0.001)).isEqualTo("zero and one thousandths");
+        assertThat(en.toText(0.0001)).isEqualTo("zero and one ten thousandths");
+        assertThat(en.toText(0.00001)).isEqualTo("zero and one hundred thousandths");
+        assertThat(en.toText(0.000001)).isEqualTo("zero and one millionth");
+        assertThat(en.toText(0.1000009)).isEqualTo("zero and one million nine ten millionth");
     }
 }

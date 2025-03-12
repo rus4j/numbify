@@ -108,6 +108,11 @@ public class Russian implements Language {
         return dict.endings.get(declension)[form(numGroup)];
     }
 
+    @Override
+    public String numberPartsDelimiter() {
+        return "";
+    }
+
     /**
      * Russian language has 3 forms for thousands and millions.
      * Example in russian:<pre>
