@@ -10,11 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EnglishCurrencyDecimalTest {
     @Test
     public void rubCurrencyDecimalTest() {
-        Numbify en = new NumbifyBuilder()
-                .english(Currency.RUB)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
-                .build();
+        Numbify en = new NumbifyBuilder().english(Currency.RUB).build();
 
         assertThat(en.toText(0.01)).isEqualTo("zero rubles one kopeck");
         assertThat(en.toText(0.02)).isEqualTo("zero rubles two kopecks");
@@ -26,11 +22,7 @@ public class EnglishCurrencyDecimalTest {
 
     @Test
     public void usdCurrencyTest() {
-        Numbify en = new NumbifyBuilder()
-                .english(Currency.USD)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
-                .build();
+        Numbify en = new NumbifyBuilder().english(Currency.USD).build();
 
         assertThat(en.toText(0.01)).isEqualTo("zero dollars one cent");
         assertThat(en.toText(0.02)).isEqualTo("zero dollars two cents");
@@ -42,11 +34,7 @@ public class EnglishCurrencyDecimalTest {
 
     @Test
     public void eurCurrencyTest() {
-        Numbify en = new NumbifyBuilder()
-                .english(Currency.EUR)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
-                .build();
+        Numbify en = new NumbifyBuilder().english(Currency.EUR).build();
 
         assertThat(en.toText(0.01)).isEqualTo("zero euros one cent");
         assertThat(en.toText(0.02)).isEqualTo("zero euros two cents");
@@ -58,12 +46,7 @@ public class EnglishCurrencyDecimalTest {
 
     @Test
     public void numberCurrencyTest() {
-        Numbify en = new NumbifyBuilder()
-                .english(Currency.NUMBER)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
-                .build();
-
+        Numbify en = new NumbifyBuilder().english(Currency.NUMBER).build();
 
         assertThat(en.toText(0.01)).isEqualTo("zero and one hundredths");
         assertThat(en.toText(0.02)).isEqualTo("zero and two hundredths");

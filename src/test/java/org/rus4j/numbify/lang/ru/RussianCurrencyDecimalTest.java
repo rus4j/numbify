@@ -13,8 +13,6 @@ public class RussianCurrencyDecimalTest {
     public void rubNominativeDecimal() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.RUB)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
                 .build();
 
         assertThat(ru.toText(0.01)).isEqualTo("ноль рублей одна копейка");
@@ -29,8 +27,6 @@ public class RussianCurrencyDecimalTest {
     public void usdNominativeDecimal() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.USD)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
                 .build();
 
         assertThat(ru.toText(0.01)).isEqualTo("ноль долларов один цент");
@@ -45,8 +41,6 @@ public class RussianCurrencyDecimalTest {
     public void eurNominativeDecimal() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.EUR)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
                 .build();
 
         assertThat(ru.toText(0.01)).isEqualTo("ноль евро один цент");
@@ -61,8 +55,6 @@ public class RussianCurrencyDecimalTest {
     public void numberNominativeDecimal() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
-                .showIntegerCurrency(true)
-                .showDecimalCurrency(true)
                 .build();
 
         assertThat(ru.toText(0.01)).isEqualTo("ноль целых одна сотая");

@@ -12,7 +12,7 @@ class RussianTest {
 
     @Test
     public void testNominativeRub() {
-        Numbify ru = new NumbifyBuilder().russian().build();
+        Numbify ru = new NumbifyBuilder().russian().hideIntCurrency().hideDecimalCurrency().build();
         assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
         assertThat(ru.toText(12)).isEqualTo("двенадцать");
@@ -36,6 +36,7 @@ class RussianTest {
     public void testNominativeNumber() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одна");
         assertThat(ru.toText(2)).isEqualTo("две");
@@ -50,6 +51,7 @@ class RussianTest {
     public void testGenitiveRub() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.GENITIVE, Currency.RUB)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноля");
         assertThat(ru.toText(1)).isEqualTo("одного");
@@ -74,6 +76,7 @@ class RussianTest {
     public void testGenitiveNumber() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.GENITIVE, Currency.NUMBER)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -85,6 +88,7 @@ class RussianTest {
     public void testAccusativeRub() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.ACCUSATIVE, Currency.RUB)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
@@ -109,6 +113,7 @@ class RussianTest {
     public void testAccusativeNumber() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.ACCUSATIVE, Currency.NUMBER)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одну");
         assertThat(ru.toText(101)).isEqualTo("сто одну");
@@ -120,6 +125,7 @@ class RussianTest {
     public void testDativeRub() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.DATIVE, Currency.RUB)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(0)).isEqualTo("нолю");
         assertThat(ru.toText(1)).isEqualTo("одному");
@@ -144,6 +150,7 @@ class RussianTest {
     public void testDativeNumber() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.DATIVE, Currency.NUMBER)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -155,6 +162,7 @@ class RussianTest {
     public void testInstrumentalRub() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.INSTRUMENTAL, Currency.RUB)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(0)).isEqualTo("нолём");
         assertThat(ru.toText(1)).isEqualTo("одним");
@@ -179,6 +187,7 @@ class RussianTest {
     public void testInstrumentalNumber() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.INSTRUMENTAL, Currency.NUMBER)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -190,6 +199,7 @@ class RussianTest {
     public void testPrepositionalRub() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.PREPOSITIONAL, Currency.RUB)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(0)).isEqualTo("ноле");
         assertThat(ru.toText(1)).isEqualTo("одном");
@@ -214,6 +224,7 @@ class RussianTest {
     public void testPrepositionalNumber() {
         Numbify ru = new NumbifyBuilder()
                 .russian(RuDeclension.PREPOSITIONAL, Currency.NUMBER)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(ru.toText(1)).isEqualTo("одной");
         assertThat(ru.toText(101)).isEqualTo("ста одной");
@@ -226,6 +237,7 @@ class RussianTest {
         Russian ru = new Russian(RuDeclension.NOMINATIVE, new Gender[]{Gender.NEUTRAL, Gender.NEUTRAL}, Currency.NUMBER);
         Numbify custom = new NumbifyBuilder()
                 .customLanguage(ru)
+                .hideIntCurrency().hideDecimalCurrency()
                 .build();
         assertThat(custom.toText(1)).isEqualTo("одно");
         assertThat(custom.toText(101)).isEqualTo("сто одно");
@@ -235,7 +247,7 @@ class RussianTest {
 
     @Test
     public void longValuesTest() {
-        Numbify ru = new NumbifyBuilder().russian().build();
+        Numbify ru = new NumbifyBuilder().russian().hideIntCurrency().hideDecimalCurrency().build();
         assertThat(ru.toText(1234L)).isEqualTo("одна тысяча двести тридцать четыре");
         assertThat(ru.toText(Long.MAX_VALUE))
                 .isEqualTo("девять квинтиллионов " +
