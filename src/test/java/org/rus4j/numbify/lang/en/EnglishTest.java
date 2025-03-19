@@ -10,7 +10,7 @@ public class EnglishTest {
 
     @Test
     public void test() {
-        Numbify en = new NumbifyBuilder().english().build();
+        Numbify en = new NumbifyBuilder().english().hideIntCurrency().hideDecimalCurrency().build();
         assertThat(en.toText(0)).isEqualTo("zero");
         assertThat(en.toText(1)).isEqualTo("one");
         assertThat(en.toText(12)).isEqualTo("twelve");

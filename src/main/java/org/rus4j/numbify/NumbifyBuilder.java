@@ -6,8 +6,8 @@ import org.rus4j.numbify.lang.ru.Russian;
 
 public class NumbifyBuilder {
     private Language language;
-    private boolean showIntegerCurrency = false;
-    private boolean showDecimalCurrency = false;
+    private boolean showIntegerCurrency = true;
+    private boolean showDecimalCurrency = true;
 
     public NumbifyBuilder english() {
         this.language = new English(Currency.USD);
@@ -29,13 +29,13 @@ public class NumbifyBuilder {
         return this;
     }
 
-    public NumbifyBuilder showIntegerCurrency(boolean show) {
-        this.showIntegerCurrency = show;
+    public NumbifyBuilder hideIntCurrency() {
+        this.showIntegerCurrency = false;
         return this;
     }
 
-    public NumbifyBuilder showDecimalCurrency(boolean show) {
-        this.showDecimalCurrency = show;
+    public NumbifyBuilder hideDecimalCurrency() {
+        this.showDecimalCurrency = false;
         return this;
     }
 
@@ -47,4 +47,10 @@ public class NumbifyBuilder {
     public Numbify build() {
         return new Numbify(language, showIntegerCurrency, showDecimalCurrency);
     }
+
+    // TODO add options (capitalization each, all, numbify only int, or only decimal part)
+    // TODO negative numbers, minus sign
+    // TODO text for decimal part
+    // TODO custom Language
+    // TODO Порядковые? Первый, Первая, Первое
 }
