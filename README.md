@@ -51,6 +51,15 @@ Numbify ru = new NumbifyBuilder()
 String number = ru.toText(123.45); // "ста двадцати трёх рублей сорока пяти копеек"
 ```
 
+## Data types
+It supports any java numeric data types that are subclasses of `Number`
+```
+                               Number
+ ┌──────┬───────┬───────┬─────┬──────┬─────────┬──────────┬─────────┐
+ │      │       │       │     │      │         │          │
+Byte  Short  Integer  Long  Float  Double  BigInteger  BigDecimal  ...
+```
+
 ## Options
 There is also a set of options you can customize:
 ### Hide integer currency
