@@ -49,8 +49,8 @@ public class CommonTest {
                         "семьсот семьдесят пять тысяч " +
                         "восемьсот восемь двенадцать");
         assertThat(ru.toText(new AtomicInteger(9001))).isEqualTo("девять тысяч одна");
-        assertThat(ru.toText(new AtomicLong(9001))).isEqualTo("девять тысяч одна");
-        assertThat(ru.toText(new DoubleAccumulator(Double::sum, 1.0))).isEqualTo("одна ноль");
+        assertThat(ru.toText(new AtomicLong(9200))).isEqualTo("девять тысяч двести");
+        assertThat(ru.toText(new DoubleAccumulator(Double::sum, 9020.0))).isEqualTo("девять тысяч двадцать ноль");
         assertThat(ru.toText(new DoubleAdder())).isEqualTo("ноль ноль");
     }
 }

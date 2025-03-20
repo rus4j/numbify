@@ -29,6 +29,9 @@ public class EnglishTest {
         assertThat(en.toText(100_000)).isEqualTo("one hundred thousand");
         assertThat(en.toText(1_000_001)).isEqualTo("one million one");
 
+        assertThat(en.toText(1_200)).isEqualTo("one thousand two hundred");
+        assertThat(en.toText(1_020)).isEqualTo("one thousand twenty");
+
         assertThat(en.toText(Long.MAX_VALUE))
                 .isEqualTo("nine quintillion " +
                         "two hundred twenty three quadrillion " +
