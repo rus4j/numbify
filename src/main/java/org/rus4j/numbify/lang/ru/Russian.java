@@ -24,7 +24,7 @@ public class Russian implements Language {
     }
 
     public Russian() {
-        this(RuDeclension.NOMINATIVE, Currency.RUB);
+        this(RuDeclension.NOMINATIVE, Currency.NUMBER);
     }
 
     /**
@@ -47,16 +47,16 @@ public class Russian implements Language {
      */
     @Override
     public String unitNumber(int groupNum, int[] digits, boolean decimalPart) {
-        if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) {
+        if (digits[2] == 0 && (digits[0] > 0 || digits[1] > 0)) {
             return "";
         }
         int currencyGender = decimalPart ? 1 : 0;
         if (groupNum == 1) {
-            return dict.units(Gender.FEMALE).get(declension)[digits[0]];
+            return dict.units(Gender.FEMALE).get(declension)[digits[2]];
         } else if (groupNum == 0) {
-            return dict.units(genders[currencyGender]).get(declension)[digits[0]];
+            return dict.units(genders[currencyGender]).get(declension)[digits[2]];
         }
-        return dict.units(Gender.MALE).get(declension)[digits[0]];
+        return dict.units(Gender.MALE).get(declension)[digits[2]];
     }
 
     @Override
@@ -124,7 +124,7 @@ public class Russian implements Language {
         if (numGroup[1] == 1) {
             return 2;
         }
-        return switch (numGroup[0]) {
+        return switch (numGroup[2]) {
             case 1 -> 0;
             case 2, 3, 4 -> 1;
             default -> 2;

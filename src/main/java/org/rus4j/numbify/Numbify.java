@@ -1,8 +1,6 @@
 package org.rus4j.numbify;
 
 import java.util.StringJoiner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Numbify {
 
@@ -16,58 +14,76 @@ public class Numbify {
         this.showDecimalCurrency = showDecimalCurrency;
     }
 
-    public String toText(Double number) {
+    public String toText(Number number) {
         NumberGroup numberGroup = new NumberGroup(number);
-        int[][] groups = numberGroup.decimalGroup(lang.hasSpecificCurrency());
-        String decimalText = toText(groups, true);
+        int[][] ints = numberGroup.integerGroup();
+        int[][] decimals = numberGroup.decimalGroup(lang.hasSpecificCurrency());
+        int[] lastIntDigits = ints[ints.length - 1];
+        StringJoiner result = new StringJoiner(" ");
 
-        StringJoiner result = new StringJoiner(" ")
-                .add(toText(number.longValue()));
-        if (!lang.numberPartsDelimiter().isEmpty()) result.add(lang.numberPartsDelimiter());
-        result.add(decimalText);
-        if (showDecimalCurrency) result.add(lang.decimalCurrency(groups[0], numberGroup.decimalLength()));
+        result.add(toText(ints, false));
+        if (showIntegerCurrency && !lang.intCurrency(lastIntDigits).isEmpty()) {
+            result.add(lang.intCurrency(lastIntDigits));
+        }
+        if (!lang.numberPartsDelimiter().isEmpty()) {
+            result.add(lang.numberPartsDelimiter());
+        }
+        if (decimals.length > 0) {
+            result.add(toText(decimals, true));
+            if (showDecimalCurrency) {
+                result.add(lang.decimalCurrency(decimals[decimals.length - 1], numberGroup.decimalLength()));
+            }
+        }
         return result.toString();
-    }
-
-    public String toText(Integer number) {
-        return toText(number.longValue());
-    }
-
-    public String toText(Long number) {
-        int[][] groups = new NumberGroup(number).integerGroup();
-        String text = toText(groups, false);
-        StringJoiner result = new StringJoiner(" ")
-                .add(text);
-        if (showIntegerCurrency) result.add(lang.intCurrency(groups[0]));
-        return result.toString().trim();
     }
 
     private String toText(int[][] groups, boolean isDecimal) {
         StringJoiner result = new StringJoiner(" ");
-        for (int i = groups.length - 1; i >= 0; i--) {
+        for (int i = 0; i < groups.length; i++) {
+            int scale = groups.length - 1 - i;
             if (groups[i][0] == 0 && groups[i][1] == 0 && groups[i][2] == 0 && groups.length > 1) continue;
-            result.add(groupToText(groups[i], i, isDecimal));
-            if (i == 1) {
+            result.add(groupToText(groups[i], scale, isDecimal));
+            if (scale == 1) {
                 result.add(lang.thousands(groups[i]));
-            } else if (i > 1) {
-                result.add(lang.largeNumbers(i - 2) + lang.endings(groups[i]));
+            } else if (scale > 1) {
+                result.add(lang.largeNumbers(scale - 2) + lang.endings(groups[i]));
             }
         }
         return result.toString();
     }
 
     private String groupToText(int[] digits, int groupNum, boolean isDecimal) {
-        String hundredText = lang.hundreds(digits[2]);
+        String hundredText = lang.hundreds(digits[0]);
         String tenText;
         String unitText = "";
         if (digits[1] == 1) {
-            tenText = lang.tenToNineteen(digits[0]);
+            tenText = lang.tenToNineteen(digits[2]);
         } else {
             tenText = lang.tens(digits[1]);
             unitText = lang.unitNumber(groupNum, digits, isDecimal);
         }
-        return Stream.of(hundredText, tenText, unitText)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.joining(" "));
+
+        if (!hundredText.isEmpty() && tenText.isEmpty() && unitText.isEmpty()) {
+            return hundredText;
+        }
+        if (!tenText.isEmpty() && hundredText.isEmpty() && unitText.isEmpty()) {
+            return tenText;
+        }
+        if (!unitText.isEmpty() && hundredText.isEmpty() && tenText.isEmpty()) {
+            return unitText;
+        }
+        if (!unitText.isEmpty() && !tenText.isEmpty() && hundredText.isEmpty()) {
+            return tenText + " " + unitText;
+        }
+        if (!unitText.isEmpty() && tenText.isEmpty()) {
+            return hundredText + " " + unitText;
+        }
+        if (!hundredText.isEmpty() && unitText.isEmpty()) {
+            return hundredText + " " + tenText;
+        }
+        if (!unitText.isEmpty()) {
+            return hundredText + " " + tenText + " " + unitText;
+        }
+        return null;
     }
 }

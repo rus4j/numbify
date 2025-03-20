@@ -12,7 +12,9 @@ class RussianTest {
 
     @Test
     public void testNominativeRub() {
-        Numbify ru = new NumbifyBuilder().russian().hideIntCurrency().hideDecimalCurrency().build();
+        Numbify ru = new NumbifyBuilder().russian(RuDeclension.NOMINATIVE, Currency.RUB)
+                .hideIntCurrency().hideDecimalCurrency()
+                .build();
         assertThat(ru.toText(0)).isEqualTo("ноль");
         assertThat(ru.toText(1)).isEqualTo("один");
         assertThat(ru.toText(12)).isEqualTo("двенадцать");

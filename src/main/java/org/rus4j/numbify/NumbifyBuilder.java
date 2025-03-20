@@ -47,10 +47,4 @@ public class NumbifyBuilder {
     public Numbify build() {
         return new Numbify(language, showIntegerCurrency, showDecimalCurrency);
     }
-
-    // TODO add options (capitalization each, all, numbify only int, or only decimal part)
-    // TODO negative numbers, minus sign
-    // TODO text for decimal part
-    // TODO custom Language
-    // TODO Порядковые? Первый, Первая, Первое
 }
