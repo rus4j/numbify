@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.DoubleAccumulator;
 import java.util.concurrent.atomic.DoubleAdder;
 
 import org.junit.jupiter.api.Test;
+import org.rus4j.numbify.Currency;
 import org.rus4j.numbify.Numbify;
 import org.rus4j.numbify.NumbifyBuilder;
 
@@ -17,7 +18,7 @@ public class CommonTest {
 
     @Test
     public void numberTypesTest() {
-        Numbify ru = new NumbifyBuilder().russian().hideIntCurrency().hideDecimalCurrency().build();
+        Numbify ru = new NumbifyBuilder().russian(Currency.NUMBER).hideIntCurrency().hideDecimalCurrency().build();
 
         assertThat(ru.toText(12)).isEqualTo("двенадцать");
         assertThat(ru.toText(1.5)).isEqualTo("одна пять");

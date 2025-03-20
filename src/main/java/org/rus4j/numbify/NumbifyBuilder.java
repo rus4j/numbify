@@ -19,8 +19,8 @@ public class NumbifyBuilder {
         return this;
     }
 
-    public NumbifyBuilder russian() {
-        this.language = new Russian();
+    public NumbifyBuilder russian(Currency currency) {
+        this.language = new Russian(currency);
         return this;
     }
 
