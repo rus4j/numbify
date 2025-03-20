@@ -249,7 +249,7 @@ class RussianTest {
 
     @Test
     public void longValuesTest() {
-        Numbify ru = new NumbifyBuilder().russian().hideIntCurrency().hideDecimalCurrency().build();
+        Numbify ru = new NumbifyBuilder().russian(Currency.RUB).hideIntCurrency().hideDecimalCurrency().build();
         assertThat(ru.toText(1234L)).isEqualTo("одна тысяча двести тридцать четыре");
         assertThat(ru.toText(Long.MAX_VALUE))
                 .isEqualTo("девять квинтиллионов " +

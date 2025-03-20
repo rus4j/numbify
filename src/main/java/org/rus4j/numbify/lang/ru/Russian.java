@@ -23,8 +23,8 @@ public class Russian implements Language {
         this(declension, currencyGender(currency), currency);
     }
 
-    public Russian() {
-        this(RuDeclension.NOMINATIVE, Currency.NUMBER);
+    public Russian(Currency currency) {
+        this(RuDeclension.NOMINATIVE, currency);
     }
 
     /**
