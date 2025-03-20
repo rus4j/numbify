@@ -25,8 +25,13 @@ The simplest example:
 Numbify en = new NumbifyBuilder()
     .english(Currency.USD)
     .build();
-
 String numberInText = en.toText(25.17); // "twenty five dollars seventeen cents"
+
+
+Numbify ru = new NumbifyBuilder()
+    .russian(Currency.NUMBER) // no specific currency
+    .build();
+String numberInText = en.toText(25.17); // "двадцать пять целых семнадцать сотых"
 ```
 
 ## Languages
