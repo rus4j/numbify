@@ -16,8 +16,8 @@ public class English implements Language {
 
     @Override
     public String unitNumber(int groupNum, int[] digits, boolean decimalPart) {
-        if (digits[0] == 0 && (digits[1] > 0 || digits[2] > 0)) return "";
-        return dict.units[digits[0]];
+        if (digits[2] == 0 && (digits[0] > 0 || digits[1] > 0)) return "";
+        return dict.units[digits[2]];
     }
 
     @Override
@@ -47,13 +47,13 @@ public class English implements Language {
 
     @Override
     public String intCurrency(int[] numGroup) {
-        boolean plural = numGroup[0] != 1;
+        boolean plural = numGroup[2] != 1;
         return currencyDict.currency(currency, plural);
     }
 
     @Override
     public String decimalCurrency(int[] numGroup, int decimalLength) {
-        boolean plural = numGroup[0] != 1;
+        boolean plural = numGroup[2] != 1;
         return currencyDict.decimalCurrency(currency, plural, decimalLength);
     }
 

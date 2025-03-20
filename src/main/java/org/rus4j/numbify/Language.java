@@ -9,8 +9,8 @@ public interface Language {
     /**
      * Transforms unit to text based on group the unit belongs to and other digits in the group.
      * @param groupNum number of group. 0 for units, 1 for a thousand, 2 for a million, 3 for a billion, etc.
-     * @param digits group of digits in current group. Arrays of length 3. The number 123 is represented as [3,2,1].
-     * @return text representation of digits[0] number.
+     * @param digits group of digits in current group. Arrays of length 3. The number 123 is represented as [1,2,3].
+     * @return text representation of digits[2] number.
      */
     String unitNumber(int groupNum, int[] digits, boolean decimalPart);
 
@@ -73,7 +73,14 @@ public interface Language {
      */
     String decimalCurrency(int[] digits, int decimalLength);
 
+    /**
+     * @return true if language has currency different from {@link Currency#NUMBER}.
+     */
     boolean hasSpecificCurrency();
 
+    /**
+     * Language could have delimiter between int and decimal part on a number.
+     * @return parts delimiter.
+     */
     String numberPartsDelimiter();
 }
