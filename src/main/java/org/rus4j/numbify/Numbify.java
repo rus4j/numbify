@@ -63,27 +63,24 @@ public class Numbify {
             unitText = lang.unitNumber(groupNum, digits, isDecimal);
         }
 
-        if (!hundredText.isEmpty() && tenText.isEmpty() && unitText.isEmpty()) {
-            return hundredText;
-        }
-        if (!tenText.isEmpty() && hundredText.isEmpty() && unitText.isEmpty()) {
-            return tenText;
-        }
-        if (!unitText.isEmpty() && hundredText.isEmpty() && tenText.isEmpty()) {
-            return unitText;
-        }
-        if (!unitText.isEmpty() && !tenText.isEmpty() && hundredText.isEmpty()) {
-            return tenText + " " + unitText;
-        }
-        if (!unitText.isEmpty() && tenText.isEmpty()) {
-            return hundredText + " " + unitText;
-        }
-        if (!hundredText.isEmpty() && unitText.isEmpty()) {
-            return hundredText + " " + tenText;
-        }
-        if (!unitText.isEmpty()) {
+        if (!hundredText.isEmpty() && !tenText.isEmpty() && !unitText.isEmpty()) {
             return hundredText + " " + tenText + " " + unitText;
         }
-        return null;
+        if (!hundredText.isEmpty() && !tenText.isEmpty()) {
+            return hundredText + " " + tenText;
+        }
+        if (!hundredText.isEmpty() && !unitText.isEmpty()) {
+            return hundredText + " " + unitText;
+        }
+        if (!hundredText.isEmpty()) {
+            return hundredText;
+        }
+        if (!tenText.isEmpty() && !unitText.isEmpty()) {
+            return tenText + " " + unitText;
+        }
+        if (!tenText.isEmpty()) {
+            return tenText;
+        }
+        return unitText;
     }
 }

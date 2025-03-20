@@ -53,15 +53,4 @@ public class CommonTest {
         assertThat(ru.toText(new DoubleAccumulator(Double::sum, 1.0))).isEqualTo("одна ноль");
         assertThat(ru.toText(new DoubleAdder())).isEqualTo("ноль ноль");
     }
-
-    @Test
-    public void startTest() {
-        Numbify ru = new NumbifyBuilder().russian().hideIntCurrency().hideDecimalCurrency().build();
-
-        long before = System.currentTimeMillis();
-        for (int i = 0; i < 999_999; i++) {
-            ru.toText(i);
-        }
-        System.out.println(System.currentTimeMillis() - before);
-    }
 }
