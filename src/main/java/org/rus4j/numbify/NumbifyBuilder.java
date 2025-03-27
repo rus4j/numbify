@@ -45,6 +45,9 @@ public class NumbifyBuilder {
     }
 
     public Numbify build() {
-        return new Numbify(language, showIntegerCurrency, showDecimalCurrency);
+        Text text = new Text();
+        NumberText intText = showIntegerCurrency ? new IntCurrencyText(text) : text::intText;
+        NumberText decimalText = showDecimalCurrency ? new DecimalCurrencyText(text) : text::decimalText;
+        return new Numbify(language, intText, decimalText, new DelimiterText());
     }
 }

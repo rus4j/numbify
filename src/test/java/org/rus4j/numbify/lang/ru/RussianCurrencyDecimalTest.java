@@ -21,6 +21,8 @@ public class RussianCurrencyDecimalTest {
         assertThat(ru.toText(0.1)).isEqualTo("ноль рублей десять копеек");
         assertThat(ru.toText(0.10)).isEqualTo("ноль рублей десять копеек");
         assertThat(ru.toText(0.001)).isEqualTo("ноль рублей ноль копеек");
+        assertThat(ru.toText((double)10)).isEqualTo("десять рублей ноль копеек");
+        assertThat(ru.toText(10)).isEqualTo("десять рублей");
     }
 
     @Test

@@ -1,86 +1,35 @@
 package org.rus4j.numbify;
 
-import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Numbify {
 
     private final Language lang;
-    private final boolean showIntegerCurrency;
-    private final boolean showDecimalCurrency;
+    private final NumberText intText;
+    private final DelimiterText delimiterText;
+    private final NumberText decimalText;
 
-    public Numbify(Language lang, boolean showIntegerCurrency, boolean showDecimalCurrency) {
+    public Numbify(
+            Language lang,
+            NumberText intText,
+            NumberText decimalText,
+            DelimiterText delimiterText
+    ) {
         this.lang = lang;
-        this.showIntegerCurrency = showIntegerCurrency;
-        this.showDecimalCurrency = showDecimalCurrency;
+        this.intText = intText;
+        this.decimalText = decimalText;
+        this.delimiterText = delimiterText;
     }
 
     public String toText(Number number) {
-        NumberGroup numberGroup = new NumberGroup(number);
-        int[][] ints = numberGroup.integerGroup();
-        int[][] decimals = numberGroup.decimalGroup(lang.hasSpecificCurrency());
-        int[] lastIntDigits = ints[ints.length - 1];
-        StringJoiner result = new StringJoiner(" ");
-
-        result.add(toText(ints, false));
-        if (showIntegerCurrency && !lang.intCurrency(lastIntDigits).isEmpty()) {
-            result.add(lang.intCurrency(lastIntDigits));
-        }
-        if (!lang.numberPartsDelimiter().isEmpty()) {
-            result.add(lang.numberPartsDelimiter());
-        }
-        if (decimals.length > 0) {
-            result.add(toText(decimals, true));
-            if (showDecimalCurrency) {
-                result.add(lang.decimalCurrency(decimals[decimals.length - 1], numberGroup.decimalLength()));
-            }
-        }
-        return result.toString();
-    }
-
-    private String toText(int[][] groups, boolean isDecimal) {
-        StringJoiner result = new StringJoiner(" ");
-        for (int i = 0; i < groups.length; i++) {
-            int scale = groups.length - 1 - i;
-            if (groups[i][0] == 0 && groups[i][1] == 0 && groups[i][2] == 0 && groups.length > 1) continue;
-            result.add(groupToText(groups[i], scale, isDecimal));
-            if (scale == 1) {
-                result.add(lang.thousands(groups[i]));
-            } else if (scale > 1) {
-                result.add(lang.largeNumbers(scale - 2) + lang.endings(groups[i]));
-            }
-        }
-        return result.toString();
-    }
-
-    private String groupToText(int[] digits, int groupNum, boolean isDecimal) {
-        String hundredText = lang.hundreds(digits[0]);
-        String tenText;
-        String unitText = "";
-        if (digits[1] == 1) {
-            tenText = lang.tenToNineteen(digits[2]);
-        } else {
-            tenText = lang.tens(digits[1]);
-            unitText = lang.unitNumber(groupNum, digits, isDecimal);
-        }
-
-        if (!hundredText.isEmpty() && !tenText.isEmpty() && !unitText.isEmpty()) {
-            return hundredText + " " + tenText + " " + unitText;
-        }
-        if (!hundredText.isEmpty() && !tenText.isEmpty()) {
-            return hundredText + " " + tenText;
-        }
-        if (!hundredText.isEmpty() && !unitText.isEmpty()) {
-            return hundredText + " " + unitText;
-        }
-        if (!hundredText.isEmpty()) {
-            return hundredText;
-        }
-        if (!tenText.isEmpty() && !unitText.isEmpty()) {
-            return tenText + " " + unitText;
-        }
-        if (!tenText.isEmpty()) {
-            return tenText;
-        }
-        return unitText;
+        NumberGroup group = new NumberGroup(number);
+        return Stream.of(
+            intText.text(group, lang),
+            delimiterText.text(lang),
+            decimalText.text(group, lang)
+        )
+            .filter(text -> text != null && !text.isEmpty())
+            .collect(Collectors.joining(" "));
     }
 }
