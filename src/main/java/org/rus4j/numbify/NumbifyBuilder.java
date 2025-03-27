@@ -8,6 +8,7 @@ public class NumbifyBuilder {
     private Language language;
     private boolean showIntegerCurrency = true;
     private boolean showDecimalCurrency = true;
+    private boolean capitalize = false;
 
     public NumbifyBuilder english() {
         this.language = new English(Currency.USD);
@@ -39,6 +40,11 @@ public class NumbifyBuilder {
         return this;
     }
 
+    public NumbifyBuilder capitalize() {
+        this.capitalize = true;
+        return this;
+    }
+
     public NumbifyBuilder customLanguage(Language language) {
         this.language = language;
         return this;
@@ -48,6 +54,7 @@ public class NumbifyBuilder {
         Text text = new Text();
         NumberText intText = showIntegerCurrency ? new IntCurrencyText(text) : text::intText;
         NumberText decimalText = showDecimalCurrency ? new DecimalCurrencyText(text) : text::decimalText;
-        return new Numbify(language, intText, decimalText, new DelimiterText());
+        CombinedText combinedText = new CombinedText(language, intText, decimalText, new DelimiterText());
+        return capitalize ? new CapitalizedText(combinedText) : combinedText;
     }
 }
