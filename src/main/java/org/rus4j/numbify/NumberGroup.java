@@ -24,7 +24,7 @@ public class NumberGroup {
     public int[][] decimalGroup(boolean shouldBeRounded) {
         if (this.decimalGroups.get() == null) {
             String[] split = new BigDecimal(number.toString()).toPlainString().split("\\.");
-            if (split.length == 1) return new int[][]{};
+            if (split.length == 1) return this.decimalGroups.updateAndGet(ints -> new int[][]{});
             String num = split[1];
             String normalize = shouldBeRounded ? round(num) : removeTrailingZeros(num);
             this.decimalGroups.set(splitNumbersByGroups(toArray(normalize)));
