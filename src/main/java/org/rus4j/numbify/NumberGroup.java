@@ -2,28 +2,51 @@ package org.rus4j.numbify;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class NumberGroup {
     private final Number number;
+    private final AtomicReference<int[][]> intGroups = new AtomicReference<>();
+    private final AtomicReference<int[][]> decimalGroups = new AtomicReference<>();
 
     public NumberGroup(Number number) {
         this.number = number;
     }
 
     public int[][] integerGroup() {
-        return splitNumbersByGroups(toArray(new BigDecimal(number.toString()).toPlainString().split("\\.")[0]));
+        if (this.intGroups.get() == null) {
+            String intPart = new BigDecimal(number.toString()).toPlainString().split("\\.")[0];
+            this.intGroups.set(splitNumbersByGroups(toArray(intPart)));
+        }
+        return this.intGroups.get();
     }
 
     public int[][] decimalGroup(boolean shouldBeRounded) {
-        String[] split = new BigDecimal(number.toString()).toPlainString().split("\\.");
-        if (split.length == 1) return new int[][]{};
-        String num = split[1];
-        String normalize = shouldBeRounded ? round(num) : removeTrailingZeros(num);
-        return splitNumbersByGroups(toArray(normalize));
+        if (this.decimalGroups.get() == null) {
+            String[] split = new BigDecimal(number.toString()).toPlainString().split("\\.");
+            if (split.length == 1) return this.decimalGroups.updateAndGet(ints -> new int[][]{});
+            String num = split[1];
+            String normalize = shouldBeRounded ? round(num) : removeTrailingZeros(num);
+            this.decimalGroups.set(splitNumbersByGroups(toArray(normalize)));
+        }
+        return this.decimalGroups.get();
     }
 
     public int decimalLength() {
         return BigDecimal.valueOf(number.doubleValue()).stripTrailingZeros().scale();
+    }
+
+    public int[] lastIntGroup() {
+        int[][] ints = integerGroup();
+        return ints[ints.length - 1];
+    }
+
+    public int[] lastDecimalGroup() {
+        int[][] decimals = decimalGroups.get();
+        if (decimals != null && decimals.length != 0) {
+            return decimals[decimals.length - 1];
+        }
+        return new int[]{};
     }
 
     private String removeTrailingZeros(String num) {
