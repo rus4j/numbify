@@ -1,8 +1,5 @@
 package org.rus4j.numbify;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public class Numbify {
 
     private final Language lang;
@@ -24,12 +21,16 @@ public class Numbify {
 
     public String toText(Number number) {
         NumberGroup group = new NumberGroup(number);
-        return Stream.of(
-            intText.text(group, lang),
-            delimiterText.text(lang),
-            decimalText.text(group, lang)
-        )
-            .filter(text -> text != null && !text.isEmpty())
-            .collect(Collectors.joining(" "));
+        String integer = intText.text(group, lang);
+        String delimiter = delimiterText.text(lang);
+        String decimal = decimalText.text(group, lang);
+
+        if (!delimiter.isEmpty() && !decimal.isEmpty()) {
+            return integer + " " + delimiter + " " + decimal;
+        }
+        if (delimiter.isEmpty() && !decimal.isEmpty()) {
+            return integer + " " + decimal;
+        }
+        return integer;
     }
 }

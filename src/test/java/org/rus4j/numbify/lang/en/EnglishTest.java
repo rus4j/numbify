@@ -1,6 +1,7 @@
 package org.rus4j.numbify.lang.en;
 
 import org.junit.jupiter.api.Test;
+import org.rus4j.numbify.Currency;
 import org.rus4j.numbify.Numbify;
 import org.rus4j.numbify.NumbifyBuilder;
 
@@ -41,5 +42,12 @@ public class EnglishTest {
                         "seven hundred seventy five thousand " +
                         "eight hundred seven"
                 );
+    }
+
+    @Test
+    public void numberTest() {
+        Numbify en = new NumbifyBuilder().english(Currency.NUMBER).build();
+        assertThat(en.toText(123)).isEqualTo("one hundred twenty three");
+        assertThat(en.toText(123.1)).isEqualTo("one hundred twenty three and one tenths");
     }
 }
