@@ -19,13 +19,13 @@ class NumberGroupTest {
     @Test
     public void lastDecimalGroupTest() {
         NumberGroup group = new NumberGroup(10);
-        assertThat(group.lastDecimalGroup()).isEqualTo(new int[]{});
+        assertThat(group.lastDecimalGroup(false)).isEqualTo(new int[]{});
 
         group.decimalGroup(true);
-        assertThat(group.lastDecimalGroup()).isEqualTo(new int[]{});
+        assertThat(group.lastDecimalGroup(false)).isEqualTo(new int[]{});
 
         NumberGroup numberGroup = new NumberGroup(10.1);
         numberGroup.decimalGroup(true);
-        assertThat(numberGroup.lastDecimalGroup()).isEqualTo(new int[]{0, 1, 0});
+        assertThat(numberGroup.lastDecimalGroup(false)).isEqualTo(new int[]{0, 1, 0});
     }
 }

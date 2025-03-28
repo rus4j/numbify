@@ -23,13 +23,18 @@ public class NumberGroup {
 
     public int[][] decimalGroup(boolean shouldBeRounded) {
         if (this.decimalGroups.get() == null) {
-            String[] split = new BigDecimal(number.toString()).toPlainString().split("\\.");
-            if (split.length == 1) return this.decimalGroups.updateAndGet(ints -> new int[][]{});
-            String num = split[1];
-            String normalize = shouldBeRounded ? round(num) : removeTrailingZeros(num);
-            this.decimalGroups.set(splitNumbersByGroups(toArray(normalize)));
+            String normalized = normalizeDecimalPart(shouldBeRounded);
+            if (normalized.isEmpty()) return this.decimalGroups.updateAndGet(ints -> new int[][]{});
+            this.decimalGroups.set(splitNumbersByGroups(toArray(normalized)));
         }
         return this.decimalGroups.get();
+    }
+
+    private String normalizeDecimalPart(boolean shouldBeRounded) {
+        String[] split = new BigDecimal(number.toString()).toPlainString().split("\\.");
+        if (split.length == 1) return "";
+        String num = split[1];
+        return shouldBeRounded ? round(num) : removeTrailingZeros(num);
     }
 
     public int decimalLength() {
@@ -41,12 +46,20 @@ public class NumberGroup {
         return ints[ints.length - 1];
     }
 
-    public int[] lastDecimalGroup() {
-        int[][] decimals = decimalGroups.get();
-        if (decimals != null && decimals.length != 0) {
+    public int[] lastDecimalGroup(boolean shouldBeRounded) {
+        int[][] decimals = decimalGroup(shouldBeRounded);
+        if (decimals.length != 0) {
             return decimals[decimals.length - 1];
         }
         return new int[]{};
+    }
+
+    public String originalInt() {
+        return new BigDecimal(number.toString()).toBigInteger().toString();
+    }
+
+    public String originalDecimal(boolean shouldBeRounded) {
+        return normalizeDecimalPart(shouldBeRounded);
     }
 
     private String removeTrailingZeros(String num) {
