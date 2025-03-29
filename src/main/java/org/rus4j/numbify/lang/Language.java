@@ -1,10 +1,8 @@
 package org.rus4j.numbify.lang;
 
-import org.rus4j.numbify.Numbify;
-
 /**
  * Every language must implement this interface.
- * Used in {@link Numbify} to transform number to text depends on specific language.
+ * Used in {@link org.rus4j.numbify.CombinedText} to transform number to text depends on specific language.
  */
 public interface Language {
 
