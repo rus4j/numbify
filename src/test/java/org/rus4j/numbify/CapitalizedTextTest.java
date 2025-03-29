@@ -1,6 +1,7 @@
 package org.rus4j.numbify;
 
 import org.junit.jupiter.api.Test;
+import org.rus4j.numbify.lang.Currency;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

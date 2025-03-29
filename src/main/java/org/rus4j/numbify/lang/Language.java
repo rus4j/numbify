@@ -1,4 +1,6 @@
-package org.rus4j.numbify;
+package org.rus4j.numbify.lang;
+
+import org.rus4j.numbify.Numbify;
 
 /**
  * Every language must implement this interface.

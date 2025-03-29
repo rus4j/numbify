@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.rus4j.numbify.Gender;
+import org.rus4j.numbify.lang.Gender;
 
 import static org.rus4j.numbify.lang.ru.RuDeclension.ACCUSATIVE;
 import static org.rus4j.numbify.lang.ru.RuDeclension.DATIVE;

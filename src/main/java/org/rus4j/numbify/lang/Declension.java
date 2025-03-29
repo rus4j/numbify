@@ -1,4 +1,4 @@
-package org.rus4j.numbify;
+package org.rus4j.numbify.lang;
 
 /**
  * Some languages could have different number text representation depends on declension.

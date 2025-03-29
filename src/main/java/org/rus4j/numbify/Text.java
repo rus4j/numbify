@@ -2,6 +2,8 @@ package org.rus4j.numbify;
 
 import java.util.StringJoiner;
 
+import org.rus4j.numbify.lang.Language;
+
 public class Text {
 
     public String intText(NumberGroup group, Language lang) {
@@ -9,7 +11,7 @@ public class Text {
     }
 
     public String decimalText(NumberGroup group, Language lang) {
-        return toText(group.decimalGroup(lang.hasSpecificCurrency()), lang, true);
+        return toText(group.decimalGroup(), lang, true);
     }
 
     private String toText(int[][] groups, Language lang, boolean isDecimal) {

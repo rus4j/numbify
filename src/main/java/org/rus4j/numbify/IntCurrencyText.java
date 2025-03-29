@@ -1,5 +1,7 @@
 package org.rus4j.numbify;
 
+import org.rus4j.numbify.lang.Language;
+
 public class IntCurrencyText implements NumberText {
     private final NumberText text;
 

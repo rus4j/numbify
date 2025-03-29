@@ -1,5 +1,7 @@
 package org.rus4j.numbify;
 
+import org.rus4j.numbify.lang.Currency;
+import org.rus4j.numbify.lang.Language;
 import org.rus4j.numbify.lang.en.English;
 import org.rus4j.numbify.lang.ru.RuDeclension;
 import org.rus4j.numbify.lang.ru.Russian;
@@ -9,8 +11,8 @@ public class NumbifyBuilder {
     private boolean showIntegerCurrency = true;
     private boolean showDecimalCurrency = true;
     private boolean capitalize = false;
-    private boolean doNotConvertInt = false;
-    private boolean doNotConvertDecimal = false;
+    private boolean originalInt = false;
+    private boolean originalDecimal = false;
 
     public NumbifyBuilder english() {
         this.language = new English(Currency.USD);
@@ -47,13 +49,13 @@ public class NumbifyBuilder {
         return this;
     }
 
-    public NumbifyBuilder doNotConvertInt() {
-        this.doNotConvertInt = true;
+    public NumbifyBuilder originalInt() {
+        this.originalInt = true;
         return this;
     }
 
-    public NumbifyBuilder doNotConvertDecimal() {
-        this.doNotConvertDecimal = true;
+    public NumbifyBuilder originalDecimal() {
+        this.originalDecimal = true;
         return this;
     }
 
@@ -64,8 +66,8 @@ public class NumbifyBuilder {
 
     public Numbify build() {
         Text text = new Text();
-        NumberText intText = doNotConvertInt ? new IntOriginalText() : text::intText;
-        NumberText decimalText = doNotConvertDecimal ? new DecimalOriginalText() : text::decimalText;
+        NumberText intText = originalInt ? new IntOriginalText() : text::intText;
+        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : text::decimalText;
         intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
         decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
         CombinedText combinedText = new CombinedText(language, intText, decimalText, new DelimiterText());

@@ -1,5 +1,7 @@
 package org.rus4j.numbify;
 
+import org.rus4j.numbify.lang.Language;
+
 public class IntOriginalText implements NumberText {
 
     @Override

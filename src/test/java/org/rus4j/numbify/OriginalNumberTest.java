@@ -1,6 +1,7 @@
 package org.rus4j.numbify;
 
 import org.junit.jupiter.api.Test;
+import org.rus4j.numbify.lang.Currency;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,9 +10,9 @@ public class OriginalNumberTest {
     @Test
     public void originalIntTest() {
         Numbify ru = new NumbifyBuilder().russian(Currency.RUB)
-                .doNotConvertInt().build();
+                .originalInt().build();
         Numbify en = new NumbifyBuilder().english(Currency.USD)
-                .doNotConvertInt().build();
+                .originalInt().build();
 
         assertThat(ru.toText(10.23)).isEqualTo("10 рублей двадцать три копейки");
         assertThat(ru.toText(0.23)).isEqualTo("0 рублей двадцать три копейки");
@@ -23,9 +24,9 @@ public class OriginalNumberTest {
     @Test
     public void originalDecimalTest() {
         Numbify ru = new NumbifyBuilder().russian(Currency.RUB)
-                .doNotConvertDecimal().build();
+                .originalDecimal().build();
         Numbify en = new NumbifyBuilder().english(Currency.USD)
-                .doNotConvertDecimal().build();
+                .originalDecimal().build();
 
         assertThat(ru.toText(10.23)).isEqualTo("десять рублей 23 копейки");
         assertThat(ru.toText(0)).isEqualTo("ноль рублей");
