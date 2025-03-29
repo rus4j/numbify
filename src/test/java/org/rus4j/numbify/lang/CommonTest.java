@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.DoubleAccumulator;
 import java.util.concurrent.atomic.DoubleAdder;
 
 import org.junit.jupiter.api.Test;
-import org.rus4j.numbify.Currency;
 import org.rus4j.numbify.Numbify;
 import org.rus4j.numbify.NumbifyBuilder;
 

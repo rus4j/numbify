@@ -1,5 +1,10 @@
 package org.rus4j.numbify;
 
+import org.rus4j.numbify.lang.Language;
+import org.rus4j.numbify.number.DefaultNumber;
+import org.rus4j.numbify.number.RoundedNumber;
+import org.rus4j.numbify.number.StringNumber;
+
 public class CombinedText implements Numbify {
 
     private final Language lang;
@@ -21,7 +26,9 @@ public class CombinedText implements Numbify {
 
     @Override
     public String toText(Number number) {
-        NumberGroup group = new NumberGroup(number);
+        StringNumber stringNumber = new DefaultNumber(number);
+        stringNumber = lang.hasSpecificCurrency() ? new RoundedNumber(stringNumber) : stringNumber;
+        NumberGroup group = new NumberGroup(stringNumber);
         String integer = intText.text(group, lang);
         String delimiter = delimiterText.text(lang);
         String decimal = decimalText.text(group, lang);

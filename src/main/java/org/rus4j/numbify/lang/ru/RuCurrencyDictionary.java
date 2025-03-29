@@ -2,7 +2,7 @@ package org.rus4j.numbify.lang.ru;
 
 import java.util.Map;
 
-import org.rus4j.numbify.Currency;
+import org.rus4j.numbify.lang.Currency;
 
 import static org.rus4j.numbify.lang.ru.RuDeclension.ACCUSATIVE;
 import static org.rus4j.numbify.lang.ru.RuDeclension.DATIVE;

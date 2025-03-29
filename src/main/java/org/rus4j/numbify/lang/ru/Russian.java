@@ -1,8 +1,8 @@
 package org.rus4j.numbify.lang.ru;
 
-import org.rus4j.numbify.Currency;
-import org.rus4j.numbify.Gender;
-import org.rus4j.numbify.Language;
+import org.rus4j.numbify.lang.Currency;
+import org.rus4j.numbify.lang.Gender;
+import org.rus4j.numbify.lang.Language;
 
 public class Russian implements Language {
     private final RuDictionary dict;

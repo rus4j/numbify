@@ -1,8 +1,8 @@
 package org.rus4j.numbify.lang.ru;
 
 import org.junit.jupiter.api.Test;
-import org.rus4j.numbify.Currency;
-import org.rus4j.numbify.Gender;
+import org.rus4j.numbify.lang.Currency;
+import org.rus4j.numbify.lang.Gender;
 import org.rus4j.numbify.Numbify;
 import org.rus4j.numbify.NumbifyBuilder;
 

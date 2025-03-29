@@ -1,14 +1,16 @@
 package org.rus4j.numbify;
 
-public class IntCurrencyText implements NumberText {
-    private final Text text;
+import org.rus4j.numbify.lang.Language;
 
-    public IntCurrencyText(Text text) {
+public class IntCurrencyText implements NumberText {
+    private final NumberText text;
+
+    public IntCurrencyText(NumberText text) {
         this.text = text;
     }
 
     public String text(NumberGroup group, Language lang) {
-        String intText = text.intText(group, lang);
+        String intText = text.text(group, lang);
         String currencyText = lang.intCurrency(group.lastIntGroup());
         if (!currencyText.isEmpty()) {
             return intText + " " + currencyText;

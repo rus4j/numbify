@@ -1,39 +1,38 @@
 package org.rus4j.numbify;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.rus4j.numbify.number.StringNumber;
+
 public class NumberGroup {
-    private final Number number;
+    private final StringNumber number;
     private final AtomicReference<int[][]> intGroups = new AtomicReference<>();
     private final AtomicReference<int[][]> decimalGroups = new AtomicReference<>();
 
-    public NumberGroup(Number number) {
+    public NumberGroup(StringNumber number) {
         this.number = number;
     }
 
     public int[][] integerGroup() {
         if (this.intGroups.get() == null) {
-            String intPart = new BigDecimal(number.toString()).toPlainString().split("\\.")[0];
+            String intPart = number.intString();
             this.intGroups.set(splitNumbersByGroups(toArray(intPart)));
         }
         return this.intGroups.get();
     }
 
-    public int[][] decimalGroup(boolean shouldBeRounded) {
+    public int[][] decimalGroup() {
         if (this.decimalGroups.get() == null) {
-            String[] split = new BigDecimal(number.toString()).toPlainString().split("\\.");
-            if (split.length == 1) return this.decimalGroups.updateAndGet(ints -> new int[][]{});
-            String num = split[1];
-            String normalize = shouldBeRounded ? round(num) : removeTrailingZeros(num);
-            this.decimalGroups.set(splitNumbersByGroups(toArray(normalize)));
+            String decimalPart = number.decimalString();
+            if (decimalPart.isEmpty()) return this.decimalGroups.updateAndGet(ints -> new int[][]{});
+            this.decimalGroups.set(splitNumbersByGroups(toArray(decimalPart)));
         }
         return this.decimalGroups.get();
     }
 
     public int decimalLength() {
-        return BigDecimal.valueOf(number.doubleValue()).stripTrailingZeros().scale();
+        return number.decimalString().length();
     }
 
     public int[] lastIntGroup() {
@@ -42,31 +41,19 @@ public class NumberGroup {
     }
 
     public int[] lastDecimalGroup() {
-        int[][] decimals = decimalGroups.get();
-        if (decimals != null && decimals.length != 0) {
+        int[][] decimals = decimalGroup();
+        if (decimals.length != 0) {
             return decimals[decimals.length - 1];
         }
         return new int[]{};
     }
 
-    private String removeTrailingZeros(String num) {
-        int n = num.length() - 1;
-        int zeroCount = 0;
-        for (int i = n; i >= 0; i--) {
-            if (num.charAt(i) != '0') {
-                break;
-            }
-            zeroCount++;
-        }
-        if (num.length() == zeroCount) return "0";
-        return num.substring(0, num.length() - zeroCount);
+    public String originalInt() {
+        return number.intString();
     }
 
-    private String round(String num) {
-        if (num.length() < 2) {
-            return num + "0".repeat(2 - num.length());
-        }
-        return num.substring(0, 2);
+    public String originalDecimal() {
+        return number.decimalString();
     }
 
     private int[] toArray(String number) {
