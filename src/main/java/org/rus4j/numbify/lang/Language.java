@@ -77,10 +77,4 @@ public interface Language {
      * @return true if language has currency different from {@link Currency#NUMBER}.
      */
     boolean hasSpecificCurrency();
-
-    /**
-     * Language could have delimiter between int and decimal part on a number.
-     * @return parts delimiter.
-     */
-    String numberPartsDelimiter();
 }

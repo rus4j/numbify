@@ -69,10 +69,4 @@ public class English implements Language {
     public boolean hasSpecificCurrency() {
         return !currency.equals(Currency.NUMBER);
     }
-
-    @Override
-    public String numberPartsDelimiter() {
-        if (hasSpecificCurrency()) return "";
-        else return "and";
-    }
 }

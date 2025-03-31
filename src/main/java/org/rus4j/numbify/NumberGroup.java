@@ -48,14 +48,6 @@ public class NumberGroup {
         return new int[]{};
     }
 
-    public String originalInt() {
-        return number.intString();
-    }
-
-    public String originalDecimal() {
-        return number.decimalString();
-    }
-
     private int[] toArray(String number) {
         char[] chars = number.toCharArray();
         int[] arr = new int[chars.length];

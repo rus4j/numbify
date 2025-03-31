@@ -13,6 +13,7 @@ public class NumbifyBuilder {
     private boolean capitalize = false;
     private boolean originalInt = false;
     private boolean originalDecimal = false;
+    private String decimalSeparator = "";
 
     public NumbifyBuilder english() {
         this.language = new English(Currency.USD);
@@ -21,6 +22,9 @@ public class NumbifyBuilder {
 
     public NumbifyBuilder english(Currency currency) {
         this.language = new English(currency);
+        if (currency == Currency.NUMBER) {
+            decimalSeparator = "and";
+        }
         return this;
     }
 
@@ -65,12 +69,12 @@ public class NumbifyBuilder {
     }
 
     public Numbify build() {
-        Text text = new Text();
-        NumberText intText = originalInt ? new IntOriginalText() : text::intText;
-        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : text::decimalText;
-        intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
-        decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
-        CombinedText combinedText = new CombinedText(language, intText, decimalText, new DelimiterText());
+        Text text = new Text(language);
+        Numbify intText = originalInt ? new IntOriginalText(text) : new IntText(text);
+        Numbify decimalText = originalDecimal ? new DecimalOriginalText(text) : new DecimalText(text);
+        intText = showIntegerCurrency ? new IntCurrencyText(intText, text) : intText;
+        decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText, text) : decimalText;
+        CombinedText combinedText = new CombinedText(intText, decimalText, decimalSeparator);
         return capitalize ? new CapitalizedText(combinedText) : combinedText;
     }
 }
