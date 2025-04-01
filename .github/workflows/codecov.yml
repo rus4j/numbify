@@ -3,6 +3,7 @@ name: codecov
   push:
     branches:
       - master
+    paths: ['**.java', '**.gradle']
   pull_request:
     branches:
       - master
