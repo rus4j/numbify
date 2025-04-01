@@ -1,4 +1,5 @@
 # Numbify
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5683645ec8914bba99fbb16142656118)](https://app.codacy.com/gh/rus4j/numbify?utm_source=github.com&utm_medium=referral&utm_content=rus4j/numbify&utm_campaign=Badge_Grade)
 [![EO](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org/)
 
 ![workflow](https://github.com/rus4j/numbify/actions/workflows/gradle.yml/badge.svg)
