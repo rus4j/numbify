@@ -4,6 +4,8 @@
 ![workflow](https://github.com/rus4j/numbify/actions/workflows/gradle.yml/badge.svg)
 [![codecov](https://codecov.io/gh/rus4j/numbify/graph/badge.svg?token=L4MHCKGMQQ)](https://codecov.io/gh/rus4j/numbify)
 [![Maven Central Version](https://img.shields.io/maven-central/v/org.rus4j/numbify)](https://central.sonatype.com/artifact/org.rus4j/numbify)
+[![Hits-of-Code](https://hitsofcode.com/github/rus4j/numbify?branch=master&label=Hits-of-Code)](https://hitsofcode.com/github/rus4j/numbify/view?branch=master&label=Hits-of-Code)
+
 
 Numbify ia s Java library for transforming numbers into text with wide customization options.
 
