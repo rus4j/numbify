@@ -14,10 +14,10 @@ public class NumbifyBuilder {
     private boolean originalInt = false;
     private boolean originalDecimal = false;
     private String decimalSeparator = "";
+    private CompoundNumberDelimiter numberDelimiter;
 
     public NumbifyBuilder english() {
-        this.language = new English(Currency.USD);
-        return this;
+        return english(Currency.USD);
     }
 
     public NumbifyBuilder english(Currency currency) {
@@ -25,16 +25,19 @@ public class NumbifyBuilder {
         if (currency == Currency.NUMBER) {
             decimalSeparator = "and";
         }
+        this.numberDelimiter = new HyphenDelimiter();
         return this;
     }
 
     public NumbifyBuilder russian(Currency currency) {
         this.language = new Russian(currency);
+        this.numberDelimiter = new SpaceDelimiter();
         return this;
     }
 
     public NumbifyBuilder russian(RuDeclension declension, Currency currency) {
         this.language = new Russian(declension, currency);
+        this.numberDelimiter = new SpaceDelimiter();
         return this;
     }
 
@@ -65,11 +68,12 @@ public class NumbifyBuilder {
 
     public NumbifyBuilder customLanguage(Language language) {
         this.language = language;
+        this.numberDelimiter = new SpaceDelimiter();
         return this;
     }
 
     public Numbify build() {
-        Text text = new Text(language);
+        Text text = new Text(language, numberDelimiter);
         Numbify intText = originalInt ? new IntOriginalText(text) : new IntText(text);
         Numbify decimalText = originalDecimal ? new DecimalOriginalText(text) : new DecimalText(text);
         intText = showIntegerCurrency ? new IntCurrencyText(intText, text) : intText;

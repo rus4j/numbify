@@ -10,6 +10,6 @@ class CapitalizedTextTest {
     @Test
     public void capitalizeTest() {
         Numbify en = new NumbifyBuilder().english(Currency.USD).capitalize().build();
-        assertThat(en.toText(123)).isEqualTo("One hundred twenty three dollars");
+        assertThat(en.toText(123)).isEqualTo("One hundred twenty-three dollars");
     }
 }
