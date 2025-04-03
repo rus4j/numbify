@@ -9,18 +9,26 @@ public class ForwardOrder implements DigitGroupOrder {
 
     @Override
     public String text(String hundredText, String tenText, String unitText) {
-        if (!hundredText.isEmpty() && !tenText.isEmpty() && !unitText.isEmpty()) {
-            return hundredText + " " + tenText + compoundNumberDelimiter + unitText;
-        } else if (!hundredText.isEmpty() && !tenText.isEmpty()) {
-            return hundredText + " " + tenText;
-        } else if (!hundredText.isEmpty() && !unitText.isEmpty()) {
-            return hundredText + " " + unitText;
-        } else if (!hundredText.isEmpty()) {
-            return hundredText;
-        } else if (!tenText.isEmpty() && !unitText.isEmpty()) {
-            return tenText + compoundNumberDelimiter + unitText;
-        } else if (!tenText.isEmpty()) {
-            return tenText;
-        } else return unitText;
+        byte emptyState = emptyState(hundredText, tenText, unitText);
+        return switch (emptyState) {
+            case 0b111 -> hundredText + " " + tenText + compoundNumberDelimiter + unitText;
+            case 0b110 -> hundredText + " " + tenText;
+            case 0b101 -> hundredText + " " + unitText;
+            case 0b100 -> hundredText;
+            case 0b011 -> tenText + compoundNumberDelimiter + unitText;
+            case 0b010 -> tenText;
+            default -> unitText;
+        };
+    }
+
+    private static byte emptyState(String hundredText, String tenText, String unitText) {
+        boolean[] isEmptyDigits = {unitText.isEmpty(), tenText.isEmpty(), hundredText.isEmpty()};
+        byte emptyState = 0b000;
+        for (int i = 0; i < isEmptyDigits.length; i++) {
+            if (!isEmptyDigits[i]) {
+                emptyState |= 1 << i;
+            }
+        }
+        return emptyState;
     }
 }
