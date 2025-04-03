@@ -1,6 +1,8 @@
 package org.rus4j.numbify;
 
+import java.util.Map;
 import java.util.StringJoiner;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.rus4j.numbify.lang.Language;
 import org.rus4j.numbify.number.DefaultNumber;
@@ -9,9 +11,12 @@ import org.rus4j.numbify.number.StringNumber;
 
 public class Text {
     private final Language lang;
+    private final DigitGroupOrder digitGroupOrder;
+    private final Map<Number, NumberGroup> numberGroupCache = new ConcurrentHashMap<>(1, 1);
 
-    public Text(Language lang) {
+    public Text(Language lang, DigitGroupOrder digitGroupOrder) {
         this.lang = lang;
+        this.digitGroupOrder = digitGroupOrder;
     }
 
     public String intText(Number number) {
@@ -50,7 +55,14 @@ public class Text {
     }
 
     private NumberGroup numberGroup(Number number) {
-        return new NumberGroup(stringNumber(number));
+        if (numberGroupCache.containsKey(number)) {
+            return numberGroupCache.get(number);
+        } else {
+            numberGroupCache.clear();
+            NumberGroup numberGroup = new NumberGroup(stringNumber(number));
+            numberGroupCache.put(number, numberGroup);
+            return numberGroup;
+        }
     }
 
     private String toText(int[][] groups, boolean isDecimal) {
@@ -80,25 +92,6 @@ public class Text {
             tenText = lang.tens(digits[1]);
             unitText = lang.unitNumber(groupNum, digits, isDecimal);
         }
-
-        if (!hundredText.isEmpty() && !tenText.isEmpty() && !unitText.isEmpty()) {
-            return hundredText + " " + tenText + " " + unitText;
-        }
-        if (!hundredText.isEmpty() && !tenText.isEmpty()) {
-            return hundredText + " " + tenText;
-        }
-        if (!hundredText.isEmpty() && !unitText.isEmpty()) {
-            return hundredText + " " + unitText;
-        }
-        if (!hundredText.isEmpty()) {
-            return hundredText;
-        }
-        if (!tenText.isEmpty() && !unitText.isEmpty()) {
-            return tenText + " " + unitText;
-        }
-        if (!tenText.isEmpty()) {
-            return tenText;
-        }
-        return unitText;
+        return digitGroupOrder.text(hundredText, tenText, unitText);
     }
 }
