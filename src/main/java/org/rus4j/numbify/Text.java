@@ -1,6 +1,8 @@
 package org.rus4j.numbify;
 
+import java.util.Map;
 import java.util.StringJoiner;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.rus4j.numbify.lang.Language;
 import org.rus4j.numbify.number.DefaultNumber;
@@ -10,6 +12,7 @@ import org.rus4j.numbify.number.StringNumber;
 public class Text {
     private final Language lang;
     private final DigitGroupOrder digitGroupOrder;
+    private final Map<Number, NumberGroup> numberGroupCache = new ConcurrentHashMap<>(1, 1);
 
     public Text(Language lang, DigitGroupOrder digitGroupOrder) {
         this.lang = lang;
@@ -52,7 +55,14 @@ public class Text {
     }
 
     private NumberGroup numberGroup(Number number) {
-        return new NumberGroup(stringNumber(number));
+        if (numberGroupCache.containsKey(number)) {
+            return numberGroupCache.get(number);
+        } else {
+            numberGroupCache.clear();
+            NumberGroup numberGroup = new NumberGroup(stringNumber(number));
+            numberGroupCache.put(number, numberGroup);
+            return numberGroup;
+        }
     }
 
     private String toText(int[][] groups, boolean isDecimal) {
