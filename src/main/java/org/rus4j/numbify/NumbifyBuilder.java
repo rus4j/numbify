@@ -14,7 +14,7 @@ public class NumbifyBuilder {
     private boolean originalInt = false;
     private boolean originalDecimal = false;
     private String decimalSeparator = "";
-    private DigitGroupOrder numberDelimiter;
+    private DigitGroupOrder digitGroupOrder;
 
     public NumbifyBuilder english() {
         return english(Currency.USD);
@@ -25,19 +25,19 @@ public class NumbifyBuilder {
         if (currency == Currency.NUMBER) {
             decimalSeparator = "and";
         }
-        this.numberDelimiter = new ForwardOrder("-");
+        this.digitGroupOrder = new ForwardOrder("-");
         return this;
     }
 
     public NumbifyBuilder russian(Currency currency) {
         this.language = new Russian(currency);
-        this.numberDelimiter = new ForwardOrder(" ");
+        this.digitGroupOrder = new ForwardOrder(" ");
         return this;
     }
 
     public NumbifyBuilder russian(RuDeclension declension, Currency currency) {
         this.language = new Russian(declension, currency);
-        this.numberDelimiter = new ForwardOrder(" ");
+        this.digitGroupOrder = new ForwardOrder(" ");
         return this;
     }
 
@@ -68,12 +68,12 @@ public class NumbifyBuilder {
 
     public NumbifyBuilder customLanguage(Language language) {
         this.language = language;
-        this.numberDelimiter = new ForwardOrder(" ");
+        this.digitGroupOrder = new ForwardOrder(" ");
         return this;
     }
 
     public Numbify build() {
-        Text text = new Text(language, numberDelimiter);
+        Text text = new Text(language, digitGroupOrder);
         Numbify intText = originalInt ? new IntOriginalText(text) : new IntText(text);
         Numbify decimalText = originalDecimal ? new DecimalOriginalText(text) : new DecimalText(text);
         intText = showIntegerCurrency ? new IntCurrencyText(intText, text) : intText;
