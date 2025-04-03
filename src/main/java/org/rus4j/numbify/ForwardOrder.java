@@ -11,22 +11,16 @@ public class ForwardOrder implements DigitGroupOrder {
     public String text(String hundredText, String tenText, String unitText) {
         if (!hundredText.isEmpty() && !tenText.isEmpty() && !unitText.isEmpty()) {
             return hundredText + " " + tenText + compoundNumberDelimiter + unitText;
-        }
-        if (!hundredText.isEmpty() && !tenText.isEmpty()) {
+        } else if (!hundredText.isEmpty() && !tenText.isEmpty()) {
             return hundredText + " " + tenText;
-        }
-        if (!hundredText.isEmpty() && !unitText.isEmpty()) {
+        } else if (!hundredText.isEmpty() && !unitText.isEmpty()) {
             return hundredText + " " + unitText;
-        }
-        if (!hundredText.isEmpty()) {
+        } else if (!hundredText.isEmpty()) {
             return hundredText;
-        }
-        if (!tenText.isEmpty() && !unitText.isEmpty()) {
+        } else if (!tenText.isEmpty() && !unitText.isEmpty()) {
             return tenText + compoundNumberDelimiter + unitText;
-        }
-        if (!tenText.isEmpty()) {
+        } else if (!tenText.isEmpty()) {
             return tenText;
-        }
-        return unitText;
+        } else return unitText;
     }
 }
