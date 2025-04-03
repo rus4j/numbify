@@ -1,10 +1,16 @@
 package org.rus4j.numbify;
 
-public class SpaceDelimiter implements CompoundNumberDelimiter {
+public class ForwardOrder implements DigitGroupOrder {
+    private final String compoundNumberDelimiter;
+
+    public ForwardOrder(String compoundNumberDelimiter) {
+        this.compoundNumberDelimiter = compoundNumberDelimiter;
+    }
+
     @Override
-    public String join(String hundredText, String tenText, String unitText) {
+    public String text(String hundredText, String tenText, String unitText) {
         if (!hundredText.isEmpty() && !tenText.isEmpty() && !unitText.isEmpty()) {
-            return hundredText + " " + tenText + " " + unitText;
+            return hundredText + " " + tenText + compoundNumberDelimiter + unitText;
         }
         if (!hundredText.isEmpty() && !tenText.isEmpty()) {
             return hundredText + " " + tenText;
@@ -16,7 +22,7 @@ public class SpaceDelimiter implements CompoundNumberDelimiter {
             return hundredText;
         }
         if (!tenText.isEmpty() && !unitText.isEmpty()) {
-            return tenText + " " + unitText;
+            return tenText + compoundNumberDelimiter + unitText;
         }
         if (!tenText.isEmpty()) {
             return tenText;

@@ -14,7 +14,7 @@ public class NumbifyBuilder {
     private boolean originalInt = false;
     private boolean originalDecimal = false;
     private String decimalSeparator = "";
-    private CompoundNumberDelimiter numberDelimiter;
+    private DigitGroupOrder numberDelimiter;
 
     public NumbifyBuilder english() {
         return english(Currency.USD);
@@ -25,19 +25,19 @@ public class NumbifyBuilder {
         if (currency == Currency.NUMBER) {
             decimalSeparator = "and";
         }
-        this.numberDelimiter = new HyphenDelimiter();
+        this.numberDelimiter = new ForwardOrder("-");
         return this;
     }
 
     public NumbifyBuilder russian(Currency currency) {
         this.language = new Russian(currency);
-        this.numberDelimiter = new SpaceDelimiter();
+        this.numberDelimiter = new ForwardOrder(" ");
         return this;
     }
 
     public NumbifyBuilder russian(RuDeclension declension, Currency currency) {
         this.language = new Russian(declension, currency);
-        this.numberDelimiter = new SpaceDelimiter();
+        this.numberDelimiter = new ForwardOrder(" ");
         return this;
     }
 
@@ -68,7 +68,7 @@ public class NumbifyBuilder {
 
     public NumbifyBuilder customLanguage(Language language) {
         this.language = language;
-        this.numberDelimiter = new SpaceDelimiter();
+        this.numberDelimiter = new ForwardOrder(" ");
         return this;
     }
 

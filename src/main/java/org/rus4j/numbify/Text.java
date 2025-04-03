@@ -9,11 +9,11 @@ import org.rus4j.numbify.number.StringNumber;
 
 public class Text {
     private final Language lang;
-    private final CompoundNumberDelimiter compoundNumberDelimiter;
+    private final DigitGroupOrder digitGroupOrder;
 
-    public Text(Language lang, CompoundNumberDelimiter compoundNumberDelimiter) {
+    public Text(Language lang, DigitGroupOrder digitGroupOrder) {
         this.lang = lang;
-        this.compoundNumberDelimiter = compoundNumberDelimiter;
+        this.digitGroupOrder = digitGroupOrder;
     }
 
     public String intText(Number number) {
@@ -82,6 +82,6 @@ public class Text {
             tenText = lang.tens(digits[1]);
             unitText = lang.unitNumber(groupNum, digits, isDecimal);
         }
-        return compoundNumberDelimiter.join(hundredText, tenText, unitText);
+        return digitGroupOrder.text(hundredText, tenText, unitText);
     }
 }
