@@ -1,59 +1,116 @@
-# Numbify
-[![EO](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org/)
+Numbify ia s Java object oriented library for transforming numbers into text with wide customization options.
+There are 2 ways of using it.
+* First one is NumbifyBuilder. You can customize it using existing builder methods.
+* Second one is using objects itself and combine them in any way you want.
 
-![workflow](https://github.com/rus4j/numbify/actions/workflows/gradle.yml/badge.svg)
-[![codecov](https://codecov.io/gh/rus4j/numbify/graph/badge.svg?token=L4MHCKGMQQ)](https://codecov.io/gh/rus4j/numbify)
-[![Maven Central Version](https://img.shields.io/maven-central/v/org.rus4j/numbify)](https://central.sonatype.com/artifact/org.rus4j/numbify)
-[![Hits-of-Code](https://hitsofcode.com/github/rus4j/numbify?branch=master&label=Hits-of-Code)](https://hitsofcode.com/github/rus4j/numbify/view?branch=master&label=Hits-of-Code)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5683645ec8914bba99fbb16142656118)](https://app.codacy.com/gh/rus4j/numbify?utm_source=github.com&utm_medium=referral&utm_content=rus4j/numbify&utm_campaign=Badge_Grade)
-
-
-Numbify ia s Java library for transforming numbers into text with wide customization options.
-
-Inspired by [Ant1mas/number-to-words-ru](https://github.com/Ant1mas/number-to-words-ru)
-
-## Usage
-Add dependency into your project:
-```xml
-<dependency>
-    <groupId>org.rus4j</groupId>
-    <artifactId>numbify</artifactId>
-    <verion>2.0.0</verion>
-</dependency>
-```
-```groovy
-implementation 'org.rus4j:numbify:2.0.0'
-```
-Each language has dedicated method with at least currency as a mandatory paramemeter.
-The simplest example:
+# NumbifyBuilder
+Base (minimal) setup must have language specific method with at least currency as a mandatory parameter.
 ```java
 Numbify en = new NumbifyBuilder()
     .english(Currency.USD)
     .build();
-String numberInText = en.toText(25.17); // "twenty five dollars seventeen cents"
-
-
-Numbify ru = new NumbifyBuilder()
-    .russian(Currency.NUMBER) // no specific currency
-    .build();
-String numberInText = en.toText(25.17); // "двадцать пять целых семнадцать сотых"
+String numberInText = en.toText(25.17); // "twenty-five dollars seventeen cents"
 ```
 
-## Languages
-* 🇬🇧 English
-* 🇷🇺 Russian
-* more TBD
-
-## Language features
+### Language features
 Some languages have features the numerals text representations depend on.
 
-For example russian have declensions, so it has additional builder method with declension as parameters.
+For example Russian have declensions, so it has additional builder method with declension as parameters.
 ```java
 Numbify ru = new NumbifyBuilder()
     .russian(RuDeclension.GENITIVE, Currency.RUB)
     .build();
 
 String number = ru.toText(123.45); // "ста двадцати трёх рублей сорока пяти копеек"
+```
+
+English has option to customize separator between integer and decimal parts of the number:
+```java
+Numbify en = new NumbifyBuilder()
+    .english(Currency.USD, "and") // "and" as decimal separator
+    .build();
+String numberInText = en.toText(25.17); // "twenty-five dollars and seventeen cents"
+```
+
+### Options
+There is also a set of options you can customize:
+```java
+Numbify en = new NumbifyBuilder()
+    .english(Currency.USD)
+    .hideIntCurrency()     // hide currency text for integer part of the number
+    .hideDecimalCurrency() // hide currency text for decimal part
+    .originalInt()         // do not convert integer part, leave it as number
+    .originalDecimal()     // do not convert decimal part
+    .capitalize()          // print text with capital letter
+    .build();
+```
+Example:
+```java
+Numbify en = new NumbifyBuilder()
+    .english(Currency.USD)
+    .originalDecimal()
+    .capitalize()
+    .build();
+
+String numberInText = en.toText(25.17); // "Twenty-five dollars 17 cents"
+```
+
+# Objects
+This way of using Numbify implies that you will combine your own setup from existing objects.
+That gives you much more possibilities to customize your result. Combining of objects based on decorator pattern.
+Base class the user interact with is `Numbify`. And you put all options you need inside it as bricks in lego.
+A minimum constuction will look like:
+```java
+Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new IntText(new Text()) // just int text
+);
+ru.toText(123.12); // сто двадцать три
+```
+If you need currency text, just wrap `IntText` like this:
+
+```java
+Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new IntCurrencyText(new IntText(new Text())) // just int text with currency
+);
+ru.toText(123.12); // сто двадцать три целых
+```
+Next, you need decimals also. Same principle as for integers, use `DecimalText`, or `DecimalCurrencyText`
+and combine the result with `CombinedText`
+```java
+Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalText(new Text()))
+    )
+);
+ru.toText(123.12); // сто двадцать три целых двенадцать сотых
+```
+Use `IntOriginalText` or `DecimalOriginalText` to leave any parts as numbers
+```java
+Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalOriginalText()) // use original decimal
+    )
+);
+ru.toText(123.12); // сто двадцать три целых 12 сотых
+```
+Finally, wrap combined text with `CapitalizedText`:
+```java
+Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new CapitalizedText(     // make the first letter capital
+        new CombinedText(
+            new IntCurrencyText(new IntText(new Text())),
+            new DecimalCurrencyText(new DecimalOriginalText())
+        )
+    )
+);
+ru.toText(123.12); // Сто двадцать три целых 12 сотых
 ```
 
 ## Data types
@@ -65,29 +122,3 @@ It supports any java numeric data types that are subclasses of `Number`
 Byte  Short  Integer  Long  Float  Double  BigInteger  BigDecimal  ...
 ```
 
-## Options
-There is also a set of options you can customize:
-### Hide integer currency
-Hide currency for interger part of number
-```java
-Numbify en = new NumbifyBuilder()
-    .english(Currency.USD)
-    .hideIntCurrency()
-    .build();
-
-String numberInText = en.toText(25.17); // "twenty five seventeen cents"
-```
-### Hide decimal currency
-Hide currency for decimal part of number
-```java
-Numbify en = new NumbifyBuilder()
-    .english(Currency.USD)
-    .hideDecimalCurrency()
-    .build();
-
-String numberInText = en.toText(25.17); // "twenty five dollars seventeen"
-```
-
-* `.capitalize(boolean)` to capitalize each word (TBD)
-* `.showIntOnly(boolean)` to show only integer part of number (TBD)
-* `.showDecimalOnly(boolean)` to show only decimal part (TBD)
