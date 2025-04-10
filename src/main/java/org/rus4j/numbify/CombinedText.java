@@ -1,25 +1,22 @@
 package org.rus4j.numbify;
 
-public class CombinedText implements Numbify {
+import org.rus4j.numbify.lang.Language;
+import org.rus4j.numbify.number.StringNumber;
 
-    private final Numbify intText;
-    private final Numbify decimalText;
-    private final String decimalSeparator;
+public class CombinedText implements NumberText {
+    private final NumberText intText;
+    private final NumberText decimalText;
 
-    public CombinedText(
-            Numbify intText,
-            Numbify decimalText,
-            String decimalSeparator
-    ) {
+    public CombinedText(NumberText intText, NumberText decimalText) {
         this.intText = intText;
         this.decimalText = decimalText;
-        this.decimalSeparator = decimalSeparator;
     }
 
     @Override
-    public String toText(Number number) {
-        String integer = intText.toText(number);
-        String decimal = decimalText.toText(number);
+    public String toText(StringNumber number, Language language) {
+        String integer = intText.toText(number, language);
+        String decimal = decimalText.toText(number, language);
+        String decimalSeparator = language.decimalSeparator();
 
         if (!decimalSeparator.isEmpty() && !decimal.isEmpty()) {
             return integer + " " + decimalSeparator + " " + decimal;

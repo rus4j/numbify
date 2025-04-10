@@ -13,31 +13,44 @@ public class NumbifyBuilder {
     private boolean capitalize = false;
     private boolean originalInt = false;
     private boolean originalDecimal = false;
-    private String decimalSeparator = "";
-    private DigitGroupOrder digitGroupOrder;
 
     public NumbifyBuilder english() {
         return english(Currency.USD);
     }
 
+    /**
+     * Use english with specific currency and decimal separator.
+     *
+     * <pre>{@code
+     * Numbify en = new NumbifyBuilder().english(Currency.NUMBER, "and").build();
+     * en.toText(1.1); // "one and one tenths"
+     *
+     * // empty separator
+     * Numbify en = new NumbifyBuilder().english(Currency.USD, "").build();
+     * en.toText(1.1); // "one dollar one cent"
+     * }</pre>
+     *
+     * @param currency currency
+     * @param decimalSeparator separator between integer and decimal parts.
+     * @return builder
+     */
+    public NumbifyBuilder english(Currency currency, String decimalSeparator) {
+        this.language = new English(currency, decimalSeparator);
+        return this;
+    }
+
     public NumbifyBuilder english(Currency currency) {
         this.language = new English(currency);
-        if (currency == Currency.NUMBER) {
-            decimalSeparator = "and";
-        }
-        this.digitGroupOrder = new ForwardOrder("-");
         return this;
     }
 
     public NumbifyBuilder russian(Currency currency) {
         this.language = new Russian(currency);
-        this.digitGroupOrder = new ForwardOrder(" ");
         return this;
     }
 
     public NumbifyBuilder russian(RuDeclension declension, Currency currency) {
         this.language = new Russian(declension, currency);
-        this.digitGroupOrder = new ForwardOrder(" ");
         return this;
     }
 
@@ -68,17 +81,17 @@ public class NumbifyBuilder {
 
     public NumbifyBuilder customLanguage(Language language) {
         this.language = language;
-        this.digitGroupOrder = new ForwardOrder(" ");
         return this;
     }
 
     public Numbify build() {
-        Text text = new Text(language, digitGroupOrder);
-        Numbify intText = originalInt ? new IntOriginalText(text) : new IntText(text);
-        Numbify decimalText = originalDecimal ? new DecimalOriginalText(text) : new DecimalText(text);
-        intText = showIntegerCurrency ? new IntCurrencyText(intText, text) : intText;
-        decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText, text) : decimalText;
-        CombinedText combinedText = new CombinedText(intText, decimalText, decimalSeparator);
-        return capitalize ? new CapitalizedText(combinedText) : combinedText;
+        Text text = new Text();
+        NumberText intText = originalInt ? new IntOriginalText() : new IntText(text);
+        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(text);
+        intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
+        decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
+        CombinedText combinedText = new CombinedText(intText, decimalText);
+        NumberText c = capitalize ? new CapitalizedText(combinedText) : combinedText;
+        return new Numbify(language, c);
     }
 }

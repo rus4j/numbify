@@ -46,7 +46,7 @@ public class EnglishCurrencyDecimalTest {
 
     @Test
     public void numberCurrencyTest() {
-        Numbify en = new NumbifyBuilder().english(Currency.NUMBER).build();
+        Numbify en = new NumbifyBuilder().english(Currency.NUMBER, "and").build();
 
         assertThat(en.toText(0.01)).isEqualTo("zero and one hundredths");
         assertThat(en.toText(0.02)).isEqualTo("zero and two hundredths");

@@ -46,7 +46,7 @@ public class EnglishTest {
 
     @Test
     public void numberTest() {
-        Numbify en = new NumbifyBuilder().english(Currency.NUMBER).build();
+        Numbify en = new NumbifyBuilder().english(Currency.NUMBER, "and").build();
         assertThat(en.toText(123)).isEqualTo("one hundred twenty-three");
         assertThat(en.toText(123.1)).isEqualTo("one hundred twenty-three and one tenths");
     }

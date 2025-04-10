@@ -1,5 +1,7 @@
 package org.rus4j.numbify.lang;
 
+import org.rus4j.numbify.DigitGroupOrder;
+
 /**
  * Every language must implement this interface.
  * Used in {@link org.rus4j.numbify.CombinedText} to transform number to text depends on specific language.
@@ -77,4 +79,15 @@ public interface Language {
      * @return true if language has currency different from {@link Currency#NUMBER}.
      */
     boolean hasSpecificCurrency();
+
+    /**
+     * @return separator between integer and decimal parts
+     */
+    String decimalSeparator();
+
+    /**
+     * Digit ordering in text representation depends on language rules.
+     * @return implementation of {@link DigitGroupOrder} interface
+     */
+    DigitGroupOrder textOrder();
 }
