@@ -1,10 +1,10 @@
-Numbify ia s Java object oriented library for transforming numbers into text with wide customization options.
-There are 2 ways of using it.
-* First one is NumbifyBuilder. You can customize it using existing builder methods.
-* Second one is using objects itself and combine them in any way you want.
+Numbify is a Java object-oriented library for converting numbers into text with extensive customization options. 
+There are two ways to use it:
+* NumbifyBuilder: Customize the conversion using the provided builder methods.
+* Direct Object Composition: Combine the library's objects in any way you need for greater flexibility.
 
 # NumbifyBuilder
-Base (minimal) setup must have language specific method with at least currency as a mandatory parameter.
+The base setup requires a language-specific method with at least a `Currency` parameter.
 ```java
 Numbify en = new NumbifyBuilder()
     .english(Currency.USD)
@@ -13,9 +13,9 @@ String numberInText = en.toText(25.17); // "twenty-five dollars seventeen cents"
 ```
 
 ### Language features
-Some languages have features the numerals text representations depend on.
+Some languages have grammatical features that affect how numbers are represented in text.
 
-For example Russian have declensions, so it has additional builder method with declension as parameters.
+For example, **Russian** uses **declensions**, so the builder includes an additional method to specify them:
 ```java
 Numbify ru = new NumbifyBuilder()
     .russian(RuDeclension.GENITIVE, Currency.RUB)
@@ -56,10 +56,15 @@ String numberInText = en.toText(25.17); // "Twenty-five dollars 17 cents"
 ```
 
 # Objects
-This way of using Numbify implies that you will combine your own setup from existing objects.
-That gives you much more possibilities to customize your result. Combining of objects based on decorator pattern.
-Base class the user interact with is `Numbify`. And you put all options you need inside it as bricks in lego.
-A minimum constuction will look like:
+For advanced customization, Numbify allows direct object composition following the decorator pattern. 
+This approach provides granular control over number formatting by combining specialized components.
+
+Core Concept:
+* Modular Design: Each formatting option (language, currency, int/decimal handling) is a separate component
+* Decorator Pattern: Components wrap each other to build complex formatting pipelines
+* Base Class: All compositions start with the Numbify root class
+
+Minimal example:
 ```java
 Numbify ru = new Numbify(
     new Russian(Currency.NUMBER),
@@ -67,8 +72,7 @@ Numbify ru = new Numbify(
 );
 ru.toText(123.12); // сто двадцать три
 ```
-If you need currency text, just wrap `IntText` like this:
-
+To include currency text in your output, wrap the `IntText` component with `IntCurrencyText`:
 ```java
 Numbify ru = new Numbify(
     new Russian(Currency.NUMBER),
@@ -77,7 +81,7 @@ Numbify ru = new Numbify(
 ru.toText(123.12); // сто двадцать три целых
 ```
 Next, you need decimals also. Same principle as for integers, use `DecimalText`, or `DecimalCurrencyText`
-and combine the result with `CombinedText`
+and combine the result with `CombinedText`:
 ```java
 Numbify ru = new Numbify(
     new Russian(Currency.NUMBER),
@@ -88,7 +92,7 @@ Numbify ru = new Numbify(
 );
 ru.toText(123.12); // сто двадцать три целых двенадцать сотых
 ```
-Use `IntOriginalText` or `DecimalOriginalText` to leave any parts as numbers
+Use `IntOriginalText` or `DecimalOriginalText` to maintain original numeric values in specific portions of the output text:
 ```java
 Numbify ru = new Numbify(
     new Russian(Currency.NUMBER),
