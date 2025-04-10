@@ -86,7 +86,8 @@ public interface Language {
     String decimalSeparator();
 
     /**
-     * @return digit group order the language uses to write numbers in text
+     * Digit ordering in text representation depends on language rules.
+     * @return implementation of {@link DigitGroupOrder} interface
      */
     DigitGroupOrder textOrder();
 }
