@@ -18,6 +18,27 @@ public class NumbifyBuilder {
         return english(Currency.USD);
     }
 
+    /**
+     * Use english with specific currency and decimal separator.
+     *
+     * <pre>{@code
+     * Numbify en = new NumbifyBuilder().english(Currency.NUMBER, "and").build();
+     * en.toText(1.1); // "one and one tenths"
+     *
+     * // empty separator
+     * Numbify en = new NumbifyBuilder().english(Currency.USD, "").build();
+     * en.toText(1.1); // "one dollar one cent"
+     * }</pre>
+     *
+     * @param currency currency
+     * @param decimalSeparator separator between integer and decimal parts.
+     * @return builder
+     */
+    public NumbifyBuilder english(Currency currency, String decimalSeparator) {
+        this.language = new English(currency, decimalSeparator);
+        return this;
+    }
+
     public NumbifyBuilder english(Currency currency) {
         this.language = new English(currency);
         return this;
