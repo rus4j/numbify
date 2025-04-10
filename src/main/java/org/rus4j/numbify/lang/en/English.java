@@ -1,5 +1,7 @@
 package org.rus4j.numbify.lang.en;
 
+import org.rus4j.numbify.DigitGroupOrder;
+import org.rus4j.numbify.ForwardOrder;
 import org.rus4j.numbify.lang.Currency;
 import org.rus4j.numbify.lang.Language;
 
@@ -7,11 +9,17 @@ public class English implements Language {
     private final EnDictionary dict;
     private final EnCurrencyDictionary currencyDict;
     private final Currency currency;
+    private final String decimalSeparator;
 
-    public English(Currency currency) {
+    public English(Currency currency, String decimalSeparator) {
         this.currency = currency;
         this.dict = new EnDictionary();
         this.currencyDict = new EnCurrencyDictionary();
+        this.decimalSeparator = decimalSeparator;
+    }
+
+    public English(Currency currency) {
+        this(currency, "");
     }
 
     @Override
@@ -68,5 +76,15 @@ public class English implements Language {
     @Override
     public boolean hasSpecificCurrency() {
         return !currency.equals(Currency.NUMBER);
+    }
+
+    @Override
+    public String decimalSeparator() {
+        return decimalSeparator;
+    }
+
+    @Override
+    public DigitGroupOrder textOrder() {
+        return new ForwardOrder("-");
     }
 }

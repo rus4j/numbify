@@ -1,14 +1,12 @@
 package org.rus4j.numbify;
 
-public class DecimalOriginalText implements Numbify {
-    private final Text text;
+import org.rus4j.numbify.lang.Language;
+import org.rus4j.numbify.number.StringNumber;
 
-    public DecimalOriginalText(Text text) {
-        this.text = text;
-    }
+public class DecimalOriginalText implements NumberText {
 
     @Override
-    public String toText(Number number) {
-        return text.originalDecimal(number);
+    public String toText(StringNumber number, Language language) {
+        return number.decimalString();
     }
 }

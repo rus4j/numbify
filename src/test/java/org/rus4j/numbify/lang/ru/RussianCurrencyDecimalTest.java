@@ -21,6 +21,7 @@ public class RussianCurrencyDecimalTest {
         assertThat(ru.toText(0.1)).isEqualTo("ноль рублей десять копеек");
         assertThat(ru.toText(0.10)).isEqualTo("ноль рублей десять копеек");
         assertThat(ru.toText(0.001)).isEqualTo("ноль рублей ноль копеек");
+        assertThat(ru.toText(10.0)).isEqualTo("десять рублей ноль копеек");
         assertThat(ru.toText((double)10)).isEqualTo("десять рублей ноль копеек");
         assertThat(ru.toText(10)).isEqualTo("десять рублей");
     }
@@ -36,6 +37,7 @@ public class RussianCurrencyDecimalTest {
         assertThat(ru.toText(0.05)).isEqualTo("ноль долларов пять центов");
         assertThat(ru.toText(0.1)).isEqualTo("ноль долларов десять центов");
         assertThat(ru.toText(0.10)).isEqualTo("ноль долларов десять центов");
+        assertThat(ru.toText(10.0)).isEqualTo("десять долларов ноль центов");
         assertThat(ru.toText(0.001)).isEqualTo("ноль долларов ноль центов");
     }
 
@@ -50,6 +52,7 @@ public class RussianCurrencyDecimalTest {
         assertThat(ru.toText(0.05)).isEqualTo("ноль евро пять центов");
         assertThat(ru.toText(0.1)).isEqualTo("ноль евро десять центов");
         assertThat(ru.toText(0.10)).isEqualTo("ноль евро десять центов");
+        assertThat(ru.toText(10.0)).isEqualTo("десять евро ноль центов");
         assertThat(ru.toText(0.001)).isEqualTo("ноль евро ноль центов");
     }
 
@@ -59,6 +62,7 @@ public class RussianCurrencyDecimalTest {
                 .russian(RuDeclension.NOMINATIVE, Currency.NUMBER)
                 .build();
 
+        assertThat(ru.toText(10.0)).isEqualTo("десять целых ноль десятых");
         assertThat(ru.toText(0.01)).isEqualTo("ноль целых одна сотая");
         assertThat(ru.toText(0.02)).isEqualTo("ноль целых две сотых");
         assertThat(ru.toText(0.05)).isEqualTo("ноль целых пять сотых");

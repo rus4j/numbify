@@ -31,10 +31,6 @@ public class NumberGroup {
         return this.decimalGroups.get();
     }
 
-    public int decimalLength() {
-        return number.decimalString().length();
-    }
-
     public int[] lastIntGroup() {
         int[][] ints = integerGroup();
         return ints[ints.length - 1];

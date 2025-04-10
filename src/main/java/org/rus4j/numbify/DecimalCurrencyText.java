@@ -1,18 +1,24 @@
 package org.rus4j.numbify;
 
-public class DecimalCurrencyText implements Numbify {
-    private final Numbify numberText;
-    private final Text text;
+import org.rus4j.numbify.lang.Language;
+import org.rus4j.numbify.number.StringNumber;
 
-    public DecimalCurrencyText(Numbify numberText, Text text) {
+public class DecimalCurrencyText implements NumberText {
+    private final NumberText numberText;
+
+    public DecimalCurrencyText(NumberText numberText) {
         this.numberText = numberText;
-        this.text = text;
     }
 
     @Override
-    public String toText(Number number) {
-        String decimalText = numberText.toText(number);
-        String decimalCurrencyText = text.decimalCurrencyText(number);
+    public String toText(StringNumber number, Language language) {
+        String decimalText = numberText.toText(number, language);
+        NumberGroup numberGroup = new NumberGroup(number);
+        String decimalCurrencyText = "";
+        int[] last3Decimals = numberGroup.lastDecimalGroup();
+        if (last3Decimals.length != 0) {
+            decimalCurrencyText = language.decimalCurrency(last3Decimals, number.decimalString().length());
+        }
         if (!decimalCurrencyText.isEmpty()) {
             return decimalText + " " + decimalCurrencyText;
         }

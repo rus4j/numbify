@@ -1,5 +1,7 @@
 package org.rus4j.numbify.lang.ru;
 
+import org.rus4j.numbify.DigitGroupOrder;
+import org.rus4j.numbify.ForwardOrder;
 import org.rus4j.numbify.lang.Currency;
 import org.rus4j.numbify.lang.Gender;
 import org.rus4j.numbify.lang.Language;
@@ -10,17 +12,19 @@ public class Russian implements Language {
     private final RuDeclension declension;
     private final Gender[] genders;
     private final Currency currency;
+    private final String decimalSeparator;
 
-    public Russian(RuDeclension declension, Gender[] genders, Currency currency) {
+    public Russian(RuDeclension declension, Gender[] genders, Currency currency, String decimalSeparator) {
         this.dict = new RuDictionary();
         this.currencyDict = new RuCurrencyDictionary();
         this.declension = declension;
         this.genders = genders;
         this.currency = currency;
+        this.decimalSeparator = decimalSeparator;
     }
 
     public Russian(RuDeclension declension, Currency currency) {
-        this(declension, currencyGender(currency), currency);
+        this(declension, currencyGender(currency), currency, "");
     }
 
     public Russian(Currency currency) {
@@ -106,6 +110,16 @@ public class Russian implements Language {
     @Override
     public String endings(int[] numGroup) {
         return dict.endings.get(declension)[form(numGroup)];
+    }
+
+    @Override
+    public String decimalSeparator() {
+        return decimalSeparator;
+    }
+
+    @Override
+    public DigitGroupOrder textOrder() {
+        return new ForwardOrder(" ");
     }
 
     /**

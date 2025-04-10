@@ -236,7 +236,7 @@ class RussianTest {
 
     @Test
     public void testNominativeNeutral() {
-        Russian ru = new Russian(RuDeclension.NOMINATIVE, new Gender[]{Gender.NEUTRAL, Gender.NEUTRAL}, Currency.NUMBER);
+        Russian ru = new Russian(RuDeclension.NOMINATIVE, new Gender[]{Gender.NEUTRAL, Gender.NEUTRAL}, Currency.NUMBER, " ");
         Numbify custom = new NumbifyBuilder()
                 .customLanguage(ru)
                 .hideIntCurrency().hideDecimalCurrency()

@@ -1,6 +1,9 @@
 package org.rus4j.numbify;
 
-public class DecimalText implements Numbify {
+import org.rus4j.numbify.lang.Language;
+import org.rus4j.numbify.number.StringNumber;
+
+public class DecimalText implements NumberText {
     private final Text text;
 
     public DecimalText(Text text) {
@@ -8,7 +11,7 @@ public class DecimalText implements Numbify {
     }
 
     @Override
-    public String toText(Number number) {
-        return text.decimalText(number);
+    public String toText(StringNumber number, Language language) {
+        return text.toDecimalText(new NumberGroup(number).decimalGroup(), language);
     }
 }
