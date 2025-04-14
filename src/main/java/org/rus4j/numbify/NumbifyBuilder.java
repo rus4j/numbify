@@ -13,6 +13,7 @@ public class NumbifyBuilder {
     private boolean capitalize = false;
     private boolean originalInt = false;
     private boolean originalDecimal = false;
+    private boolean minusSign = false;
 
     public NumbifyBuilder english() {
         return english(Currency.USD);
@@ -79,6 +80,11 @@ public class NumbifyBuilder {
         return this;
     }
 
+    public NumbifyBuilder negativeSign() {
+        this.minusSign = true;
+        return this;
+    }
+
     public NumbifyBuilder customLanguage(Language language) {
         this.language = language;
         return this;
@@ -90,8 +96,9 @@ public class NumbifyBuilder {
         NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(text);
         intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
         decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
-        CombinedText combinedText = new CombinedText(intText, decimalText);
-        NumberText c = capitalize ? new CapitalizedText(combinedText) : combinedText;
-        return new Numbify(language, c);
+        NumberText numberText = new CombinedText(intText, decimalText);
+        numberText = minusSign ? new NegativeSignText(numberText) : numberText;
+        numberText = capitalize ? new CapitalizedText(numberText) : numberText;
+        return new Numbify(language, numberText);
     }
 }

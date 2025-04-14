@@ -12,6 +12,6 @@ public class IntText implements NumberText {
 
     @Override
     public String toText(StringNumber number, Language language) {
-        return text.toIntText(new NumberGroup(number).integerGroup(), language);
+        return text.toIntText(number, language);
     }
 }

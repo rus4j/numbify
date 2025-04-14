@@ -87,4 +87,9 @@ public class English implements Language {
     public DigitGroupOrder textOrder() {
         return new ForwardOrder("-");
     }
+
+    @Override
+    public String minusSign() {
+        return "negative";
+    }
 }

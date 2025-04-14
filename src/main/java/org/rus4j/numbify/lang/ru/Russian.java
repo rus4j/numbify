@@ -122,6 +122,11 @@ public class Russian implements Language {
         return new ForwardOrder(" ");
     }
 
+    @Override
+    public String minusSign() {
+        return "минус";
+    }
+
     /**
      * Russian language has 3 forms for thousands and millions.
      * Example in russian:<pre>
