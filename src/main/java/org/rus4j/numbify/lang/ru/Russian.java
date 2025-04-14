@@ -123,7 +123,7 @@ public class Russian implements Language {
     }
 
     @Override
-    public String minusSign() {
+    public String negativeSign() {
         return "минус";
     }
 

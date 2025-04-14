@@ -92,7 +92,7 @@ public interface Language {
     DigitGroupOrder textOrder();
 
     /**
-     * @return minus sign (-) in text representation
+     * @return negative sign (-) in text representation
      */
-    String minusSign();
+    String negativeSign();
 }

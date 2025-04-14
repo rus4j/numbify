@@ -89,7 +89,7 @@ public class English implements Language {
     }
 
     @Override
-    public String minusSign() {
+    public String negativeSign() {
         return "negative";
     }
 }
