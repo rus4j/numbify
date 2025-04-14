@@ -18,10 +18,16 @@ public class RoundedNumber implements StringNumber {
         return number.intString();
     }
 
+    @Override
     public String decimalString() {
         String decimalPart = number.decimalString();
         if (decimalPart.isEmpty()) return decimalPart;
         return round(decimalPart);
+    }
+
+    @Override
+    public boolean isNegative() {
+        return number.isNegative();
     }
 
     private String round(String decimalPart) {

@@ -4,14 +4,16 @@ import java.math.BigDecimal;
 
 public class DefaultNumber implements StringNumber {
     private final Number number;
+    private final boolean isNegative;
 
     public DefaultNumber(Number number) {
         this.number = number;
+        this.isNegative = number.toString().charAt(0) == '-';
     }
 
     @Override
     public String intString() {
-        return new BigDecimal(number.toString()).toPlainString().split("\\.")[0];
+        return new BigDecimal(number.toString()).abs().toPlainString().split("\\.")[0];
     }
 
     @Override
@@ -20,6 +22,11 @@ public class DefaultNumber implements StringNumber {
         if (split.length == 1) return "";
         String num = split[1];
         return removeTrailingZeros(num);
+    }
+
+    @Override
+    public boolean isNegative() {
+        return isNegative;
     }
 
     private String removeTrailingZeros(String num) {

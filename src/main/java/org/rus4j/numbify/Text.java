@@ -3,14 +3,16 @@ package org.rus4j.numbify;
 import java.util.StringJoiner;
 
 import org.rus4j.numbify.lang.Language;
+import org.rus4j.numbify.number.StringNumber;
 
 public class Text {
-    public String toIntText(int[][] groups, Language lang) {
-        return toText(groups, lang, false);
+    public String toIntText(StringNumber number, Language lang) {
+        String numText = toText(new NumberGroup(number).integerGroup(), lang, false);
+        return number.isNegative() ? "- " + numText : numText;
     }
 
-    public String toDecimalText(int[][] groups, Language lang) {
-        return toText(groups, lang, true);
+    public String toDecimalText(StringNumber number, Language lang) {
+        return toText(new NumberGroup(number).decimalGroup(), lang, true);
     }
 
     private String toText(int[][] groups, Language lang, boolean isDecimal) {

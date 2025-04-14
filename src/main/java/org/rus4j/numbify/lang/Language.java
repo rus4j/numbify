@@ -90,4 +90,9 @@ public interface Language {
      * @return implementation of {@link DigitGroupOrder} interface
      */
     DigitGroupOrder textOrder();
+
+    /**
+     * @return negative sign (-) in text representation
+     */
+    String negativeSign();
 }

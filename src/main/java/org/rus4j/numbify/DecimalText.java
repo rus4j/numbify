@@ -12,6 +12,6 @@ public class DecimalText implements NumberText {
 
     @Override
     public String toText(StringNumber number, Language language) {
-        return text.toDecimalText(new NumberGroup(number).decimalGroup(), language);
+        return text.toDecimalText(number, language);
     }
 }
