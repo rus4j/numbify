@@ -122,7 +122,7 @@ It supports any java numeric data types that are subclasses of `Number`
 ```
                                Number
  ┌──────┬───────┬───────┬─────┬──────┬─────────┬──────────┬─────────┐
- │      │       │       │     │      │         │          │
+ │       │        │        │      │       │          │           │
 Byte  Short  Integer  Long  Float  Double  BigInteger  BigDecimal  ...
 ```
 
