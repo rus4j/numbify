@@ -15,6 +15,12 @@ class NegativeSignTextTest {
     }
 
     @Test
+    public void negativeRussianSignTest() {
+        Numbify en = new NumbifyBuilder().russian(Currency.RUB).negativeSign().build();
+        assertThat(en.toText(-123)).isEqualTo("минус сто двадцать три рубля");
+    }
+
+    @Test
     public void negativeSignWithCapitalizeTest() {
         Numbify en = new NumbifyBuilder().english(Currency.USD).capitalize().negativeSign().build();
         assertThat(en.toText(-123)).isEqualTo("Negative one hundred twenty-three dollars");
