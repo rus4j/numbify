@@ -13,7 +13,11 @@ public class CapitalizedText implements NumberText {
     @Override
     public String toText(StringNumber number, Language language) {
         char[] chars = numberText.toText(number, language).toCharArray();
-        chars[0] = Character.toUpperCase(chars[0]);
+        if (chars[0] == '-') {
+            chars[2] = Character.toUpperCase(chars[2]);
+        } else {
+            chars[0] = Character.toUpperCase(chars[0]);
+        }
         return new String(chars, 0, chars.length);
     }
 }
