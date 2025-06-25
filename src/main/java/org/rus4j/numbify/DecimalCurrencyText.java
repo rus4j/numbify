@@ -13,9 +13,8 @@ public class DecimalCurrencyText implements NumberText {
     @Override
     public String toText(StringNumber number, Language language) {
         String decimalText = numberText.toText(number, language);
-        NumberGroup numberGroup = new NumberGroup(number);
+        int[] last3Decimals = lastDecimalGroup(number);
         String decimalCurrencyText = "";
-        int[] last3Decimals = numberGroup.lastDecimalGroup();
         if (last3Decimals.length != 0) {
             decimalCurrencyText = language.decimalCurrency(last3Decimals, number.decimalString().length());
         }
@@ -23,5 +22,13 @@ public class DecimalCurrencyText implements NumberText {
             return decimalText + " " + decimalCurrencyText;
         }
         return decimalText;
+    }
+
+    private int[] lastDecimalGroup(StringNumber number) {
+        int[][] decimalGroup = new NumberGroup(number.decimalString()).group();
+        if (decimalGroup.length != 0) {
+            return decimalGroup[decimalGroup.length - 1];
+        }
+        return new int[]{};
     }
 }

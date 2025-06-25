@@ -14,6 +14,13 @@ public class Russian implements Language {
     private final Currency currency;
     private final String decimalSeparator;
 
+    /**
+     * Full 'Russian' constructor
+     * @param declension declension of the result text.
+     * @param genders genders[0] is for integer part, genders[1] is for decimal one.
+     * @param currency currency.
+     * @param decimalSeparator string separator between integer and decimal part.
+     */
     public Russian(RuDeclension declension, Gender[] genders, Currency currency, String decimalSeparator) {
         this.dict = new RuDictionary();
         this.currencyDict = new RuCurrencyDictionary();

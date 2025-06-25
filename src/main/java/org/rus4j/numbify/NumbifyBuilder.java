@@ -14,6 +14,7 @@ public class NumbifyBuilder {
     private boolean originalInt = false;
     private boolean originalDecimal = false;
     private boolean minusSign = false;
+    private boolean digitByDigitDecimal = false;
 
     public NumbifyBuilder english() {
         return english(Currency.USD);
@@ -85,15 +86,21 @@ public class NumbifyBuilder {
         return this;
     }
 
+    public NumbifyBuilder digitByDigitDecimal() {
+        this.digitByDigitDecimal = true;
+        return this;
+    }
+
     public NumbifyBuilder customLanguage(Language language) {
         this.language = language;
         return this;
     }
 
     public Numbify build() {
-        Text text = new Text();
-        NumberText intText = originalInt ? new IntOriginalText() : new IntText(text);
-        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(text);
+        TextEngine textForInt = new Text();
+        TextEngine textForDecimal = digitByDigitDecimal ? new DigitByDigitText() : textForInt;
+        NumberText intText = originalInt ? new IntOriginalText() : new IntText(textForInt);
+        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(textForDecimal);
         intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
         decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
         NumberText numberText = new CombinedText(intText, decimalText);
