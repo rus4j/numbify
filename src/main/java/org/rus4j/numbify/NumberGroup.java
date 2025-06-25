@@ -3,45 +3,19 @@ package org.rus4j.numbify;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.rus4j.numbify.number.StringNumber;
-
 public class NumberGroup {
-    private final StringNumber number;
-    private final AtomicReference<int[][]> intGroups = new AtomicReference<>();
-    private final AtomicReference<int[][]> decimalGroups = new AtomicReference<>();
+    private final String number;
+    private final AtomicReference<int[][]> groups = new AtomicReference<>();
 
-    public NumberGroup(StringNumber number) {
+    public NumberGroup(String number) {
         this.number = number;
     }
 
-    public int[][] integerGroup() {
-        if (this.intGroups.get() == null) {
-            String intPart = number.intString();
-            this.intGroups.set(splitNumbersByGroups(toArray(intPart)));
+    public int[][] group() {
+        if (this.groups.get() == null) {
+            this.groups.set(splitNumbersByGroups(toArray(number)));
         }
-        return this.intGroups.get();
-    }
-
-    public int[][] decimalGroup() {
-        if (this.decimalGroups.get() == null) {
-            String decimalPart = number.decimalString();
-            if (decimalPart.isEmpty()) return this.decimalGroups.updateAndGet(ints -> new int[][]{});
-            this.decimalGroups.set(splitNumbersByGroups(toArray(decimalPart)));
-        }
-        return this.decimalGroups.get();
-    }
-
-    public int[] lastIntGroup() {
-        int[][] ints = integerGroup();
-        return ints[ints.length - 1];
-    }
-
-    public int[] lastDecimalGroup() {
-        int[][] decimals = decimalGroup();
-        if (decimals.length != 0) {
-            return decimals[decimals.length - 1];
-        }
-        return new int[]{};
+        return this.groups.get();
     }
 
     private int[] toArray(String number) {

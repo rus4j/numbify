@@ -1,18 +1,14 @@
 package org.rus4j.numbify;
 
 import java.util.StringJoiner;
-
 import org.rus4j.numbify.lang.Language;
-import org.rus4j.numbify.number.StringNumber;
 
-public class Text {
-    public String toIntText(StringNumber number, Language lang) {
-        String numText = toText(new NumberGroup(number).integerGroup(), lang, false);
-        return number.isNegative() ? "- " + numText : numText;
-    }
+public class Text implements TextEngine {
 
-    public String toDecimalText(StringNumber number, Language lang) {
-        return toText(new NumberGroup(number).decimalGroup(), lang, true);
+    @Override
+    public String toText(String number, Language lang, boolean isDecimal) {
+        int[][] group = number.isEmpty() ? new int[][]{} : new NumberGroup(number).group();
+        return toText(group, lang, isDecimal);
     }
 
     private String toText(int[][] groups, Language lang, boolean isDecimal) {
