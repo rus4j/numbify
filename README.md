@@ -41,18 +41,21 @@ Numbify en = new NumbifyBuilder()
     .hideDecimalCurrency() // hide currency text for decimal part
     .originalInt()         // do not convert integer part, leave it as number
     .originalDecimal()     // do not convert decimal part
+    .negativeSign()        // convert negative sign '-' to text representation
+    .digitByDigitDecimal() // convert decimal part digit by digit like 1.25 -> "one point two five"
     .capitalize()          // print text with capital letter
     .build();
 ```
 Example:
 ```java
 Numbify en = new NumbifyBuilder()
-    .english(Currency.USD)
-    .originalDecimal()
+    .english(Currency.NUMBER, "point")
+    .digitByDigitDecimal()
+    .hideDecimalCurrency()
     .capitalize()
     .build();
 
-String numberInText = en.toText(25.17); // "Twenty-five dollars 17 cents"
+String numberInText = en.toText(25.177); // "Twenty-five point one seven seven"
 ```
 
 # Objects
@@ -107,7 +110,7 @@ Finally, wrap combined text with `CapitalizedText`:
 ```java
 Numbify ru = new Numbify(
     new Russian(Currency.NUMBER),
-    new CapitalizedText(     // make the first letter capital
+    new CapitalizedText(
         new CombinedText(
             new IntCurrencyText(new IntText(new Text())),
             new DecimalCurrencyText(new DecimalOriginalText())
@@ -116,6 +119,37 @@ Numbify ru = new Numbify(
 );
 ru.toText(123.12); // Сто двадцать три целых 12 сотых
 ```
+Use `NegativeSignText` to translate '-' to text:
+```java
+Numbify en = new Numbify(
+    new English(Currency.USD, "and"),
+    new CapitalizedText(
+        new NegativeSignText(    // convert negative sign to text
+            new CombinedText(
+                new IntCurrencyText(new IntText(new Text())),
+                new DecimalCurrencyText(new DecimalOriginalText())
+            )
+        )
+    )
+);
+en.toText(-123.12); // Negative one hundred twenty-three dollars and 12 cents
+```
+There is also a possibility to convert number digit by digit using `DigitByDigitText`:
+```java
+Numbify en = new Numbify(
+    new English(Currency.NUMBER, "point"),
+    new CapitalizedText(
+        new CombinedText(
+            new IntCurrencyText(new IntText(new Text())),
+            new DecimalText(new DigitByDigitText())
+        )
+    )
+);
+en.toText(1.122); // One point one two two
+```
+## Schema of classes
+
+
 
 ## Data types
 It supports any java numeric data types that are subclasses of `Number`
