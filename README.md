@@ -148,7 +148,7 @@ Numbify en = new Numbify(
 en.toText(1.122); // One point one two two
 ```
 ## Schema of classes
-
+![Numbify.drawio.svg](Numbify.drawio.svg)
 
 
 ## Data types
