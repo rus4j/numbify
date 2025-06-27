@@ -13,7 +13,7 @@ apply plugin: 'com.vanniktech.maven.publish'
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
-    coordinates("org.rus4j", "numbify", "2.1.0")
+    coordinates("org.rus4j", "numbify", "2.2.0")
 
     pom {
         name = "Numbify"

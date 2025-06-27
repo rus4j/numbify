@@ -19,7 +19,7 @@ Add maven dependency into your project:
 <dependency>
     <groupId>org.rus4j</groupId>
     <artifactId>numbify</artifactId>
-    <verion>2.1.0</verion>
+    <verion>2.2.0</verion>
 </dependency>
 ```
 Gradle dependency:
