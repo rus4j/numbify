@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numbify - Java Number to Text Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"/>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="logo">Numbify</div>
+        <p class="tagline">Java object-oriented library for converting numbers into text</p>
+        <div class="badges">
+            <a href="https://github.com/rus4j/numbify" class="badge">🐙 GitHub</a>
+            <a href="https://mvnrepository.com/artifact/org.rus4j/numbify" class="badge">📦 Maven Central</a>
+        </div>
+    </header>
+    <main>
+        <section>
+            <p>Numbify is a Java object-oriented library for converting numbers into text with extensive customization
+                options.
+                There are two ways to use it:
+            <ul>
+                <li><b>NumbifyBuilder</b>: Traditional builder pattern.</li>
+                <li><b>Object Composition</b>: Object oriented way.</li>
+            </ul>
+            </p>
+        </section>
+
+
+        <section>
+            <h2>Objects example</h2>
+            <p>For advanced customization, Numbify allows direct object composition following the decorator pattern.
+                This approach provides granular control over number formatting by combining specialized components.
+
+                Minimal example:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution5-1">Objects</div>
+                    <div class="tab" data-tab="solution5-2">Builder</div>
+                </div>
+                <div id="solution5-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new IntText(new Text()) // just int text
+);
+ru.toText(123.12); // сто двадцать три</code></pre>
+                </div>
+
+                <div id="solution5-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Not possible</code></pre>
+                </div>
+            </div>
+
+            <p>To include currency text in your output, wrap the IntText component with IntCurrencyText:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution6-1">Objects</div>
+                    <div class="tab" data-tab="solution6-2">Builder</div>
+                </div>
+                <div id="solution6-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new IntCurrencyText(new IntText(new Text())) // just int text with currency
+);
+ru.toText(123.12); // сто двадцать три целых</code></pre>
+                </div>
+
+                <div id="solution6-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Not possible</code></pre>
+                </div>
+            </div>
+
+
+            <p>Next, you need decimals also. Same principle as for integers, use DecimalText,
+                or DecimalCurrencyText and combine the result with CombinedText:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution7-1">Objects</div>
+                    <div class="tab" data-tab="solution7-2">Builder</div>
+                </div>
+                <div id="solution7-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalText(new Text()))
+    )
+);
+ru.toText(123.12); // сто двадцать три целых двенадцать сотых</code></pre>
+                </div>
+
+                <div id="solution7-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .russian(Currency.NUMBER)
+    .build();
+en.toText(); // сто двадцать три целых двенадцать сотых</code></pre>
+                </div>
+            </div>
+
+
+            <p>Use IntOriginalText or DecimalOriginalText to maintain original
+                numeric values in specific portions of the output text:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution8-1">Objects</div>
+                    <div class="tab" data-tab="solution8-2">Builder</div>
+                </div>
+                <div id="solution8-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalOriginalText()) // use original decimal
+    )
+);
+ru.toText(123.12); // сто двадцать три целых 12 сотых</code></pre>
+                </div>
+
+                <div id="solution8-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .russian(Currency.NUMBER)
+    .originalDecimal()
+    .build();
+en.toText(); // сто двадцать три целых 12 сотых</code></pre>
+                </div>
+            </div>
+
+
+            <p>Finally, wrap combined text with CapitalizedText:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution9-1">Objects</div>
+                    <div class="tab" data-tab="solution9-2">Builder</div>
+                </div>
+                <div id="solution9-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify ru = new Numbify(
+    new Russian(Currency.NUMBER),
+    new CapitalizedText(
+        new CombinedText(
+            new IntCurrencyText(new IntText(new Text())),
+            new DecimalCurrencyText(new DecimalOriginalText())
+        )
+    )
+);
+ru.toText(123.12); // Сто двадцать три целых 12 сотых</code></pre>
+                </div>
+
+                <div id="solution9-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .russian(Currency.NUMBER)
+    .originalDecimal()
+    .capitalize()
+    .build();
+en.toText(); // Сто двадцать три целых 12 сотых</code></pre>
+                </div>
+            </div>
+
+
+            <p>Use NegativeSignText to translate ‘-‘ to text:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution10-1">Objects</div>
+                    <div class="tab" data-tab="solution10-2">Builder</div>
+                </div>
+                <div id="solution10-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new Numbify(
+    new English(Currency.USD, "and"),
+    new CapitalizedText(
+            new NegativeSignText(    // convert negative sign to text
+                    new CombinedText(
+                            new IntCurrencyText(new IntText(new Text())),
+                            new DecimalCurrencyText(new DecimalOriginalText())
+                    )
+            )
+    )
+);
+en.toText(-123.12); // Negative one hundred twenty-three dollars and 12 cents</code></pre>
+                </div>
+
+                <div id="solution10-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .english(Currency.USD, "and")
+    .originalDecimal()
+    .capitalize()
+    .negativeSign()
+    .build();
+en.toText(); // Negative one hundred twenty-three dollars and 12 cents</code></pre>
+                </div>
+            </div>
+
+
+            <p>There is also a possibility to convert number digit by digit using DigitByDigitText:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution11-1">Objects</div>
+                    <div class="tab" data-tab="solution11-2">Builder</div>
+                </div>
+                <div id="solution11-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new Numbify(
+    new English(Currency.NUMBER, "point"),
+    new CapitalizedText(
+            new CombinedText(
+                    new IntCurrencyText(new IntText(new Text())),
+                    new DecimalText(new DigitByDigitText())
+            )
+    )
+);
+en.toText(1.122); // One point one two two</code></pre>
+                </div>
+
+                <div id="solution11-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Not possible</code></pre>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <h2>NumbifyBuilder</h2>
+            <p>List of option methods available in builder:</p>
+            <div class="code-group">
+                <div class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .english(Currency.USD)
+    .hideIntCurrency()     // hide currency text for integer part of the number
+    .hideDecimalCurrency() // hide currency text for decimal part
+    .originalInt()         // do not convert integer part, leave it as number
+    .originalDecimal()     // do not convert decimal part
+    .negativeSign()        // convert negative sign '-' to text representation
+    .digitByDigitDecimal() // convert decimal part digit by digit like 1.25 -> "one point two five"
+    .capitalize()          // print text with capital letter
+    .build();</code></pre>
+                </div>
+            </div>
+            <p>Simple usage:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution1-1">Builder</div>
+                    <div class="tab" data-tab="solution1-2">Objects</div>
+                </div>
+                <div id="solution1-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .english(Currency.USD)
+    .build();
+String numberInText = en.toText(25.17); // "twenty-five dollars seventeen cents"</code></pre>
+                </div>
+
+                <div id="solution1-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new Numbify(
+    new English(Currency.USD),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalText(new Text()))
+    )
+);
+en.toText(25.17); // "twenty-five dollars seventeen cents"</code></pre>
+                </div>
+            </div>
+            <p>More complex example:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution2-1">Builder</div>
+                    <div class="tab" data-tab="solution2-2">Objects</div>
+                </div>
+                <div id="solution2-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .english(Currency.NUMBER, "point")
+    .digitByDigitDecimal()
+    .hideDecimalCurrency()
+    .capitalize()
+    .build();
+
+String numberInText = en.toText(25.177); // "Twenty-five dollars point one seven seven"</code></pre>
+                </div>
+
+                <div id="solution2-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify numbify = new Numbify(
+    new English(Currency.NUMBER, "point"),
+    new CapitalizedText(
+        new CombinedText(
+            new IntCurrencyText(new IntText(new Text())),
+            new DecimalText(new DigitByDigitText())
+        )
+    )
+);
+en.toText(25.177); // "Twenty-five dollars point one seven seven"</code></pre>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section>
+            <h2>Language features</h2>
+            <p>Some languages have grammatical features that affect how numbers are represented in text.
+                For example, Russian uses declensions, so the builder includes an additional method to specify them:
+            </p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution3-1">Builder</div>
+                    <div class="tab" data-tab="solution3-2">Objects</div>
+                </div>
+                <div id="solution3-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify ru = new NumbifyBuilder()
+    .russian(RuDeclension.GENITIVE, Currency.RUB)
+    .build();
+
+String number = ru.toText(123.45); // "ста двадцати трёх рублей сорока пяти копеек"</code></pre>
+                </div>
+
+                <div id="solution3-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify ru = new Numbify(
+    new Russian(RuDeclension.GENITIVE, Currency.RUB),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalText(new Text()))
+    )
+);
+ru.toText(123.45); // "ста двадцати трёх рублей сорока пяти копеек"</code></pre>
+                </div>
+            </div>
+
+            <p>English has option to customize separator between integer and decimal parts of the number:</p>
+            <div class="code-group">
+                <div class="tabs">
+                    <div class="tab active" data-tab="solution4-1">Builder</div>
+                    <div class="tab" data-tab="solution4-2">Objects</div>
+                </div>
+                <div id="solution4-1" class="code-block active">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new NumbifyBuilder()
+    .english(Currency.USD, "and") // "and" as decimal separator
+    .build();
+String numberInText = en.toText(25.17); // "twenty-five dollars and seventeen cents"</code></pre>
+                </div>
+
+                <div id="solution4-2" class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-java">Numbify en = new Numbify(
+    new English(Currency.USD, "and"),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalText(new Text()))
+    )
+);
+en.toText(25.17); // "twenty-five dollars and seventeen cents"</code></pre>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <h2>Schema of Classes</h2>
+            <img src="Numbify.svg">
+        </section>
+
+        <section>
+            <h2>Supported Number Types</h2>
+            <p>Numbify supports any Java numeric data types that are subclasses of <code>Number</code>:</p>
+            <pre><code class="language-java">Number
+ ├── Byte
+ ├── Short
+ ├── Integer
+ ├── Long
+ ├── Float
+ ├── Double
+ ├── BigInteger
+ └── BigDecimal</code></pre>
+        </section>
+    </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<script>
+    document.querySelectorAll('.code-group').forEach(group => {
+        const tabs = group.querySelectorAll('.tab');
+        const blocks = group.querySelectorAll('.code-block');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                blocks.forEach(b => b.classList.remove('active'));
+
+                tab.classList.add('active');
+                group.querySelector(`#${tab.dataset.tab}`).classList.add('active');
+            });
+        });
+    });
+
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const code = button.nextElementSibling.querySelector('code').innerText;
+            try {
+                await navigator.clipboard.writeText(code);
+                const originalText = button.innerText;
+                button.innerText = "Copied!";
+                setTimeout(() => {
+                    button.innerText = originalText;
+                }, 2000);
+            } catch (err) {
+                alert("Не удалось скопировать код");
+            }
+        });
+    });
+</script>
+</body>
+</html>
