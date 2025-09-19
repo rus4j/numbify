@@ -30,6 +30,22 @@ public class Russian implements Language {
         this.decimalSeparator = decimalSeparator;
     }
 
+    /**
+     * 'Russian' constructor with default genders.
+     * By default, genders[0] = Gender.MALE, genders[1] = Gender.FEMALE.
+     */
+    public Russian(RuDeclension declension, Currency currency, String decimalSeparator) {
+        this(declension, new Gender[] {Gender.MALE, Gender.FEMALE}, currency, decimalSeparator);
+    }
+
+    /**
+     * 'Russian' constructor with default declension and genders.
+     * By default, declension = RuDeclension.NOMINATIVE, genders[0] = Gender.MALE, genders[1] = Gender.FEMALE.
+     */
+    public Russian(Currency currency, String decimalSeparator) {
+        this(RuDeclension.NOMINATIVE, currency, decimalSeparator);
+    }
+
     public Russian(RuDeclension declension, Currency currency) {
         this(declension, currencyGender(currency), currency, "");
     }
