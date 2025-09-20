@@ -3,6 +3,7 @@ package org.rus4j.numbify.lang.ru;
 import org.rus4j.numbify.DigitGroupOrder;
 import org.rus4j.numbify.ForwardOrder;
 import org.rus4j.numbify.lang.Currency;
+import org.rus4j.numbify.lang.CustomCurrencyText;
 import org.rus4j.numbify.lang.Gender;
 import org.rus4j.numbify.lang.Language;
 
@@ -12,6 +13,7 @@ public class Russian implements Language {
     private final RuDeclension declension;
     private final Gender[] genders;
     private final Currency currency;
+    private final CustomCurrencyText customCurrencyText;
     private final String decimalSeparator;
 
     /**
@@ -19,15 +21,31 @@ public class Russian implements Language {
      * @param declension declension of the result text.
      * @param genders genders[0] is for integer part, genders[1] is for decimal one.
      * @param currency currency.
+     * @param customCurrencyText implementation of {@link CustomCurrencyText}.
      * @param decimalSeparator string separator between integer and decimal part.
      */
-    public Russian(RuDeclension declension, Gender[] genders, Currency currency, String decimalSeparator) {
+    private Russian(
+            RuDeclension declension,
+            Gender[] genders,
+            Currency currency,
+            CustomCurrencyText customCurrencyText,
+            String decimalSeparator
+    ) {
         this.dict = new RuDictionary();
         this.currencyDict = new RuCurrencyDictionary();
         this.declension = declension;
         this.genders = genders;
         this.currency = currency;
         this.decimalSeparator = decimalSeparator;
+        this.customCurrencyText = customCurrencyText;
+    }
+
+    public Russian(RuDeclension declension, Gender[] genders, Currency currency, String decimalSeparator) {
+        this(declension, genders, currency, null, decimalSeparator);
+    }
+
+    public Russian(RuDeclension declension, Gender[] genders, CustomCurrencyText customCurrencyText, String decimalSeparator) {
+        this(declension, genders, null, customCurrencyText, decimalSeparator);
     }
 
     public Russian(RuDeclension declension, Currency currency, String decimalSeparator) {
@@ -105,17 +123,23 @@ public class Russian implements Language {
 
     @Override
     public String intCurrency(int[] numGroup) {
+        if (customCurrencyText != null) {
+            return customCurrencyText.intCurrencyText(numGroup);
+        }
         return currencyDict.currency(currency, declension, form(numGroup));
     }
 
     @Override
     public String decimalCurrency(int[] digits, int decimalLength) {
+        if (customCurrencyText != null) {
+            return customCurrencyText.decimalCurrencyText(digits);
+        }
         return currencyDict.decimalCurrency(currency, declension, decimalLength, form(digits));
     }
 
     @Override
     public boolean hasSpecificCurrency() {
-        return !currency.equals(Currency.NUMBER);
+        return currency != null && !currency.equals(Currency.NUMBER) || customCurrencyText != null;
     }
 
     /**
