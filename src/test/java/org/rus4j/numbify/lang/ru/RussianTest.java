@@ -1,6 +1,13 @@
 package org.rus4j.numbify.lang.ru;
 
 import org.junit.jupiter.api.Test;
+import org.rus4j.numbify.CapitalizedText;
+import org.rus4j.numbify.CombinedText;
+import org.rus4j.numbify.DecimalCurrencyText;
+import org.rus4j.numbify.DecimalOriginalText;
+import org.rus4j.numbify.IntCurrencyText;
+import org.rus4j.numbify.IntText;
+import org.rus4j.numbify.Text;
 import org.rus4j.numbify.lang.Currency;
 import org.rus4j.numbify.lang.Gender;
 import org.rus4j.numbify.Numbify;
@@ -262,4 +269,59 @@ class RussianTest {
                 );
     }
 
+    @Test
+    public void testCheckGenderByCurrencyRUB() {
+        String ru = new Numbify(
+                new Russian(RuDeclension.NOMINATIVE, Currency.RUB, "и"),
+                new CapitalizedText(
+                        new CombinedText(
+                                new IntCurrencyText(new IntText(new Text())),
+                                new DecimalCurrencyText(new DecimalOriginalText())
+                        )
+                )
+        ).toText(52.12);
+        assertThat(ru).isEqualTo("Пятьдесят два рубля и 12 копеек");
+    }
+
+    @Test
+    public void testCheckByCurrencyNumber() {
+        String ru = new Numbify(
+                new Russian(RuDeclension.NOMINATIVE, Currency.NUMBER, "и"),
+                new CapitalizedText(
+                        new CombinedText(
+                                new IntCurrencyText(new IntText(new Text())),
+                                new DecimalCurrencyText(new DecimalOriginalText())
+                        )
+                )
+        ).toText(52.12);
+        assertThat(ru).isEqualTo("Пятьдесят две целых и 12 сотых");
+    }
+
+    @Test
+    public void testCheckGenderByCurrencyUSD() {
+        String ru = new Numbify(
+                new Russian(Currency.USD, "и"),
+                new CapitalizedText(
+                        new CombinedText(
+                                new IntCurrencyText(new IntText(new Text())),
+                                new DecimalCurrencyText(new DecimalOriginalText())
+                        )
+                )
+        ).toText(52.12);
+        assertThat(ru).isEqualTo("Пятьдесят два доллара и 12 центов");
+    }
+
+    @Test
+    public void testCheckGenderAndDeclension() {
+        String ru = new Numbify(
+                new Russian(Currency.NUMBER, "и"),
+                new CapitalizedText(
+                        new CombinedText(
+                                new IntCurrencyText(new IntText(new Text())),
+                                new DecimalCurrencyText(new DecimalOriginalText())
+                        )
+                )
+        ).toText(123.87);
+        assertThat(ru).isEqualTo("Сто двадцать три целых и 87 сотых");
+    }
 }

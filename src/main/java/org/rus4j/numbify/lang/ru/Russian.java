@@ -30,6 +30,14 @@ public class Russian implements Language {
         this.decimalSeparator = decimalSeparator;
     }
 
+    public Russian(RuDeclension declension, Currency currency, String decimalSeparator) {
+        this(declension, currencyGender(currency), currency, decimalSeparator);
+    }
+
+    public Russian(Currency currency, String decimalSeparator) {
+        this(RuDeclension.NOMINATIVE, currency, decimalSeparator);
+    }
+
     public Russian(RuDeclension declension, Currency currency) {
         this(declension, currencyGender(currency), currency, "");
     }
