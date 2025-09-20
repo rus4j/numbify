@@ -3,23 +3,38 @@ package org.rus4j.numbify.lang.en;
 import org.rus4j.numbify.DigitGroupOrder;
 import org.rus4j.numbify.ForwardOrder;
 import org.rus4j.numbify.lang.Currency;
+import org.rus4j.numbify.lang.CustomCurrencyText;
 import org.rus4j.numbify.lang.Language;
 
 public class English implements Language {
     private final EnDictionary dict;
     private final EnCurrencyDictionary currencyDict;
     private final Currency currency;
+    private final CustomCurrencyText customCurrencyText;
     private final String decimalSeparator;
 
-    public English(Currency currency, String decimalSeparator) {
+    private English(Currency currency, CustomCurrencyText customCurrencyText, String decimalSeparator) {
         this.currency = currency;
+        this.customCurrencyText = customCurrencyText;
         this.dict = new EnDictionary();
         this.currencyDict = new EnCurrencyDictionary();
         this.decimalSeparator = decimalSeparator;
     }
 
+    public English(Currency currency, String decimalSeparator) {
+        this(currency, null, decimalSeparator);
+    }
+
     public English(Currency currency) {
         this(currency, "");
+    }
+
+    public English(CustomCurrencyText customCurrencyText, String decimalSeparator) {
+        this(null, customCurrencyText, decimalSeparator);
+    }
+
+    public English(CustomCurrencyText customCurrencyText) {
+        this(customCurrencyText, "");
     }
 
     @Override
@@ -55,12 +70,18 @@ public class English implements Language {
 
     @Override
     public String intCurrency(int[] numGroup) {
+        if (customCurrencyText != null) {
+            return customCurrencyText.intCurrencyText(numGroup);
+        }
         boolean plural = numGroup[2] != 1;
         return currencyDict.currency(currency, plural);
     }
 
     @Override
     public String decimalCurrency(int[] numGroup, int decimalLength) {
+        if (customCurrencyText != null) {
+            return customCurrencyText.decimalCurrencyText(numGroup);
+        }
         boolean plural = numGroup[2] != 1;
         return currencyDict.decimalCurrency(currency, plural, decimalLength);
     }
@@ -75,7 +96,7 @@ public class English implements Language {
 
     @Override
     public boolean hasSpecificCurrency() {
-        return !currency.equals(Currency.NUMBER);
+        return currency != null && !currency.equals(Currency.NUMBER) || customCurrencyText != null;
     }
 
     @Override
