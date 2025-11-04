@@ -6,5 +6,5 @@ package org.rus4j.numbify;
  * but in German it's pronounced backwards "drei und zwanzig" (3 and 20)
  */
 public interface DigitGroupOrder {
-    String text(String hundredText, String tenText, String unitText);
+    String text(String hundredText, String tenText, String unitText, String delimiter);
 }

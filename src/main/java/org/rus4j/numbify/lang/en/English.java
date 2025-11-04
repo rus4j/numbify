@@ -64,7 +64,7 @@ public class English implements Language {
     }
 
     @Override
-    public String largeNumbers(int i) {
+    public String largeNumbers(int i, int[] digits) {
         return dict.millions[i];
     }
 
@@ -84,14 +84,6 @@ public class English implements Language {
         }
         boolean plural = numGroup[2] != 1;
         return currencyDict.decimalCurrency(currency, plural, decimalLength);
-    }
-
-    /**
-     * In english there is no additional endings for the word 'million'.
-     */
-    @Override
-    public String endings(int[] numGroup) {
-        return "";
     }
 
     @Override

@@ -116,9 +116,13 @@ public class Russian implements Language {
         return dict.thousands.get(declension)[form(numGroup)];
     }
 
+    /**
+     * In russian there are 3 forms on endings for the word 'million'.
+     * See {@link Russian#form(int[])}
+     */
     @Override
-    public String largeNumbers(int i) {
-        return dict.millions[i];
+    public String largeNumbers(int i, int[] digits) {
+        return dict.millions[i] + dict.endings.get(declension)[form(digits)];
     }
 
     @Override
@@ -140,15 +144,6 @@ public class Russian implements Language {
     @Override
     public boolean hasSpecificCurrency() {
         return currency != null && !currency.equals(Currency.NUMBER) || customCurrencyText != null;
-    }
-
-    /**
-     * In russian there are 3 forms on endings for the word 'million'.
-     * See {@link Russian#form(int[])}
-     */
-    @Override
-    public String endings(int[] numGroup) {
-        return dict.endings.get(declension)[form(numGroup)];
     }
 
     @Override

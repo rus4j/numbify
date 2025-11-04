@@ -38,14 +38,6 @@ public interface Language {
     String hundreds(int i);
 
     /**
-     * Languages could have different endings for the word 'million'
-     * depending on number they refer to.
-     * @param digits group of last 3 digits the words refer to.
-     * @return ending.
-     */
-    String endings(int[] digits);
-
-    /**
      * Languages could have different forms of the word 'thousand'
      * depending on number they refer to.
      * @param digits group of last 3 digits the word refer to.
@@ -55,10 +47,13 @@ public interface Language {
 
     /**
      * Transforms -<b>illion</b> number to text.
+     * Also, languages could have different endings for the word 'million'
+     * depending on number they refer to.
      * @param i order of number. 0 for a million, 1 for a billion, 2 for a trillion, etc.
-     * @return text representation of large -illion number.
+     * @param digits group of last 3 digits the word refers to.
+     * @return text representation of large -illion number with corresponding ending.
      */
-    String largeNumbers(int i);
+    String largeNumbers(int i, int[] digits);
 
     /**
      * Transforms integer part of currency to text.
