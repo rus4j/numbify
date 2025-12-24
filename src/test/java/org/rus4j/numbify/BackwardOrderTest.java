@@ -40,5 +40,6 @@ class BackwardOrderTest {
         assertEquals("twenty", order.text("", "twenty", "", " "));
         assertEquals("three", order.text("", "", "three", " "));
         assertEquals("", order.text("", "", "", " "));
+        assertEquals("", order.text("", "", "", ""));
     }
 }
