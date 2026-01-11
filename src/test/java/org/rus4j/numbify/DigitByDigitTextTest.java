@@ -3,6 +3,7 @@ package org.rus4j.numbify;
 import org.junit.jupiter.api.Test;
 import org.rus4j.numbify.lang.Currency;
 import org.rus4j.numbify.lang.Gender;
+import org.rus4j.numbify.lang.de.German;
 import org.rus4j.numbify.lang.en.English;
 import org.rus4j.numbify.lang.ru.RuDeclension;
 import org.rus4j.numbify.lang.ru.Russian;
@@ -90,5 +91,18 @@ class DigitByDigitTextTest {
                 .digitByDigitDecimal()
                 .build();
         assertThat(en.toText(1.42)).isEqualTo("one point four two");
+    }
+
+    @Test
+    public void oneByOneGermanTest() {
+        Numbify de = new Numbify(
+                new German(Currency.NUMBER),
+                new CombinedText(
+                        new IntText(new Text()),
+                        new DecimalText(new DigitByDigitText())
+                )
+        );
+        assertThat(de.toText(1.42)).isEqualTo("eins Komma vier zwei");
+        assertThat(de.toText(1.01)).isEqualTo("eins Komma null eins");
     }
 }
