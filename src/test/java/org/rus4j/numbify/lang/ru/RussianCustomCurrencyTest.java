@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.rus4j.numbify.CombinedText;
 import org.rus4j.numbify.DecimalCurrencyText;
 import org.rus4j.numbify.DecimalOriginalText;
+import org.rus4j.numbify.DecimalText;
 import org.rus4j.numbify.IntCurrencyText;
 import org.rus4j.numbify.IntText;
 import org.rus4j.numbify.Numbify;
@@ -29,6 +30,16 @@ public class RussianCustomCurrencyTest {
         );
 
         assertThat(numbify.toText(10.0)).isEqualTo("десять долларов США и 00 центов");
+    }
+
+    @Test
+    public void testCustomDecimalCurrencyText() {
+        Russian russian = new Russian(
+                RuDeclension.NOMINATIVE, new Gender[]{Gender.MALE, Gender.FEMALE}, new CustomDollarText(), "и"
+        );
+        Numbify numbify = new Numbify(russian, new DecimalCurrencyText(new DecimalText(new Text())));
+
+        assertThat(numbify.toText(0.01)).isEqualTo("одна цент");
     }
 
     static class CustomDollarText implements CustomCurrencyText {

@@ -2,6 +2,7 @@ package org.rus4j.numbify;
 
 import org.junit.jupiter.api.Test;
 import org.rus4j.numbify.lang.Currency;
+import org.rus4j.numbify.lang.de.German;
 import org.rus4j.numbify.lang.en.English;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,6 +19,15 @@ class NegativeSignTextTest {
     public void negativeRussianSignTest() {
         Numbify en = new NumbifyBuilder().russian(Currency.RUB).negativeSign().build();
         assertThat(en.toText(-123)).isEqualTo("минус сто двадцать три рубля");
+    }
+
+    @Test
+    public void negativeGermanSignTest() {
+        Numbify de = new Numbify(
+                new German(Currency.EUR),
+                new NegativeSignText(new IntText(new SolidText()))
+        );
+        assertThat(de.toText(-123)).isEqualTo("minus einhundertdreiundzwanzig");
     }
 
     @Test
