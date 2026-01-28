@@ -26,30 +26,74 @@ Gradle dependency:
 ```groovy
 implementation 'org.rus4j:numbify:2.3.0'
 ```
-The simplest example in English:
+`Numbify` uses the Decorator pattern to compose number-to-text transformations.
+This gives you full control over how your numbers are converted 
+and allows you to build complex transformations by wrapping simple components.
+
+### Basic Example
 ```java
-Numbify en = new NumbifyBuilder()
-    .english(Currency.USD)
-    .build();
-String numberInText = en.toText(25.17); // "twenty five dollars seventeen cents"
+Numbify en = new Numbify(
+    new English(Currency.USD),
+    new CombinedText(
+        new IntCurrencyText(new IntText(new Text())),
+        new DecimalCurrencyText(new DecimalText(new Text()))
+    )
+);
+String result = en.toText(25.17); // "twenty five dollars seventeen cents"
 ```
 
-More complex example:
+### Customization Example
+Add decorators to customize the output:
 ```java
-Numbify ru = new NumbifyBuilder()
-    .russian(RuDeclension.GENITIVE, Currency.NUMBER) // no specific currency in Genitive
-    .originalDecimal()
-    .capitalize()
-    .build();
-String numberInText = en.toText(25.17); // "Двадцати пяти целых 17 сотых"
+Numbify en = new Numbify(
+    new English(Currency.USD),
+    new CapitalizedText(
+        new NegativeSignText(
+            new CombinedText(
+                new IntCurrencyText(new IntText(new Text())),
+                new DecimalCurrencyText(new DecimalText(new Text()))
+            )
+        )
+    )
+);
+String result = en.toText(-123.45); // "Negative one hundred twenty-three dollars forty-five cents"
 ```
 
-Check full documentation and list of possible options on https://rus4j.org/numbify.
+## Core Components
 
-## Languages
-* 🇬🇧 English
-* 🇷🇺 Russian
-* more TBD
+Numbify provides several decorator types that you can compose:
+
+### Text Processing Decorators
+- **`CapitalizedText`** - Capitalizes the first letter of the output
+- **`NegativeSignText`** - Converts the minus sign to text (e.g., "negative" or "минус")
+
+### Number Part Decorators
+- **`IntText`** - Converts the integer part to text
+- **`DecimalText`** - Converts the decimal part to text
+- **`IntOriginalText`** - Keeps the integer part as digits
+- **`DecimalOriginalText`** - Keeps the decimal part as digits
+
+### Currency Decorators
+- **`IntCurrencyText`** — Adds currency name to the integer part
+- **`DecimalCurrencyText`** — Adds currency name to the decimal part
+- **`UsdCodeText`** — Adds currency code "USD" instead of "dollars"
+- **`EurCodeText`** — Adds currency code "EUR" instead of "euros"
+- **`CustomCurrencyText`** — Interface for implementing custom currency representations
+
+### Combination Decorators
+- **`CombinedText`** - Combines integer and decimal parts
+
+### Text Engines
+- **`Text`** - Standard text conversion with configurable delimiter
+- **`DigitByDigitText`** - Produce each digit separately
+- **`SolidText`** - Produces text without spaces (useful for German)
+
+## Supported Languages
+
+* 🇬🇧 **English**
+* 🇷🇺 **Russian** — 6 declensions
+* 🇩🇪 **German** — backward digit ordering
+* ...
 
 ## Data types
 It supports any java numeric data types that are subclasses of `Number`
@@ -59,3 +103,29 @@ It supports any java numeric data types that are subclasses of `Number`
  │      │       │       │     │      │         │          │
 Byte  Short  Integer  Long  Float  Double  BigInteger  BigDecimal  ...
 ```
+## Builder Interface (Alternative)
+
+For those who prefer a fluent API:
+
+```java
+Numbify en = new NumbifyBuilder()
+    .english(Currency.USD)
+    .capitalize()
+    .negativeSign()
+    .build();
+```
+
+**However, we recommend using decorators directly** 
+for greater flexibility, better composability, 
+and more explicit control.
+## Documentation
+
+Visit https://rus4j.org/numbify for complete documentation including:
+- Full API reference
+- More examples and use cases
+- Language-specific features
+- Custom implementations
+
+## Contributing
+
+Contributions are welcome!
