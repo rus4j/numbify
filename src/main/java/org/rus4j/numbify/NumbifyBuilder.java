@@ -109,7 +109,7 @@ public class NumbifyBuilder {
     public Numbify build() {
         TextEngine textForDecimal = digitByDigitDecimal ? new DigitByDigitText() : decimalTextEngine;
         NumberText intText = originalInt ? new IntOriginalText() : new IntText(intTextEngine);
-        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(decimalTextEngine);
+        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(textForDecimal);
         intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
         decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
         NumberText numberText = new CombinedText(intText, decimalText);

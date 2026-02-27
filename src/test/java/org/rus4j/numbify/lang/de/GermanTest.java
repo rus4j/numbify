@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.rus4j.numbify.IntCurrencyText;
 import org.rus4j.numbify.IntText;
 import org.rus4j.numbify.Numbify;
+import org.rus4j.numbify.NumbifyBuilder;
 import org.rus4j.numbify.SolidText;
 import org.rus4j.numbify.lang.Currency;
 
@@ -49,5 +50,14 @@ public class GermanTest {
 
         assertThat(de.toText(1_024)).isEqualTo("eintausendvierundzwanzig");
         assertThat(de.toText(101)).isEqualTo("einhunderteins");
+    }
+
+    @Test
+    public void builderTest() {
+        Numbify de = new NumbifyBuilder()
+                .german(Currency.NUMBER)
+                .build();
+
+        assertThat(de.toText(1_024)).isEqualTo("eintausendvierundzwanzig");
     }
 }
