@@ -2,6 +2,7 @@ package org.rus4j.numbify;
 
 import org.rus4j.numbify.lang.Currency;
 import org.rus4j.numbify.lang.Language;
+import org.rus4j.numbify.lang.de.German;
 import org.rus4j.numbify.lang.en.English;
 import org.rus4j.numbify.lang.ru.RuDeclension;
 import org.rus4j.numbify.lang.ru.Russian;
@@ -15,6 +16,8 @@ public class NumbifyBuilder {
     private boolean originalDecimal = false;
     private boolean minusSign = false;
     private boolean digitByDigitDecimal = false;
+    private TextEngine intTextEngine = new Text();
+    private TextEngine decimalTextEngine = new Text();
 
     public NumbifyBuilder english() {
         return english(Currency.USD);
@@ -53,6 +56,13 @@ public class NumbifyBuilder {
 
     public NumbifyBuilder russian(RuDeclension declension, Currency currency) {
         this.language = new Russian(declension, currency);
+        return this;
+    }
+
+    public NumbifyBuilder german(Currency currency) {
+        this.language = new German(currency);
+        this.intTextEngine = new SolidText();
+        this.decimalTextEngine = new SolidText();
         return this;
     }
 
@@ -97,10 +107,9 @@ public class NumbifyBuilder {
     }
 
     public Numbify build() {
-        TextEngine textForInt = new Text();
-        TextEngine textForDecimal = digitByDigitDecimal ? new DigitByDigitText() : textForInt;
-        NumberText intText = originalInt ? new IntOriginalText() : new IntText(textForInt);
-        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(textForDecimal);
+        TextEngine textForDecimal = digitByDigitDecimal ? new DigitByDigitText() : decimalTextEngine;
+        NumberText intText = originalInt ? new IntOriginalText() : new IntText(intTextEngine);
+        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(decimalTextEngine);
         intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
         decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
         NumberText numberText = new CombinedText(intText, decimalText);
