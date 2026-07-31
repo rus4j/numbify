@@ -19,10 +19,19 @@ public class NegativeSignText implements NumberText {
     @Override
     public String toText(StringNumber number, Language language) {
         String text = numberText.toText(number, language);
-        if (number.isNegative()) {
-            String negativeSign = customNegativeSignText.isEmpty() ? language.negativeSign() : customNegativeSignText;
+
+        if (!number.isNegative() || text.isEmpty()) {
+            return text;
+        }
+
+        String negativeSign = customNegativeSignText.isEmpty()
+                ? language.negativeSign()
+                : customNegativeSignText;
+
+        if (text.startsWith("-")) {
             return negativeSign + text.substring(1);
         }
-        return text;
+
+        return negativeSign + " " + text;
     }
 }
