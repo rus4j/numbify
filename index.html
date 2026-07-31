@@ -102,7 +102,7 @@ ru.toText(123.12); // сто двадцать три целых двенадца
                     <pre><code class="language-java">Numbify en = new NumbifyBuilder()
     .russian(Currency.NUMBER)
     .build();
-en.toText(); // сто двадцать три целых двенадцать сотых</code></pre>
+en.toText(123.12); // сто двадцать три целых двенадцать сотых</code></pre>
                 </div>
             </div>
 
@@ -132,7 +132,7 @@ ru.toText(123.12); // сто двадцать три целых 12 сотых</c
     .russian(Currency.NUMBER)
     .originalDecimal()
     .build();
-en.toText(); // сто двадцать три целых 12 сотых</code></pre>
+en.toText(123.12); // сто двадцать три целых 12 сотых</code></pre>
                 </div>
             </div>
 
@@ -164,7 +164,7 @@ ru.toText(123.12); // Сто двадцать три целых 12 сотых</c
     .originalDecimal()
     .capitalize()
     .build();
-en.toText(); // Сто двадцать три целых 12 сотых</code></pre>
+en.toText(123.12); // Сто двадцать три целых 12 сотых</code></pre>
                 </div>
             </div>
 
@@ -199,7 +199,7 @@ en.toText(-123.12); // Negative one hundred twenty-three dollars and 12 cents</c
     .capitalize()
     .negativeSign()
     .build();
-en.toText(); // Negative one hundred twenty-three dollars and 12 cents</code></pre>
+en.toText(123.12); // Negative one hundred twenty-three dollars and 12 cents</code></pre>
                 </div>
             </div>
 
