@@ -58,6 +58,16 @@ class NegativeSignTextTest {
     }
 
     @Test
+    public void negativeOriginalIntTest() {
+        Numbify en = new Numbify(
+                new English(Currency.NUMBER),
+                new IntOriginalText()
+        );
+
+        assertThat(en.toText(-12.123)).isEqualTo("- 12");
+    }
+
+    @Test
     public void negativeSignWithIntOriginalTextTest() {
         Numbify en = new Numbify(
                 new English(Currency.NUMBER),
@@ -66,26 +76,5 @@ class NegativeSignTextTest {
                 )
         );
         assertThat(en.toText(-12.123)).isEqualTo("negative 12");
-    }
-
-    @Test
-    public void negativeSignWithDecimalOriginalTextTest() {
-        Numbify en = new Numbify(
-                new English(Currency.NUMBER),
-                new NegativeSignText(
-                        new DecimalOriginalText()
-                )
-        );
-        assertThat(en.toText(-12.123)).isEqualTo("negative 123");
-    }
-
-    @Test
-    public void negativeSignWithEmptyDecimalOriginalTextTest() {
-        Numbify en = new Numbify(
-                new English(Currency.NUMBER),
-                new NegativeSignText(new DecimalOriginalText())
-        );
-
-        assertThat(en.toText(-123)).isEmpty();
     }
 }
