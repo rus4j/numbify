@@ -7,6 +7,8 @@ public class IntOriginalText implements NumberText {
 
     @Override
     public String toText(StringNumber number, Language language) {
-        return number.intString();
+        String text = number.intString();
+
+        return number.isNegative() ? "- " + text : text;
     }
 }

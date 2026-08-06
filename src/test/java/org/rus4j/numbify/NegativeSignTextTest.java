@@ -56,4 +56,25 @@ class NegativeSignTextTest {
         );
         assertThat(en.toText(-123)).isEqualTo("minus one hundred twenty-three dollars");
     }
+
+    @Test
+    public void negativeOriginalIntTest() {
+        Numbify en = new Numbify(
+                new English(Currency.NUMBER),
+                new IntOriginalText()
+        );
+
+        assertThat(en.toText(-12.123)).isEqualTo("- 12");
+    }
+
+    @Test
+    public void negativeSignWithIntOriginalTextTest() {
+        Numbify en = new Numbify(
+                new English(Currency.NUMBER),
+                new NegativeSignText(
+                        new IntOriginalText()
+                )
+        );
+        assertThat(en.toText(-12.123)).isEqualTo("negative 12");
+    }
 }
