@@ -87,4 +87,16 @@ public class SurroundedTextTest {
 
         assertThat(en.toText(123)).isEmpty();
     }
+
+    @Test
+    public void surroundedTextWithABuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english(Currency.NUMBER)
+                .hideIntCurrency()
+                .hideDecimalCurrency()
+                .surround("{", "}")
+                .build();
+
+        assertThat(en.toText(123.45)).isEqualTo("{one hundred twenty-three forty-five}");
+    }
 }

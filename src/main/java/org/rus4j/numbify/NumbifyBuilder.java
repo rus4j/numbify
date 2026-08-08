@@ -16,6 +16,9 @@ public class NumbifyBuilder {
     private boolean originalDecimal = false;
     private boolean minusSign = false;
     private boolean digitByDigitDecimal = false;
+    private boolean surround = false;
+    private String prefix = "";
+    private String suffix = "";
     private TextEngine intTextEngine = new Text();
     private TextEngine decimalTextEngine = new Text();
 
@@ -106,6 +109,14 @@ public class NumbifyBuilder {
         return this;
     }
 
+    public NumbifyBuilder surround(String prefix, String suffix) {
+        surround = true;
+        this.prefix = prefix;
+        this.suffix = suffix;
+
+        return this;
+    }
+
     public Numbify build() {
         TextEngine textForDecimal = digitByDigitDecimal ? new DigitByDigitText() : decimalTextEngine;
         NumberText intText = originalInt ? new IntOriginalText() : new IntText(intTextEngine);
@@ -115,6 +126,7 @@ public class NumbifyBuilder {
         NumberText numberText = new CombinedText(intText, decimalText);
         numberText = minusSign ? new NegativeSignText(numberText) : numberText;
         numberText = capitalize ? new CapitalizedText(numberText) : numberText;
+        numberText = surround ? new SurroundedText(numberText, prefix, suffix) : numberText;
         return new Numbify(language, numberText);
     }
 }
