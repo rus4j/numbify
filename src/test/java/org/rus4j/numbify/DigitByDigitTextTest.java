@@ -94,6 +94,15 @@ class DigitByDigitTextTest {
     }
 
     @Test
+    public void integerOneByOneWithBuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english()
+                .digitByDigitInt()
+                .build();
+        assertThat(en.toText(123.12)).isEqualTo("one two three dollars twelve cents");
+    }
+
+    @Test
     public void oneByOneGermanTest() {
         Numbify de = new Numbify(
                 new German(Currency.NUMBER),

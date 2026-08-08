@@ -15,7 +15,6 @@ public class NumbifyBuilder {
     private boolean originalInt = false;
     private boolean originalDecimal = false;
     private boolean minusSign = false;
-    private boolean digitByDigitDecimal = false;
     private TextEngine intTextEngine = new Text();
     private TextEngine decimalTextEngine = new Text();
 
@@ -96,8 +95,33 @@ public class NumbifyBuilder {
         return this;
     }
 
+    public NumbifyBuilder digitByDigitInt() {
+        this.intTextEngine = new DigitByDigitText();
+        return this;
+    }
+
+    public NumbifyBuilder solidInt() {
+        this.intTextEngine = new SolidText();
+        return this;
+    }
+
+    public NumbifyBuilder customIntTextEngine(TextEngine textEngine) {
+        this.intTextEngine = textEngine;
+        return this;
+    }
+
     public NumbifyBuilder digitByDigitDecimal() {
-        this.digitByDigitDecimal = true;
+        this.decimalTextEngine = new DigitByDigitText();
+        return this;
+    }
+
+    public NumbifyBuilder solidDecimal() {
+        this.decimalTextEngine = new SolidText();
+        return this;
+    }
+
+    public NumbifyBuilder customDecimalTextEngine(TextEngine textEngine) {
+        this.decimalTextEngine = textEngine;
         return this;
     }
 
@@ -107,9 +131,8 @@ public class NumbifyBuilder {
     }
 
     public Numbify build() {
-        TextEngine textForDecimal = digitByDigitDecimal ? new DigitByDigitText() : decimalTextEngine;
         NumberText intText = originalInt ? new IntOriginalText() : new IntText(intTextEngine);
-        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(textForDecimal);
+        NumberText decimalText = originalDecimal ? new DecimalOriginalText() : new DecimalText(decimalTextEngine);
         intText = showIntegerCurrency ? new IntCurrencyText(intText) : intText;
         decimalText = showDecimalCurrency ? new DecimalCurrencyText(decimalText) : decimalText;
         NumberText numberText = new CombinedText(intText, decimalText);
