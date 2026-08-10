@@ -28,6 +28,64 @@ public class SolidTextTest {
 
         assertThat(solid.toText(123)).isEqualTo("стодвадцатьтри");
     }
+
+    @Test
+    public void solidIntWithBuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english()
+                .solidInt()
+                .build();
+        assertThat(en.toText(123.12)).isEqualTo("one hundredtwenty-three dollars twelve cents");
+    }
+
+    @Test
+    public void solidDecimalWithBuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english(Currency.NUMBER)
+                .solidDecimal()
+                .build();
+        assertThat(en.toText(123.123)).isEqualTo("one hundred twenty-three one hundredtwenty-three thousandths");
+    }
+
+    @Test
+    public void customIntTextEngineWithBuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english()
+                .customIntTextEngine((number, lang, isDecimal) -> "custom")
+                .build();
+        assertThat(en.toText(123.12)).isEqualTo("custom dollars twelve cents");
+    }
+
+    @Test
+    public void customDecimalTextEngineWithBuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english()
+                .customDecimalTextEngine((number, lang, isDecimal) -> "custom")
+                .build();
+        assertThat(en.toText(123.12)).isEqualTo("one hundred twenty-three dollars custom cents");
+    }
+
+    @Test
+    public void severalIntTextEnginesInARowWithBuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english()
+                .digitByDigitInt()
+                .solidInt()
+                .customIntTextEngine((number, lang, isDecimal) -> "custom")
+                .build();
+        assertThat(en.toText(123.12)).isEqualTo("custom dollars twelve cents");
+    }
+
+    @Test
+    public void severalDecimalTextEnginesInARowWithBuilderTest() {
+        Numbify en = new NumbifyBuilder()
+                .english()
+                .digitByDigitDecimal()
+                .solidDecimal()
+                .customDecimalTextEngine((number, lang, isDecimal) -> "custom")
+                .build();
+        assertThat(en.toText(123.12)).isEqualTo("one hundred twenty-three dollars custom cents");
+    }
 }
 
 class CustomEnglish extends English {
