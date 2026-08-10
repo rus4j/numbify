@@ -17,7 +17,6 @@ public class SurroundedText implements NumberText {
     @Override
     public String toText(StringNumber number, Language language) {
         String text = numberText.toText(number, language);
-
         return text.isEmpty() ? "" : prefix + text + suffix;
     }
 }

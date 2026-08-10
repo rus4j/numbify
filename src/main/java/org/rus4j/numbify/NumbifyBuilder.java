@@ -137,7 +137,6 @@ public class NumbifyBuilder {
         surround = true;
         this.prefix = prefix;
         this.suffix = suffix;
-
         return this;
     }
 
