@@ -19,12 +19,12 @@ Add maven dependency into your project:
 <dependency>
     <groupId>org.rus4j</groupId>
     <artifactId>numbify</artifactId>
-    <verion>2.3.0</verion>
+    <verion>2.4.0</verion>
 </dependency>
 ```
 Gradle dependency:
 ```groovy
-implementation 'org.rus4j:numbify:2.3.0'
+implementation 'org.rus4j:numbify:2.4.0'
 ```
 `Numbify` uses the Decorator pattern to compose number-to-text transformations.
 This gives you full control over how your numbers are converted 
