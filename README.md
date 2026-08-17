@@ -66,6 +66,7 @@ Numbify provides several decorator types that you can compose:
 ### Text Processing Decorators
 - **`CapitalizedText`** - Capitalizes the first letter of the output
 - **`NegativeSignText`** - Converts the minus sign to text (e.g., "negative" or "минус")
+- **`SurroundedText`** - Surrounds text with specific prefix and suffix (e.g. for brackets)
 
 ### Number Part Decorators
 - **`IntText`** - Converts the integer part to text
