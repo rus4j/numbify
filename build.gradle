@@ -20,7 +20,7 @@ sourceCompatibility = JavaVersion.VERSION_17
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    testImplementation 'org.assertj:assertj-core:3.27.3'
+    testImplementation 'org.assertj:assertj-core:3.27.7'
 }
 
 tasks.withType(Test).configureEach {
