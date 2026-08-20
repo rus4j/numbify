@@ -9,7 +9,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5683645ec8914bba99fbb16142656118)](https://app.codacy.com/gh/rus4j/numbify?utm_source=github.com&utm_medium=referral&utm_content=rus4j/numbify&utm_campaign=Badge_Grade)
 
 
-Numbify ia s Java library for transforming numbers into text with wide customization options.
+Numbify is a Java library for transforming numbers into text with wide customization options.
 
 Inspired by [Ant1mas/number-to-words-ru](https://github.com/Ant1mas/number-to-words-ru)
 
