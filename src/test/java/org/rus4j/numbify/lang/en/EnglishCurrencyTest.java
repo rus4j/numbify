@@ -91,4 +91,14 @@ public class EnglishCurrencyTest {
         assertThat(en.toText(new BigDecimal("1.11"))).isEqualTo("one euro eleven cents");
         assertThat(en.toText(new BigDecimal("1.21"))).isEqualTo("one euro twenty-one cents");
     }
+
+    @Test
+    public void intCurrencySingleArgumentTest() {
+        English standard = new English(Currency.USD);
+        assertThat(standard.intCurrency(new int[]{0, 0, 1})).isEqualTo("dollar");
+        assertThat(standard.intCurrency(new int[]{0, 0, 2})).isEqualTo("dollars");
+
+        English custom = new English(new UsdCodeText());
+        assertThat(custom.intCurrency(new int[]{0, 0, 1})).isEqualTo("USD");
+    }
 }
