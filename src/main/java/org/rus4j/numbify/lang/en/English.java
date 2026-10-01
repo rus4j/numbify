@@ -78,6 +78,14 @@ public class English implements Language {
     }
 
     @Override
+    public String intCurrency(int[] numGroup, boolean plural) {
+        if (customCurrencyText != null) {
+            return customCurrencyText.intCurrencyText(numGroup);
+        }
+        return currencyDict.currency(currency, plural);
+    }
+
+    @Override
     public String decimalCurrency(int[] numGroup, int decimalLength) {
         if (customCurrencyText != null) {
             return customCurrencyText.decimalCurrencyText(numGroup);

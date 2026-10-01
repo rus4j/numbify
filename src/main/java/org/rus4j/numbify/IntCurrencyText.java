@@ -13,7 +13,8 @@ public class IntCurrencyText implements NumberText {
     @Override
     public String toText(StringNumber number, Language language) {
         String intText = numberText.toText(number, language);
-        String currencyText = language.intCurrency(lastIntGroup(number));
+        boolean plural = !"1".equals(number.intString());
+        String currencyText = language.intCurrency(lastIntGroup(number), plural);
         if (!currencyText.isEmpty()) {
             return intText + " " + currencyText;
         }

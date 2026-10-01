@@ -19,7 +19,7 @@ public class EnglishCurrencyTest {
         assertThat(en.toText(100)).isEqualTo("one hundred rubles");
         assertThat(en.toText(1)).isEqualTo("one ruble");
         assertThat(en.toText(11)).isEqualTo("eleven rubles");
-        assertThat(en.toText(21)).endsWith("twenty one rubles");
+        assertThat(en.toText(21)).endsWith("twenty-one rubles");
         assertThat(en.toText(101)).endsWith("one hundred one rubles");
         assertThat(en.toText(1001)).endsWith("one thousand one rubles");
         assertThat(en.toText(990_123)).isEqualTo("nine hundred ninety thousand one hundred twenty-three rubles");
@@ -35,7 +35,7 @@ public class EnglishCurrencyTest {
         assertThat(en.toText(100)).isEqualTo("one hundred dollars");
         assertThat(en.toText(1)).isEqualTo("one dollar");
         assertThat(en.toText(11)).isEqualTo("eleven dollars");
-        assertThat(en.toText(21)).endsWith("twenty one dollars");
+        assertThat(en.toText(21)).endsWith("twenty-one dollars");
         assertThat(en.toText(101)).endsWith("one hundred one dollars");
         assertThat(en.toText(1001)).endsWith("one thousand one dollars");
         assertThat(en.toText(99_123)).isEqualTo("ninety-nine thousand one hundred twenty-three dollars");
@@ -51,7 +51,7 @@ public class EnglishCurrencyTest {
         assertThat(en.toText(100)).isEqualTo("one hundred euros");
         assertThat(en.toText(1)).isEqualTo("one euro");
         assertThat(en.toText(11)).isEqualTo("eleven euros");
-        assertThat(en.toText(21)).endsWith("twenty one euros");
+        assertThat(en.toText(21)).endsWith("twenty-one euros");
         assertThat(en.toText(101)).endsWith("one hundred one euros");
         assertThat(en.toText(1001)).endsWith("one thousand one euros");
         assertThat(en.toText(99_123)).isEqualTo("ninety-nine thousand one hundred twenty-three euros");
