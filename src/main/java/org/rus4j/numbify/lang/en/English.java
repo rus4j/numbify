@@ -90,7 +90,9 @@ public class English implements Language {
         if (customCurrencyText != null) {
             return customCurrencyText.decimalCurrencyText(numGroup);
         }
-        boolean plural = numGroup[2] != 1;
+
+        boolean plural = !(numGroup[0] == 0 && numGroup[1] == 0 && numGroup[2] == 1);
+
         return currencyDict.decimalCurrency(currency, plural, decimalLength);
     }
 
