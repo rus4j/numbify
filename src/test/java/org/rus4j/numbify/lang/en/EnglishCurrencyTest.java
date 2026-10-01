@@ -5,6 +5,8 @@ import org.rus4j.numbify.lang.Currency;
 import org.rus4j.numbify.Numbify;
 import org.rus4j.numbify.NumbifyBuilder;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EnglishCurrencyTest {
@@ -55,5 +57,38 @@ public class EnglishCurrencyTest {
         assertThat(en.toText(101)).endsWith("one hundred one euros");
         assertThat(en.toText(1001)).endsWith("one thousand one euros");
         assertThat(en.toText(99_123)).isEqualTo("ninety-nine thousand one hundred twenty-three euros");
+    }
+
+    @Test
+    public void rubDecimalCurrencyTest() {
+        Numbify en = new NumbifyBuilder()
+                .english(Currency.RUB)
+                .build();
+
+        assertThat(en.toText(new BigDecimal("1.01"))).isEqualTo("one ruble one kopeck");
+        assertThat(en.toText(new BigDecimal("1.11"))).isEqualTo("one ruble eleven kopecks");
+        assertThat(en.toText(new BigDecimal("1.21"))).isEqualTo("one ruble twenty-one kopecks");
+    }
+
+    @Test
+    public void usdDecimalCurrencyTest() {
+        Numbify en = new NumbifyBuilder()
+                .english(Currency.USD)
+                .build();
+
+        assertThat(en.toText(new BigDecimal("1.01"))).isEqualTo("one dollar one cent");
+        assertThat(en.toText(new BigDecimal("1.11"))).isEqualTo("one dollar eleven cents");
+        assertThat(en.toText(new BigDecimal("1.21"))).isEqualTo("one dollar twenty-one cents");
+    }
+
+    @Test
+    public void eurDecimalCurrencyTest() {
+        Numbify en = new NumbifyBuilder()
+                .english(Currency.EUR)
+                .build();
+
+        assertThat(en.toText(new BigDecimal("1.01"))).isEqualTo("one euro one cent");
+        assertThat(en.toText(new BigDecimal("1.11"))).isEqualTo("one euro eleven cents");
+        assertThat(en.toText(new BigDecimal("1.21"))).isEqualTo("one euro twenty-one cents");
     }
 }
