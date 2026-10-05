@@ -37,6 +37,8 @@ public class EnglishCustomCurrencyTest {
 
         assertThat(numbify.toText(10.0)).isEqualTo("ten USD zero cents");
         assertThat(numbify.toText(10.01)).isEqualTo("ten USD one cent");
+        assertThat(numbify.toText(10.11)).isEqualTo("ten USD eleven cents");
+        assertThat(numbify.toText(10.21)).isEqualTo("ten USD twenty-one cents");
     }
 
     @Test
@@ -51,5 +53,7 @@ public class EnglishCustomCurrencyTest {
 
         assertThat(numbify.toText(10.0)).isEqualTo("ten EUR zero cents");
         assertThat(numbify.toText(10.01)).isEqualTo("ten EUR one cent");
+        assertThat(numbify.toText(10.11)).isEqualTo("ten EUR eleven cents");
+        assertThat(numbify.toText(10.21)).isEqualTo("ten EUR twenty-one cents");
     }
 }
