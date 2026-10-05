@@ -78,10 +78,26 @@ public class English implements Language {
     }
 
     @Override
-    public String intCurrency(int[] numGroup, boolean plural) {
+    public String intCurrency(int[][] groups) {
         if (customCurrencyText != null) {
-            return customCurrencyText.intCurrencyText(numGroup);
+            return customCurrencyText.intCurrencyText(groups);
         }
+
+        boolean pluralBeforeLastGroup = false;
+
+        for (int i = 0; i < groups.length - 1; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (groups[i][j] != 0) {
+                    pluralBeforeLastGroup = true;
+                    break;
+                }
+            }
+        }
+
+        int[] lastGroup = groups[groups.length - 1];
+
+        boolean plural = pluralBeforeLastGroup || lastGroup[0] != 0 || lastGroup[1] != 0 || lastGroup[2] != 1;
+
         return currencyDict.currency(currency, plural);
     }
 

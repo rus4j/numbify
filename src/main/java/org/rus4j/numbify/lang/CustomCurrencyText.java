@@ -22,4 +22,12 @@ public interface CustomCurrencyText {
      * @return text that going to be used as currency for decimal part of the number. Not null.
      */
     String decimalCurrencyText(int[] digits);
+
+    /**
+     * @param groups all the groups of 3 digits the currency refer to.
+     * @return text that going to be used as currency for integer part of the number. Not null.
+     */
+    default String intCurrencyText(int[][] groups) {
+        return intCurrencyText(groups[groups.length - 1]);
+    }
 }

@@ -65,12 +65,11 @@ public interface Language {
     /**
      * Transforms integer part of currency to text.
      *
-     * @param digits group of last 3 digits the currency refer to.
-     * @param plural predetermined plural.
+     * @param groups all the groups of 3 digits the currency refer to.
      * @return currency text for integer part of the number.
      */
-    default String intCurrency(int[] digits, boolean plural) {
-        return intCurrency(digits);
+    default String intCurrency(int[][] groups) {
+        return intCurrency(groups[groups.length - 1]);
     }
 
     /**

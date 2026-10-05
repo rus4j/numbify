@@ -12,4 +12,9 @@ public class UsdCodeText implements CustomCurrencyText {
     public String decimalCurrencyText(int[] digits) {
         return digits[2] != 1 ? "cents" : "cent";
     }
+
+    @Override
+    public String intCurrencyText(int[][] groups) {
+        return "USD";
+    }
 }
