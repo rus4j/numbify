@@ -15,6 +15,7 @@ public interface CustomCurrencyText {
      * @param digits group of last 3 digits the currency refer to.
      * @return text that going to be used as currency for integer part of the number. Not null.
      */
+    @Deprecated
     String intCurrencyText(int[] digits);
 
     /**

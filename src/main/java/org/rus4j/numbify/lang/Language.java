@@ -60,6 +60,7 @@ public interface Language {
      * @param digits group of last 3 digits the currency refer to.
      * @return currency text for integer part of the number.
      */
+    @Deprecated
     String intCurrency(int[] digits);
 
     /**
