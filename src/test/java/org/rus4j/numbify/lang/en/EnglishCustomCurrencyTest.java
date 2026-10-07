@@ -56,4 +56,10 @@ public class EnglishCustomCurrencyTest {
         assertThat(numbify.toText(10.11)).isEqualTo("ten EUR eleven cents");
         assertThat(numbify.toText(10.21)).isEqualTo("ten EUR twenty-one cents");
     }
+
+    @Test
+    public void customDecimalCurrencyWithHundredsTest() {
+        assertThat(new UsdCodeText().decimalCurrencyText(new int[]{1, 0, 1})).isEqualTo("cents");
+        assertThat(new EurCodeText().decimalCurrencyText(new int[]{1, 0, 1})).isEqualTo("cents");
+    }
 }
