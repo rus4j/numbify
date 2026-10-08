@@ -70,10 +70,17 @@ public class English implements Language {
 
     @Override
     public String intCurrency(int[] numGroup) {
+        return intCurrency(new int[][]{numGroup});
+    }
+
+    @Override
+    public String intCurrency(int[][] groups) {
         if (customCurrencyText != null) {
-            return customCurrencyText.intCurrencyText(numGroup);
+            return customCurrencyText.intCurrencyText(groups);
         }
-        boolean plural = numGroup[2] != 1;
+
+        boolean plural = !isExactlyOne(groups);
+
         return currencyDict.currency(currency, plural);
     }
 
@@ -82,7 +89,9 @@ public class English implements Language {
         if (customCurrencyText != null) {
             return customCurrencyText.decimalCurrencyText(numGroup);
         }
-        boolean plural = numGroup[2] != 1;
+
+        boolean plural = !isOne(numGroup);
+
         return currencyDict.decimalCurrency(currency, plural, decimalLength);
     }
 
@@ -104,5 +113,13 @@ public class English implements Language {
     @Override
     public String negativeSign() {
         return "negative";
+    }
+
+    private boolean isExactlyOne(int[][] groups) {
+        return groups.length == 1 && isOne(groups[0]);
+    }
+
+    private boolean isOne(int[] digits) {
+        return digits[0] == 0 && digits[1] == 0 && digits[2] == 1;
     }
 }

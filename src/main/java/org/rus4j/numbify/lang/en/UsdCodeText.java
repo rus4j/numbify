@@ -10,6 +10,6 @@ public class UsdCodeText implements CustomCurrencyText {
 
     @Override
     public String decimalCurrencyText(int[] digits) {
-        return digits[2] != 1 ? "cents" : "cent";
+        return digits[0] == 0 && digits[1] == 0 && digits[2] == 1 ? "cent" : "cents";
     }
 }
